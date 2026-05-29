@@ -51,15 +51,25 @@ export default function Login() {
         : '/pos';
       navigate(dest, { replace: true });
     } catch (err: unknown) {
-      const axiosErr = err as { response?: { data?: { message?: string }; status?: number } };
+      const axiosErr = err as {
+        response?: { data?: { message?: string | string[] }; status?: number };
+        code?: string;
+      };
       const status = axiosErr.response?.status;
-      const msg = axiosErr.response?.data?.message;
-      if (status === 401) {
-        setServerError('Invalid email or password. Check credentials and try again.');
-      } else if (typeof msg === 'string') {
+      const raw = axiosErr.response?.data?.message;
+      // NestJS validation errors return message as string[] — join them
+      const msg = Array.isArray(raw) ? raw.join('. ') : raw;
+
+      if (!axiosErr.response || axiosErr.code === 'ERR_NETWORK') {
+        setServerError('Cannot connect to API — run: cd electrotrack-api && npm run start:dev');
+      } else if (status === 401) {
+        setServerError('Invalid email or password.');
+      } else if (status === 403) {
+        setServerError('Account suspended. Contact the platform admin.');
+      } else if (typeof msg === 'string' && msg.length > 0) {
         setServerError(msg);
       } else {
-        setServerError('Could not reach the server. Make sure the API is running on port 3000.');
+        setServerError(`Server error (${status ?? 'unknown'}) — check the API terminal for details.`);
       }
     }
   };
