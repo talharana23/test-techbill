@@ -215,7 +215,7 @@ export interface SalesSummary {
   totalItems: number;
   totalDiscounts: number;
   byPaymentMethod: { method: string; count: number; revenue: number }[];
-  topProducts: { productId: string; name: string; units: number; revenue: number }[];
+  soldProducts: { productId: string; name: string; units: number; revenue: number }[];
 }
 
 export interface LowStockItem {

@@ -92,10 +92,9 @@ export class ReportsService {
       });
     }
 
-    const topProducts = [...productMap.entries()]
+    const soldProducts = [...productMap.entries()]
       .map(([productId, d]) => ({ productId, ...d }))
-      .sort((a, b) => b.revenue - a.revenue)
-      .slice(0, 10);
+      .sort((a, b) => b.revenue - a.revenue);
 
     let totalCost = 0;
     for (const item of items) {
@@ -117,7 +116,7 @@ export class ReportsService {
         count: g._count.id,
         revenue: Number(g._sum.totalAmount ?? 0),
       })),
-      topProducts,
+      soldProducts,
     };
   }
 

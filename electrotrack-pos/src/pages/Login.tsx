@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Eye, EyeOff } from 'lucide-react';
 import { api } from '../api/client';
 import { useAuthStore } from '../store/auth.store';
 import { connectSocket } from '../api/socket';
@@ -27,6 +27,7 @@ export default function Login() {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } =
     useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
@@ -155,8 +156,14 @@ export default function Login() {
                   Forgot password?
                 </button>
               </div>
-              <input {...register('password')} type="password" autoComplete="current-password"
-                placeholder="••••••••" className={inputCls} />
+              <div className="relative">
+                <input {...register('password')} type={showPassword ? 'text' : 'password'} autoComplete="current-password"
+                  placeholder="••••••••" className={`${inputCls} pr-10`} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors flex items-center justify-center">
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
               {errors.password && <p className="text-[11px] text-stitch-error mt-1">{errors.password.message}</p>}
             </div>
             <button type="submit" disabled={isSubmitting}
@@ -207,9 +214,15 @@ export default function Login() {
             </div>
             <div>
               <label className={labelCls}>New Password</label>
-              <input type="password" required minLength={8} value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="At least 8 characters" className={inputCls} />
+              <div className="relative">
+                <input type={showPassword ? 'text' : 'password'} required minLength={8} value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="At least 8 characters" className={`${inputCls} pr-10`} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors flex items-center justify-center">
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
             </div>
             <button type="submit" disabled={loading || otp.length !== 6 || newPassword.length < 8}
               className="w-full bg-stitch-primary hover:bg-stitch-primary/90 text-stitch-on-primary font-bold rounded-lg py-2.5 text-sm transition-all disabled:opacity-50">
