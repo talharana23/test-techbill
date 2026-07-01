@@ -1,0 +1,1512 @@
+{
+  "D:\\electrotrack-saas\\.claude\\settings.json": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "86220c85af61a9c9f8dbb7b5d33c8d8d",
+    "semantic_hash": "86220c85af61a9c9f8dbb7b5d33c8d8d"
+  },
+  "D:\\electrotrack-saas\\.claude\\settings.local.json": {
+    "mtime": 1782919972.211389,
+    "ast_hash": "29455eab1a2af722631d787b2f274261",
+    "semantic_hash": "29455eab1a2af722631d787b2f274261"
+  },
+  "D:\\electrotrack-saas\\.mcp.json": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "bc6d7a06e1fc7e2f0f661661307e79ee",
+    "semantic_hash": "bc6d7a06e1fc7e2f0f661661307e79ee"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\examples\\gold-standard-card.tsx": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "5f83eb4c9a4964262fe1f2137af2ee94",
+    "semantic_hash": "5f83eb4c9a4964262fe1f2137af2ee94"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\package.json": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "bd228ad5fd162ce8d750701301f0af5d",
+    "semantic_hash": "bd228ad5fd162ce8d750701301f0af5d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\resources\\component-template.tsx": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "8ca96b746d85cfb807645e330806c65e",
+    "semantic_hash": "8ca96b746d85cfb807645e330806c65e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\resources\\style-guide.json": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "7e66f758ccae39526670c084f439a16e",
+    "semantic_hash": "7e66f758ccae39526670c084f439a16e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\scripts\\fetch-stitch.sh": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "3b27a58087cd6028a0e12c0559ac9542",
+    "semantic_hash": "3b27a58087cd6028a0e12c0559ac9542"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\scripts\\validate.js": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "4c5a4011efc6b6c56b28b93a22ab5b3e",
+    "semantic_hash": "4c5a4011efc6b6c56b28b93a22ab5b3e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\remotion\\examples\\WalkthroughComposition.tsx": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "45615e04fa1194942415cc47ac48ba9a",
+    "semantic_hash": "45615e04fa1194942415cc47ac48ba9a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\remotion\\examples\\screens.json": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "3c4dc92a2aebe782a7c18325c4506eed",
+    "semantic_hash": "3c4dc92a2aebe782a7c18325c4506eed"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\remotion\\resources\\screen-slide-template.tsx": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "5bee2cf7e90b097252c38c870a206821",
+    "semantic_hash": "5bee2cf7e90b097252c38c870a206821"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\remotion\\scripts\\download-stitch-asset.sh": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "e77e5097d07ec219d9bbb15a3c6984ce",
+    "semantic_hash": "e77e5097d07ec219d9bbb15a3c6984ce"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\examples\\auth-layout.tsx": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "9bc762e6fe283bd45bc8900b38d6dedc",
+    "semantic_hash": "9bc762e6fe283bd45bc8900b38d6dedc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\examples\\data-table.tsx": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "5fc5b58f02aa0e8d68a0156ed6118485",
+    "semantic_hash": "5fc5b58f02aa0e8d68a0156ed6118485"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\examples\\form-pattern.tsx": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "38481e98ce3a18b601d056426d200532",
+    "semantic_hash": "38481e98ce3a18b601d056426d200532"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\scripts\\verify-setup.sh": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "ac40485eb6a08ee6f66f5b7db90c41cc",
+    "semantic_hash": "ac40485eb6a08ee6f66f5b7db90c41cc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-static-html\\scripts\\extract_inline_html.ts": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "4677e24e8427db538ecdc59be6d98dc0",
+    "semantic_hash": "4677e24e8427db538ecdc59be6d98dc0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-static-html\\scripts\\post_process.ts": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "9545b3b7f61dca4364ce2f93b09b223d",
+    "semantic_hash": "9545b3b7f61dca4364ce2f93b09b223d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-static-html\\scripts\\snapshot.ts": {
+    "mtime": 1781074097.1178088,
+    "ast_hash": "2ea9ccb1231c5a8b0ff81c43218e7242",
+    "semantic_hash": "2ea9ccb1231c5a8b0ff81c43218e7242"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-upload-to-stitch\\scripts\\upload_to_stitch.py": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "ce2993ec11fe01ef3a46f5e4b8f63f1f",
+    "semantic_hash": "ce2993ec11fe01ef3a46f5e4b8f63f1f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\examples\\gold-standard-card.tsx": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "5f83eb4c9a4964262fe1f2137af2ee94",
+    "semantic_hash": "5f83eb4c9a4964262fe1f2137af2ee94"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\package.json": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "bd228ad5fd162ce8d750701301f0af5d",
+    "semantic_hash": "bd228ad5fd162ce8d750701301f0af5d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\resources\\component-template.tsx": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "8ca96b746d85cfb807645e330806c65e",
+    "semantic_hash": "8ca96b746d85cfb807645e330806c65e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\resources\\style-guide.json": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "7e66f758ccae39526670c084f439a16e",
+    "semantic_hash": "7e66f758ccae39526670c084f439a16e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\scripts\\fetch-stitch.sh": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "3b27a58087cd6028a0e12c0559ac9542",
+    "semantic_hash": "3b27a58087cd6028a0e12c0559ac9542"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\scripts\\validate.js": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "4c5a4011efc6b6c56b28b93a22ab5b3e",
+    "semantic_hash": "4c5a4011efc6b6c56b28b93a22ab5b3e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\remotion\\examples\\WalkthroughComposition.tsx": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "45615e04fa1194942415cc47ac48ba9a",
+    "semantic_hash": "45615e04fa1194942415cc47ac48ba9a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\remotion\\examples\\screens.json": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "3c4dc92a2aebe782a7c18325c4506eed",
+    "semantic_hash": "3c4dc92a2aebe782a7c18325c4506eed"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\remotion\\resources\\screen-slide-template.tsx": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "5bee2cf7e90b097252c38c870a206821",
+    "semantic_hash": "5bee2cf7e90b097252c38c870a206821"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\remotion\\scripts\\download-stitch-asset.sh": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "e77e5097d07ec219d9bbb15a3c6984ce",
+    "semantic_hash": "e77e5097d07ec219d9bbb15a3c6984ce"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\examples\\auth-layout.tsx": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "9bc762e6fe283bd45bc8900b38d6dedc",
+    "semantic_hash": "9bc762e6fe283bd45bc8900b38d6dedc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\examples\\data-table.tsx": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "5fc5b58f02aa0e8d68a0156ed6118485",
+    "semantic_hash": "5fc5b58f02aa0e8d68a0156ed6118485"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\examples\\form-pattern.tsx": {
+    "mtime": 1781074097.134506,
+    "ast_hash": "38481e98ce3a18b601d056426d200532",
+    "semantic_hash": "38481e98ce3a18b601d056426d200532"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\scripts\\verify-setup.sh": {
+    "mtime": 1781074097.135959,
+    "ast_hash": "ac40485eb6a08ee6f66f5b7db90c41cc",
+    "semantic_hash": "ac40485eb6a08ee6f66f5b7db90c41cc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-static-html\\scripts\\extract_inline_html.ts": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "4677e24e8427db538ecdc59be6d98dc0",
+    "semantic_hash": "4677e24e8427db538ecdc59be6d98dc0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-static-html\\scripts\\post_process.ts": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "9545b3b7f61dca4364ce2f93b09b223d",
+    "semantic_hash": "9545b3b7f61dca4364ce2f93b09b223d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-static-html\\scripts\\snapshot.ts": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "2ea9ccb1231c5a8b0ff81c43218e7242",
+    "semantic_hash": "2ea9ccb1231c5a8b0ff81c43218e7242"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-upload-to-stitch\\scripts\\upload_to_stitch.py": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "ce2993ec11fe01ef3a46f5e4b8f63f1f",
+    "semantic_hash": "ce2993ec11fe01ef3a46f5e4b8f63f1f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\eslint.config.mjs": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "069d66f3fd2af0b03d917cf51a1f4c42",
+    "semantic_hash": "069d66f3fd2af0b03d917cf51a1f4c42"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\nest-cli.json": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "fa439650fa28a1a7aa8c2b6d81c8cc20",
+    "semantic_hash": "fa439650fa28a1a7aa8c2b6d81c8cc20"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\package.json": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "55dede26eb9fe3632212d31c97762536",
+    "semantic_hash": "55dede26eb9fe3632212d31c97762536"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\prisma\\migrations\\20260529114538_yy\\migration.sql": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "ab19a50a17b1822c209f2f89c35384c0",
+    "semantic_hash": "ab19a50a17b1822c209f2f89c35384c0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\prisma\\migrations\\20260529160953_add_product_enrichment\\migration.sql": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "aa71987f1e238d6cd24b94d40a0b9c79",
+    "semantic_hash": "aa71987f1e238d6cd24b94d40a0b9c79"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\prisma\\seed.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "d10a72823c2225e1b85a7823186a0b01",
+    "semantic_hash": "d10a72823c2225e1b85a7823186a0b01"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\skills-lock.json": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "a1f7c6062eae63dd1291ca5e925c6602",
+    "semantic_hash": "a1f7c6062eae63dd1291ca5e925c6602"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\app.controller.spec.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "e91fed2ee35431d60d1adbf1d5739b83",
+    "semantic_hash": "e91fed2ee35431d60d1adbf1d5739b83"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\app.controller.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "c7c8f909429320aa5d7604ce152b98a6",
+    "semantic_hash": "c7c8f909429320aa5d7604ce152b98a6"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\app.module.ts": {
+    "mtime": 1782920409.9595149,
+    "ast_hash": "03e93a23cccf1e79e0769f010b46ff5b",
+    "semantic_hash": "03e93a23cccf1e79e0769f010b46ff5b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\app.service.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "08e985e831bca61f6be89c5c2ecef2fa",
+    "semantic_hash": "08e985e831bca61f6be89c5c2ecef2fa"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\common\\decorators\\permissions.decorator.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "be1a03668b51f734620f4f71fa2c30a2",
+    "semantic_hash": "be1a03668b51f734620f4f71fa2c30a2"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\common\\decorators\\roles.decorator.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "070239dbd1b97b413d36e079e68ab7b7",
+    "semantic_hash": "070239dbd1b97b413d36e079e68ab7b7"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\common\\guards\\jwt-auth.guard.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "c0c992948ec2737126972c8f1abfc6a6",
+    "semantic_hash": "c0c992948ec2737126972c8f1abfc6a6"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\common\\guards\\otp.guard.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "7e4fe5a400a0b9f93f985f4eaa80f678",
+    "semantic_hash": "7e4fe5a400a0b9f93f985f4eaa80f678"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\common\\guards\\permissions.guard.ts": {
+    "mtime": 1782920409.9640975,
+    "ast_hash": "fe1050cc5e082aa20f399eeba204d551",
+    "semantic_hash": "fe1050cc5e082aa20f399eeba204d551"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\common\\guards\\roles.guard.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "d0dc0f6033205c4c7c7097d0696cc788",
+    "semantic_hash": "d0dc0f6033205c4c7c7097d0696cc788"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\common\\guards\\tenant.guard.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "5e69cbc8cf7d05466d63db87e2fc0a62",
+    "semantic_hash": "5e69cbc8cf7d05466d63db87e2fc0a62"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\main.ts": {
+    "mtime": 1782920409.96463,
+    "ast_hash": "967a9e4a697767193900afb6d0a3ab88",
+    "semantic_hash": "967a9e4a697767193900afb6d0a3ab88"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\ai\\ai.controller.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "66f1fb6b89ed153e1891ecd0b44ecc62",
+    "semantic_hash": "66f1fb6b89ed153e1891ecd0b44ecc62"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\ai\\ai.module.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "4b611ba196267d3153944a09ba378515",
+    "semantic_hash": "4b611ba196267d3153944a09ba378515"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\ai\\ai.service.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "56082086f025166d185e691c7c0d3143",
+    "semantic_hash": "56082086f025166d185e691c7c0d3143"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\audit\\audit.controller.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "9b6d9dd93419bcedb3cb7b87d0246df7",
+    "semantic_hash": "9b6d9dd93419bcedb3cb7b87d0246df7"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\audit\\audit.module.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "155e843635e2011580b5a7064339b5e0",
+    "semantic_hash": "155e843635e2011580b5a7064339b5e0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\audit\\audit.service.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "a51671feda7bfffc5ff384a7360bb8e0",
+    "semantic_hash": "a51671feda7bfffc5ff384a7360bb8e0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\audit\\dto\\filter-audit-logs.dto.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "c5f5770cb854906795aba07ce78b6e54",
+    "semantic_hash": "c5f5770cb854906795aba07ce78b6e54"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\auth.controller.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "86f535191c0a298e8c8f5c8533e44874",
+    "semantic_hash": "86f535191c0a298e8c8f5c8533e44874"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\auth.module.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "be81531ec4cf61bbfe1029b6d3809167",
+    "semantic_hash": "be81531ec4cf61bbfe1029b6d3809167"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\auth.service.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "c09cca6aac8fcf66e3728d6e595f5667",
+    "semantic_hash": "c09cca6aac8fcf66e3728d6e595f5667"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\dto\\login.dto.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "73ccb9bd9bd2ddf96d1eb95cd6946599",
+    "semantic_hash": "73ccb9bd9bd2ddf96d1eb95cd6946599"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\dto\\request-otp.dto.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "00194518053a9c69a4fb696a334a6b5f",
+    "semantic_hash": "00194518053a9c69a4fb696a334a6b5f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\dto\\verify-otp.dto.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "c8e5271e7666ce3742ac6de5bb10475a",
+    "semantic_hash": "c8e5271e7666ce3742ac6de5bb10475a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\guards\\jwt-auth.guard.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "2b92f25f532cd586e177c70272d64c42",
+    "semantic_hash": "2b92f25f532cd586e177c70272d64c42"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\jwt.strategy.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "aa1f55a48da35d5f506d6c7e0b6b96c3",
+    "semantic_hash": "aa1f55a48da35d5f506d6c7e0b6b96c3"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\auth\\otp.service.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "b058b87219a80da869bab1911818f899",
+    "semantic_hash": "b058b87219a80da869bab1911818f899"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\events\\events.gateway.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "27e4cefb42694df28d87be1b327d3f48",
+    "semantic_hash": "27e4cefb42694df28d87be1b327d3f48"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\events\\events.module.ts": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "ac7e6ebac1d74926c83d3f03fc773eb4",
+    "semantic_hash": "ac7e6ebac1d74926c83d3f03fc773eb4"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\expenses\\dto\\create-expense.dto.ts": {
+    "mtime": 1782920409.9656365,
+    "ast_hash": "0541dd971306086f9e637e02ab276609",
+    "semantic_hash": "0541dd971306086f9e637e02ab276609"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\expenses\\expenses.controller.ts": {
+    "mtime": 1782920409.9666374,
+    "ast_hash": "4a31cfa71f8d38a753318696c028405f",
+    "semantic_hash": "4a31cfa71f8d38a753318696c028405f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\expenses\\expenses.module.ts": {
+    "mtime": 1782920409.9666374,
+    "ast_hash": "cce75a678dd7411d2ad7a6f589d8516a",
+    "semantic_hash": "cce75a678dd7411d2ad7a6f589d8516a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\expenses\\expenses.service.ts": {
+    "mtime": 1782920409.9676366,
+    "ast_hash": "6d0386525121274abc2a82cddb42dfe9",
+    "semantic_hash": "6d0386525121274abc2a82cddb42dfe9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\dto\\bulk-create-units.dto.ts": {
+    "mtime": 1781074097.1669657,
+    "ast_hash": "b7aa397226b6dd09de043832b3bd2a53",
+    "semantic_hash": "b7aa397226b6dd09de043832b3bd2a53"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\dto\\create-product.dto.ts": {
+    "mtime": 1781074097.1669657,
+    "ast_hash": "3e44c46024096ff1090b272950018288",
+    "semantic_hash": "3e44c46024096ff1090b272950018288"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\dto\\create-unit.dto.ts": {
+    "mtime": 1781074097.1669657,
+    "ast_hash": "6199f4bb7b1a62b945725a9e1b1c9e8a",
+    "semantic_hash": "6199f4bb7b1a62b945725a9e1b1c9e8a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\dto\\filter-units.dto.ts": {
+    "mtime": 1781074097.1669657,
+    "ast_hash": "f96c1c7b0b2de2de509383b3e00453e9",
+    "semantic_hash": "f96c1c7b0b2de2de509383b3e00453e9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\dto\\update-product.dto.ts": {
+    "mtime": 1781074097.1669657,
+    "ast_hash": "e22a6e1aa4f32b4f9c70c64f212f1707",
+    "semantic_hash": "e22a6e1aa4f32b4f9c70c64f212f1707"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\dto\\update-unit.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "e55fd78509d6f51f361893e55be31e88",
+    "semantic_hash": "e55fd78509d6f51f361893e55be31e88"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\inventory.controller.ts": {
+    "mtime": 1782920409.968639,
+    "ast_hash": "af41ec67fa309cdd51a58714beb823ef",
+    "semantic_hash": "af41ec67fa309cdd51a58714beb823ef"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\inventory.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "1df9164eb5a13a93072b936062aa5765",
+    "semantic_hash": "1df9164eb5a13a93072b936062aa5765"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\inventory\\inventory.service.ts": {
+    "mtime": 1782920409.9696374,
+    "ast_hash": "5431c80ccd3cfaca127a313527846255",
+    "semantic_hash": "5431c80ccd3cfaca127a313527846255"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\notifications\\notifications.controller.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "4ebb3e183f11412ce3185f7e10aa2392",
+    "semantic_hash": "4ebb3e183f11412ce3185f7e10aa2392"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\notifications\\notifications.listener.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "423d3a6e95e25dbdeb07f80709884a7f",
+    "semantic_hash": "423d3a6e95e25dbdeb07f80709884a7f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\notifications\\notifications.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "a5773350d0e23095df31af441f99df5c",
+    "semantic_hash": "a5773350d0e23095df31af441f99df5c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\notifications\\notifications.service.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "9c8853ae97b99cb115f1b13ae7a8d9ee",
+    "semantic_hash": "9c8853ae97b99cb115f1b13ae7a8d9ee"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\dto\\filter-reconciliation.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "24a9773287b13a13a1d62fc3cb5c19d6",
+    "semantic_hash": "24a9773287b13a13a1d62fc3cb5c19d6"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\dto\\reconciliation.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "db71f17b8943ac1b09fce7bbac4b3dac",
+    "semantic_hash": "db71f17b8943ac1b09fce7bbac4b3dac"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\dto\\sales-summary-query.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "fe68d5578e989e445056575881c1b33d",
+    "semantic_hash": "fe68d5578e989e445056575881c1b33d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\reports.controller.ts": {
+    "mtime": 1782920409.9706378,
+    "ast_hash": "66ceaaf7aab0ef3a30bff14ad0627690",
+    "semantic_hash": "66ceaaf7aab0ef3a30bff14ad0627690"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\reports.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "5952d536c0bfb3335f75516dcc94d38a",
+    "semantic_hash": "5952d536c0bfb3335f75516dcc94d38a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\reports.scheduler.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "db412f5ebbda5a02b017087e21fe0090",
+    "semantic_hash": "db412f5ebbda5a02b017087e21fe0090"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\reports.service.ts": {
+    "mtime": 1782920409.9717278,
+    "ast_hash": "ebb19e1576e2abac63f6d7fcc672ee61",
+    "semantic_hash": "ebb19e1576e2abac63f6d7fcc672ee61"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\reports\\schemas\\report.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "c5f4677fe18c724e554cd792144120d0",
+    "semantic_hash": "c5f4677fe18c724e554cd792144120d0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\dto\\approve-return.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "3364a250b837999ecc311b60a5b1db3c",
+    "semantic_hash": "3364a250b837999ecc311b60a5b1db3c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\dto\\create-return.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "539f368e0e5c94d4fcfad657753bdec5",
+    "semantic_hash": "539f368e0e5c94d4fcfad657753bdec5"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\dto\\filter-returns.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "2b8ed60278d134494aad9edd73361d16",
+    "semantic_hash": "2b8ed60278d134494aad9edd73361d16"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\dto\\reject-return.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "63b1baa65462c2136514d7fbcb4897d3",
+    "semantic_hash": "63b1baa65462c2136514d7fbcb4897d3"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\dto\\review-return.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "4201d8d384b6866008ceb470c80ab967",
+    "semantic_hash": "4201d8d384b6866008ceb470c80ab967"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\returns.controller.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "ddbb4c3264dc52d2e5fe657d39920971",
+    "semantic_hash": "ddbb4c3264dc52d2e5fe657d39920971"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\returns.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "55990441eeb6e2e4b91a6c9b3ede24f6",
+    "semantic_hash": "55990441eeb6e2e4b91a6c9b3ede24f6"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\returns\\returns.service.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "fa4ac8067d09a6a1d805b49dd08fd61b",
+    "semantic_hash": "fa4ac8067d09a6a1d805b49dd08fd61b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\sales\\dto\\create-sale.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "b99d8129a249cdd3d1ef2e4569fc4c1b",
+    "semantic_hash": "b99d8129a249cdd3d1ef2e4569fc4c1b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\sales\\dto\\filter-sales.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "a38214e12b17d6b1b9c30dc3bd41d0d9",
+    "semantic_hash": "a38214e12b17d6b1b9c30dc3bd41d0d9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\sales\\dto\\upsert-customer.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "2c22bb2c4e5bd888b6cbf16f53d69ede",
+    "semantic_hash": "2c22bb2c4e5bd888b6cbf16f53d69ede"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\sales\\dto\\void-sale.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "fbc3dd12ac23fac03f0c8698d72ee72a",
+    "semantic_hash": "fbc3dd12ac23fac03f0c8698d72ee72a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\sales\\sales.controller.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "a8092b1f78d3ebd5e26de0789eba7227",
+    "semantic_hash": "a8092b1f78d3ebd5e26de0789eba7227"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\sales\\sales.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "45d1116085fdd0e4cd59b8818ce29fa2",
+    "semantic_hash": "45d1116085fdd0e4cd59b8818ce29fa2"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\sales\\sales.service.ts": {
+    "mtime": 1782920409.9717278,
+    "ast_hash": "53b465adcffed195214cbce21fcc1057",
+    "semantic_hash": "53b465adcffed195214cbce21fcc1057"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\settings\\settings.controller.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "471bfb497352020ba43c464722feab88",
+    "semantic_hash": "471bfb497352020ba43c464722feab88"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\settings\\settings.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "23937a6bb13673dd780775599e801850",
+    "semantic_hash": "23937a6bb13673dd780775599e801850"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\settings\\settings.service.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "4a0c9142fd31bb011435e449d999abd9",
+    "semantic_hash": "4a0c9142fd31bb011435e449d999abd9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\suppliers\\dto\\create-po.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "0bc9cf487bd118493c05adcce650fddc",
+    "semantic_hash": "0bc9cf487bd118493c05adcce650fddc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\suppliers\\dto\\create-supplier.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "8663d2754cc15915a069ed00e9e0b4f1",
+    "semantic_hash": "8663d2754cc15915a069ed00e9e0b4f1"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\suppliers\\suppliers.controller.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "12a0da23fe046c0c7b7d7cb4a3278963",
+    "semantic_hash": "12a0da23fe046c0c7b7d7cb4a3278963"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\suppliers\\suppliers.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "f6e723ec0b6472d39a53ab3216287ffe",
+    "semantic_hash": "f6e723ec0b6472d39a53ab3216287ffe"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\suppliers\\suppliers.service.ts": {
+    "mtime": 1782920409.9727292,
+    "ast_hash": "c45aaf1d2f9bb850816d41779b5a0314",
+    "semantic_hash": "c45aaf1d2f9bb850816d41779b5a0314"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\tenants\\tenants.controller.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "96a78eabb44f08157c87c6e7173c7813",
+    "semantic_hash": "96a78eabb44f08157c87c6e7173c7813"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\tenants\\tenants.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "98b8c8956a206ef3938cae63b4053cee",
+    "semantic_hash": "98b8c8956a206ef3938cae63b4053cee"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\tenants\\tenants.service.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "d513ed322a064003c5332f1b665fec7f",
+    "semantic_hash": "d513ed322a064003c5332f1b665fec7f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\users\\dto\\create-user.dto.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "4b7eadb96a83d0b3e16a646b2fa5aa79",
+    "semantic_hash": "4b7eadb96a83d0b3e16a646b2fa5aa79"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\users\\users.controller.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "3329d9e4c865766ab6c7900683107cf9",
+    "semantic_hash": "3329d9e4c865766ab6c7900683107cf9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\users\\users.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "2e628280dadc311a009c6d6cfa401439",
+    "semantic_hash": "2e628280dadc311a009c6d6cfa401439"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\modules\\users\\users.service.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "fd997b0d5d9c637a13393a1dcca74f82",
+    "semantic_hash": "fd997b0d5d9c637a13393a1dcca74f82"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\prisma\\prisma.module.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "0d14fad4b4742f49ea6d9d9c48069e8b",
+    "semantic_hash": "0d14fad4b4742f49ea6d9d9c48069e8b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\src\\prisma\\prisma.service.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "6eb69c2f15fd881ebe0ac87811d89ae2",
+    "semantic_hash": "6eb69c2f15fd881ebe0ac87811d89ae2"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\test\\app.e2e-spec.ts": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "668094bf268e0395763312620e5638e8",
+    "semantic_hash": "668094bf268e0395763312620e5638e8"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\test\\jest-e2e.json": {
+    "mtime": 1781074097.1687243,
+    "ast_hash": "707a50895cb1c565825637916e9cf290",
+    "semantic_hash": "707a50895cb1c565825637916e9cf290"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\tsconfig.build.json": {
+    "mtime": 1781074097.184384,
+    "ast_hash": "9a333aa2b19ef63553e90a5374d1acda",
+    "semantic_hash": "9a333aa2b19ef63553e90a5374d1acda"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\tsconfig.json": {
+    "mtime": 1781074097.184384,
+    "ast_hash": "57ba13c638667eed283a0d1194922b03",
+    "semantic_hash": "57ba13c638667eed283a0d1194922b03"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\package.json": {
+    "mtime": 1781074097.1855586,
+    "ast_hash": "8b36343efbcd0628b908b2c323397fbd",
+    "semantic_hash": "8b36343efbcd0628b908b2c323397fbd"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\postcss.config.js": {
+    "mtime": 1781074097.1876001,
+    "ast_hash": "33fad9c02cb0ec6d6030369ef6347d57",
+    "semantic_hash": "33fad9c02cb0ec6d6030369ef6347d57"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\public\\manifest.json": {
+    "mtime": 1781074097.1876001,
+    "ast_hash": "1ca43059ef5b1e50e84ec7783a67ab08",
+    "semantic_hash": "1ca43059ef5b1e50e84ec7783a67ab08"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\public\\sw.js": {
+    "mtime": 1781074097.1885998,
+    "ast_hash": "49b594a23c9efba02ca3bb6210447890",
+    "semantic_hash": "49b594a23c9efba02ca3bb6210447890"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\App.tsx": {
+    "mtime": 1782920409.975728,
+    "ast_hash": "29105e7f0ee6c8c34bdc9792523466ac",
+    "semantic_hash": "29105e7f0ee6c8c34bdc9792523466ac"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\api\\client.ts": {
+    "mtime": 1781074097.1896002,
+    "ast_hash": "5f0ab4f1f18b279b4021007cc4a7ff3f",
+    "semantic_hash": "5f0ab4f1f18b279b4021007cc4a7ff3f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\api\\socket.ts": {
+    "mtime": 1781074097.1906009,
+    "ast_hash": "56a6058538f4fbf1f33394d14f78cdeb",
+    "semantic_hash": "56a6058538f4fbf1f33394d14f78cdeb"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\auth\\ProtectedRoute.tsx": {
+    "mtime": 1781074097.1906009,
+    "ast_hash": "8fa83a2de801d2469b070c826f664f2d",
+    "semantic_hash": "8fa83a2de801d2469b070c826f664f2d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\dashboard\\AiInsights.tsx": {
+    "mtime": 1781074097.1915998,
+    "ast_hash": "240f3270dea4143030067793402955cc",
+    "semantic_hash": "240f3270dea4143030067793402955cc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\dashboard\\SalesChart.tsx": {
+    "mtime": 1781074097.1915998,
+    "ast_hash": "43434148bb0732e1d4cc50aa8fbfddbf",
+    "semantic_hash": "43434148bb0732e1d4cc50aa8fbfddbf"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\dashboard\\SalesFeed.tsx": {
+    "mtime": 1781074097.1915998,
+    "ast_hash": "4cce997ba2030f9263582d644ed562a6",
+    "semantic_hash": "4cce997ba2030f9263582d644ed562a6"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\dashboard\\StockAlerts.tsx": {
+    "mtime": 1781074097.1915998,
+    "ast_hash": "6adc102805f2cef56155f4d02af5d682",
+    "semantic_hash": "6adc102805f2cef56155f4d02af5d682"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\layout\\AppShell.tsx": {
+    "mtime": 1782920409.9767287,
+    "ast_hash": "2d2c12537ba77f43e83daed02f25f03c",
+    "semantic_hash": "2d2c12537ba77f43e83daed02f25f03c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\pos\\BarcodeScanner.tsx": {
+    "mtime": 1781074097.1925998,
+    "ast_hash": "f84c7f4c8fc38adde53a4ed4ee76a4d8",
+    "semantic_hash": "f84c7f4c8fc38adde53a4ed4ee76a4d8"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\pos\\CartTable.tsx": {
+    "mtime": 1781074097.1925998,
+    "ast_hash": "bee5da39df07e8b346162f2997783172",
+    "semantic_hash": "bee5da39df07e8b346162f2997783172"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\pos\\InvoiceModal.tsx": {
+    "mtime": 1781074097.1935995,
+    "ast_hash": "d2c9c35972cbc118b50a71b7e0197bdf",
+    "semantic_hash": "d2c9c35972cbc118b50a71b7e0197bdf"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\pos\\PaymentForm.tsx": {
+    "mtime": 1781074097.1935995,
+    "ast_hash": "494939638f651da015c713b3c216782c",
+    "semantic_hash": "494939638f651da015c713b3c216782c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\pos\\ProductGrid.tsx": {
+    "mtime": 1781074097.1935995,
+    "ast_hash": "b2876dd1e8a2d778e6211d0f22e21515",
+    "semantic_hash": "b2876dd1e8a2d778e6211d0f22e21515"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\pos\\SerialInput.tsx": {
+    "mtime": 1781074097.1935995,
+    "ast_hash": "515bdd5e8f0698d4bbd0adc0bc6614f4",
+    "semantic_hash": "515bdd5e8f0698d4bbd0adc0bc6614f4"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\components\\pos\\UniversalSearch.tsx": {
+    "mtime": 1781074097.1950924,
+    "ast_hash": "e9ae53a8e8c1db262f426a274cb06c00",
+    "semantic_hash": "e9ae53a8e8c1db262f426a274cb06c00"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\db\\offline.db.ts": {
+    "mtime": 1781074097.1950924,
+    "ast_hash": "7c29d3c687003a84b90b85ddf4bdc5eb",
+    "semantic_hash": "7c29d3c687003a84b90b85ddf4bdc5eb"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\hooks\\useAuth.ts": {
+    "mtime": 1781074097.1950924,
+    "ast_hash": "83bbf0aea312b3dc809337186454e5fb",
+    "semantic_hash": "83bbf0aea312b3dc809337186454e5fb"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\lib\\permissions.ts": {
+    "mtime": 1781074097.1960998,
+    "ast_hash": "3ea64e329affbe187463f0d050dbe7fd",
+    "semantic_hash": "3ea64e329affbe187463f0d050dbe7fd"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\lib\\supabase.ts": {
+    "mtime": 1781074097.1960998,
+    "ast_hash": "0bdce987c1dbee2c042bfb88c706d432",
+    "semantic_hash": "0bdce987c1dbee2c042bfb88c706d432"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\main.tsx": {
+    "mtime": 1781074097.1972232,
+    "ast_hash": "63bc80f33adeb82faa41519462a07fe9",
+    "semantic_hash": "63bc80f33adeb82faa41519462a07fe9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\Login.tsx": {
+    "mtime": 1782920409.9777303,
+    "ast_hash": "c90ae140a3d2ed1ee5e0294711681e3b",
+    "semantic_hash": "c90ae140a3d2ed1ee5e0294711681e3b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\audit\\AuditPage.tsx": {
+    "mtime": 1781074097.1982298,
+    "ast_hash": "e57c30d71a044cdc0cfe1528e5dc0e0c",
+    "semantic_hash": "e57c30d71a044cdc0cfe1528e5dc0e0c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\customers\\CustomersPage.tsx": {
+    "mtime": 1781074097.1982298,
+    "ast_hash": "a41b55d54e30e618ae5054da236543e7",
+    "semantic_hash": "a41b55d54e30e618ae5054da236543e7"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\customers\\LoyaltyPage.tsx": {
+    "mtime": 1781074097.1982298,
+    "ast_hash": "7356347b9f99514b22a314116f7e0b3d",
+    "semantic_hash": "7356347b9f99514b22a314116f7e0b3d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\dashboard\\OwnerDashboard.tsx": {
+    "mtime": 1782920409.9777303,
+    "ast_hash": "6b44bf01ade54ee5eecbf9081bf648ef",
+    "semantic_hash": "6b44bf01ade54ee5eecbf9081bf648ef"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\expenses\\ExpensesPage.tsx": {
+    "mtime": 1782920409.9787278,
+    "ast_hash": "af591517100e6c694e60f802ea5242a2",
+    "semantic_hash": "af591517100e6c694e60f802ea5242a2"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\inventory\\InventoryPage.tsx": {
+    "mtime": 1782920409.9797297,
+    "ast_hash": "4b4684054cbc35a2dab3374dc404ea42",
+    "semantic_hash": "4b4684054cbc35a2dab3374dc404ea42"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\pos\\PosScreen.tsx": {
+    "mtime": 1782920409.9808002,
+    "ast_hash": "a6dd4495f7c86ef74c9c0a84517d13e0",
+    "semantic_hash": "a6dd4495f7c86ef74c9c0a84517d13e0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\reports\\CashReconciliationPage.tsx": {
+    "mtime": 1782920409.9808002,
+    "ast_hash": "79c652d703e766e9b02da242d3bb1543",
+    "semantic_hash": "79c652d703e766e9b02da242d3bb1543"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\reports\\ReportsPage.tsx": {
+    "mtime": 1782920409.981799,
+    "ast_hash": "bf43a43a819cd0969cddc347771bfaf9",
+    "semantic_hash": "bf43a43a819cd0969cddc347771bfaf9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\returns\\ReturnAnalyticsPage.tsx": {
+    "mtime": 1781074097.202211,
+    "ast_hash": "2a60a94994ce0d84a4a585cc2ad0a05f",
+    "semantic_hash": "2a60a94994ce0d84a4a585cc2ad0a05f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\returns\\ReturnsPage.tsx": {
+    "mtime": 1781074097.202211,
+    "ast_hash": "1597337c5bf2a01ecd122240f0b8fde0",
+    "semantic_hash": "1597337c5bf2a01ecd122240f0b8fde0"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\sales\\InvoiceHistoryPage.tsx": {
+    "mtime": 1781074097.2033508,
+    "ast_hash": "c139ef4ff3f5c2e221940960f7d52c5c",
+    "semantic_hash": "c139ef4ff3f5c2e221940960f7d52c5c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\settings\\SettingsPage.tsx": {
+    "mtime": 1781074097.2033508,
+    "ast_hash": "e2fef2dd19f691125b4d8bb79ac13ee1",
+    "semantic_hash": "e2fef2dd19f691125b4d8bb79ac13ee1"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\suppliers\\GrnPage.tsx": {
+    "mtime": 1782920409.9828024,
+    "ast_hash": "ce3727d70fe2f1a7a0924823881455a9",
+    "semantic_hash": "ce3727d70fe2f1a7a0924823881455a9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\suppliers\\PurchaseOrdersPage.tsx": {
+    "mtime": 1782920409.9828024,
+    "ast_hash": "8f1f4bb4b75325bcf2a71de8b276b0bf",
+    "semantic_hash": "8f1f4bb4b75325bcf2a71de8b276b0bf"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\suppliers\\SuppliersPage.tsx": {
+    "mtime": 1781074097.2043517,
+    "ast_hash": "eb4f39292a77987d6d5fc50383f085ef",
+    "semantic_hash": "eb4f39292a77987d6d5fc50383f085ef"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\tenants\\TenantsPage.tsx": {
+    "mtime": 1781074097.2053528,
+    "ast_hash": "2aef26cff41bff17c33f063fa83b3df9",
+    "semantic_hash": "2aef26cff41bff17c33f063fa83b3df9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\users\\UsersPage.tsx": {
+    "mtime": 1781074097.2053528,
+    "ast_hash": "14cd821768a00992d5a06c826440fa8d",
+    "semantic_hash": "14cd821768a00992d5a06c826440fa8d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\pages\\warranty\\WarrantyPage.tsx": {
+    "mtime": 1781074097.2063508,
+    "ast_hash": "afbc86f4b4925c2a3fe015b7bfe8cbc5",
+    "semantic_hash": "afbc86f4b4925c2a3fe015b7bfe8cbc5"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\providers\\AuthProvider.tsx": {
+    "mtime": 1781074097.2063508,
+    "ast_hash": "0c36bc0d073ad30909717cede81566b5",
+    "semantic_hash": "0c36bc0d073ad30909717cede81566b5"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\store\\auth.store.ts": {
+    "mtime": 1781074097.2063508,
+    "ast_hash": "ea500dddd9b0696fdf7bc40c37977272",
+    "semantic_hash": "ea500dddd9b0696fdf7bc40c37977272"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\store\\cart.store.ts": {
+    "mtime": 1781074097.2063508,
+    "ast_hash": "3a81e40c8ace21bb0ef931db1d51bea1",
+    "semantic_hash": "3a81e40c8ace21bb0ef931db1d51bea1"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\store\\supabase-auth.store.ts": {
+    "mtime": 1781074097.2073522,
+    "ast_hash": "dcd7e4844c4c1ae618a464df7dcadab5",
+    "semantic_hash": "dcd7e4844c4c1ae618a464df7dcadab5"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\types\\index.ts": {
+    "mtime": 1782920409.9838,
+    "ast_hash": "b6b409d582736cc5193d57592b6d57e4",
+    "semantic_hash": "b6b409d582736cc5193d57592b6d57e4"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\src\\vite-env.d.ts": {
+    "mtime": 1781074097.2073522,
+    "ast_hash": "8f68c27c3fc38817b2726b20e2d4f1ee",
+    "semantic_hash": "8f68c27c3fc38817b2726b20e2d4f1ee"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\tailwind.config.ts": {
+    "mtime": 1781074097.208352,
+    "ast_hash": "9a20bcf3c5b9cf00bdecf058cd6e589f",
+    "semantic_hash": "9a20bcf3c5b9cf00bdecf058cd6e589f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\tsconfig.app.json": {
+    "mtime": 1781074097.208352,
+    "ast_hash": "f7a793589b4b229cae4b559b219286dc",
+    "semantic_hash": "f7a793589b4b229cae4b559b219286dc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\tsconfig.json": {
+    "mtime": 1781074097.208352,
+    "ast_hash": "852c3a5df14a4b43ac28e9554ebedf4a",
+    "semantic_hash": "852c3a5df14a4b43ac28e9554ebedf4a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\tsconfig.node.json": {
+    "mtime": 1781074097.208352,
+    "ast_hash": "1a57d92c4ca85af3626ea7e667e6754f",
+    "semantic_hash": "1a57d92c4ca85af3626ea7e667e6754f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\vite.config.ts": {
+    "mtime": 1782920409.9848006,
+    "ast_hash": "9992ccaffc76126a812dfbd352b0b923",
+    "semantic_hash": "9992ccaffc76126a812dfbd352b0b923"
+  },
+  "D:\\electrotrack-saas\\package.json": {
+    "mtime": 1781074097.2103515,
+    "ast_hash": "f26bda632b15f25dd64efd9a22ad8a90",
+    "semantic_hash": "f26bda632b15f25dd64efd9a22ad8a90"
+  },
+  "D:\\electrotrack-saas\\prisma\\seed.ts": {
+    "mtime": 1781074097.2113514,
+    "ast_hash": "c5d83ca557b8122f077e3947a9fa7d9a",
+    "semantic_hash": "c5d83ca557b8122f077e3947a9fa7d9a"
+  },
+  "D:\\electrotrack-saas\\tsconfig.json": {
+    "mtime": 1781074097.2853472,
+    "ast_hash": "1c8125b6833f7965f74be87a4f57561b",
+    "semantic_hash": "1c8125b6833f7965f74be87a4f57561b"
+  },
+  "D:\\electrotrack-saas\\PLAN.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "f594427e722b4ffdb7a6b577d447b653",
+    "semantic_hash": "f594427e722b4ffdb7a6b577d447b653"
+  },
+  "D:\\electrotrack-saas\\README.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "e24c5de8d014ac70ce4c15bfeae5e6c9",
+    "semantic_hash": "e24c5de8d014ac70ce4c15bfeae5e6c9"
+  },
+  "D:\\electrotrack-saas\\WORK_SUMMARY.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "89837ffe5af97a1a7d12bbacf50a7f49",
+    "semantic_hash": "89837ffe5af97a1a7d12bbacf50a7f49"
+  },
+  "D:\\electrotrack-saas\\designs\\electrotrack-pos.html": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "d125205631043e0ced66ae43bc646026",
+    "semantic_hash": "d125205631043e0ced66ae43bc646026"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\00_README_EXECUTION_ORDER.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "215dbeea336b8f08be2baa457296a3a1",
+    "semantic_hash": "215dbeea336b8f08be2baa457296a3a1"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\01_PHASE_0_PREFLIGHT_FIXES.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "fdc260d134096dab7450ba3f5808f48e",
+    "semantic_hash": "fdc260d134096dab7450ba3f5808f48e"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\02_PHASE_1_SAAS_AUTH_FOUNDATION.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "61f45f190125e31da1a230a14ced7030",
+    "semantic_hash": "61f45f190125e31da1a230a14ced7030"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\03_PHASE_2_PERMISSIONS_FRONTEND_ACCESS.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "137d549d0eac2a08bea247aac8a58234",
+    "semantic_hash": "137d549d0eac2a08bea247aac8a58234"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\04_PHASE_3_STITCH_UI_SYNC.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "33b3a290754e1a01d869cdb94b11da33",
+    "semantic_hash": "33b3a290754e1a01d869cdb94b11da33"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\05_PHASE_4_FINAL_QA_RELEASE.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "38d094072c58af958afb14a26179430c",
+    "semantic_hash": "38d094072c58af958afb14a26179430c"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\AGENT_PROMPTS.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "410532c1947e50adda90cf6e696b1e10",
+    "semantic_hash": "410532c1947e50adda90cf6e696b1e10"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\API_CONTRACT_CHANGES.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "81ed20e75e54db00647ad037975d860d",
+    "semantic_hash": "81ed20e75e54db00647ad037975d860d"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\DB_MIGRATION_PLAN.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "f8c128a700e03f572d37759e37328d9a",
+    "semantic_hash": "f8c128a700e03f572d37759e37328d9a"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\ELECTROTRACK_CLAUDE_CODE_MASTER.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "05e2507e9305e39392e6f776c01c1073",
+    "semantic_hash": "05e2507e9305e39392e6f776c01c1073"
+  },
+  "D:\\electrotrack-saas\\docs\\execution\\PERMISSION_MATRIX.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "dac1a0574d257796ff3b8d2d12a782ad",
+    "semantic_hash": "dac1a0574d257796ff3b8d2d12a782ad"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\design-md\\README.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "f18e1c4c6e59ac67ce06278a64dc3e14",
+    "semantic_hash": "f18e1c4c6e59ac67ce06278a64dc3e14"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\design-md\\SKILL.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "0cf43f06542561a9faa9d554c507d409",
+    "semantic_hash": "0cf43f06542561a9faa9d554c507d409"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\design-md\\examples\\DESIGN.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "c970c3690bb2f9129022864d16a70b6e",
+    "semantic_hash": "c970c3690bb2f9129022864d16a70b6e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\enhance-prompt\\README.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "03ae99f197e9a27810a55306cb1d5503",
+    "semantic_hash": "03ae99f197e9a27810a55306cb1d5503"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\enhance-prompt\\SKILL.md": {
+    "mtime": 1781074097.086107,
+    "ast_hash": "b9296710352c915853b7efb31926e08a",
+    "semantic_hash": "b9296710352c915853b7efb31926e08a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\enhance-prompt\\references\\KEYWORDS.md": {
+    "mtime": 1781074097.1010914,
+    "ast_hash": "ba099dba18ab099922b6962c153a3fcc",
+    "semantic_hash": "ba099dba18ab099922b6962c153a3fcc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\README.md": {
+    "mtime": 1781074097.1014473,
+    "ast_hash": "9dab0d2e20988eb8125dc73a21b98eee",
+    "semantic_hash": "9dab0d2e20988eb8125dc73a21b98eee"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\SKILL.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "31d334f250af491bfa582811c1314e94",
+    "semantic_hash": "31d334f250af491bfa582811c1314e94"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\resources\\architecture-checklist.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "787bbacfa264f4d382f60fa72eb05e55",
+    "semantic_hash": "787bbacfa264f4d382f60fa72eb05e55"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\react-components\\resources\\stitch-api-reference.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "1b7a2272c61fe6388af3b0ac15ffe0e9",
+    "semantic_hash": "1b7a2272c61fe6388af3b0ac15ffe0e9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\remotion\\README.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "35dad823acae995c32df8c9bc2817c8d",
+    "semantic_hash": "35dad823acae995c32df8c9bc2817c8d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\remotion\\SKILL.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "06574fc69c2ddfef118faa48dddffecc",
+    "semantic_hash": "06574fc69c2ddfef118faa48dddffecc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\remotion\\resources\\composition-checklist.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "6c49b540c3240a763239aa7bb3b469ed",
+    "semantic_hash": "6c49b540c3240a763239aa7bb3b469ed"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\README.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "a136c345aa29d90441c95b3b1ba9e29e",
+    "semantic_hash": "a136c345aa29d90441c95b3b1ba9e29e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\SKILL.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "530e9aa98171404331b47ae393b32e46",
+    "semantic_hash": "530e9aa98171404331b47ae393b32e46"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\resources\\component-catalog.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "e19f26472e164eea7ee3dda940ecaf56",
+    "semantic_hash": "e19f26472e164eea7ee3dda940ecaf56"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\resources\\customization-guide.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "21f09241bdaaa84c262e7ed5d76b5f5f",
+    "semantic_hash": "21f09241bdaaa84c262e7ed5d76b5f5f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\resources\\migration-guide.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "c088d6bfcab25cabe0f08609df3bf4f4",
+    "semantic_hash": "c088d6bfcab25cabe0f08609df3bf4f4"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\shadcn-ui\\resources\\setup-guide.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "bfa28ae827d26eefadc89cf60df32d08",
+    "semantic_hash": "bfa28ae827d26eefadc89cf60df32d08"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-code-to-design\\SKILL.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "4fa2dddb2b7977592f13f3f381b46e61",
+    "semantic_hash": "4fa2dddb2b7977592f13f3f381b46e61"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-design-md\\SKILL.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "131e24e998c26c0fadcaf2a7daaa5f4f",
+    "semantic_hash": "131e24e998c26c0fadcaf2a7daaa5f4f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-design-md\\examples\\DESIGN.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "59a6c0906e5d2075600234e93e84e3b8",
+    "semantic_hash": "59a6c0906e5d2075600234e93e84e3b8"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-design-md\\references\\angular.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "c8fc9ebba709b7b119e5c8d6a794487c",
+    "semantic_hash": "c8fc9ebba709b7b119e5c8d6a794487c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-design-md\\references\\plain-css.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "6f28b349a3885e9195a6243c29c3fae1",
+    "semantic_hash": "6f28b349a3885e9195a6243c29c3fae1"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-design-md\\references\\react-tailwind.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "1e7422296a416965b56d3fbb903f280e",
+    "semantic_hash": "1e7422296a416965b56d3fbb903f280e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-design-md\\references\\svelte.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "071ddf7c6beb335dcd60db4c6184ad39",
+    "semantic_hash": "071ddf7c6beb335dcd60db4c6184ad39"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-design-md\\references\\vue.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "aa1007204a4ba4529b122158a56e561b",
+    "semantic_hash": "aa1007204a4ba4529b122158a56e561b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-extract-static-html\\SKILL.md": {
+    "mtime": 1781074097.1024194,
+    "ast_hash": "c26f1bee1477b756b2306b041d4a51c9",
+    "semantic_hash": "c26f1bee1477b756b2306b041d4a51c9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-generate-design\\SKILL.md": {
+    "mtime": 1781074097.1184962,
+    "ast_hash": "46e4029c8e8c54a8ae620ccbe9e9e5c6",
+    "semantic_hash": "46e4029c8e8c54a8ae620ccbe9e9e5c6"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-generate-design\\examples\\enhanced-prompt.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "450dbfd1139b3a69c71d619de3b52a61",
+    "semantic_hash": "450dbfd1139b3a69c71d619de3b52a61"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-generate-design\\references\\design-mappings.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "5971e25248ca3c62709d310e16479721",
+    "semantic_hash": "5971e25248ca3c62709d310e16479721"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-generate-design\\references\\prompt-keywords.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "5a2468e6fc5b78b7bf86d0937fd73e83",
+    "semantic_hash": "5a2468e6fc5b78b7bf86d0937fd73e83"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-loop\\README.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "bdc8408f806e383be327d7344f0307e5",
+    "semantic_hash": "bdc8408f806e383be327d7344f0307e5"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-loop\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "548f14fc2ca3a067d21f15972232d208",
+    "semantic_hash": "548f14fc2ca3a067d21f15972232d208"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-loop\\examples\\SITE.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "5479810c6a046042d946135616fe5b47",
+    "semantic_hash": "5479810c6a046042d946135616fe5b47"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-loop\\examples\\next-prompt.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "10f8d7ad582bbdb6790719684b821d82",
+    "semantic_hash": "10f8d7ad582bbdb6790719684b821d82"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-loop\\resources\\baton-schema.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "0b96c14f5d73d72706beb78228fdeec7",
+    "semantic_hash": "0b96c14f5d73d72706beb78228fdeec7"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-loop\\resources\\site-template.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "ddfe344ed97183770d102e9b5cd59b82",
+    "semantic_hash": "ddfe344ed97183770d102e9b5cd59b82"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-manage-design-system\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "c83f45df9fecdd6145f95bdae3bd3b06",
+    "semantic_hash": "c83f45df9fecdd6145f95bdae3bd3b06"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-manage-design-system\\reference\\tool-schema.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "23060671ee11d4e6ec23ee674a37ed33",
+    "semantic_hash": "23060671ee11d4e6ec23ee674a37ed33"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\stitch-upload-to-stitch\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "ef3b7860ab44afd73c3d811c11d36cc7",
+    "semantic_hash": "ef3b7860ab44afd73c3d811c11d36cc7"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\taste-design\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "7d594f640bbb722724bb5816027415bc",
+    "semantic_hash": "7d594f640bbb722724bb5816027415bc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.agents\\skills\\taste-design\\resources\\DESIGN.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "c091f6ab78955cbe502d45cab9f5feb2",
+    "semantic_hash": "c091f6ab78955cbe502d45cab9f5feb2"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\design-md\\README.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "f18e1c4c6e59ac67ce06278a64dc3e14",
+    "semantic_hash": "f18e1c4c6e59ac67ce06278a64dc3e14"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\design-md\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "0cf43f06542561a9faa9d554c507d409",
+    "semantic_hash": "0cf43f06542561a9faa9d554c507d409"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\design-md\\examples\\DESIGN.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "c970c3690bb2f9129022864d16a70b6e",
+    "semantic_hash": "c970c3690bb2f9129022864d16a70b6e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\enhance-prompt\\README.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "03ae99f197e9a27810a55306cb1d5503",
+    "semantic_hash": "03ae99f197e9a27810a55306cb1d5503"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\enhance-prompt\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "b9296710352c915853b7efb31926e08a",
+    "semantic_hash": "b9296710352c915853b7efb31926e08a"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\enhance-prompt\\references\\KEYWORDS.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "ba099dba18ab099922b6962c153a3fcc",
+    "semantic_hash": "ba099dba18ab099922b6962c153a3fcc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\README.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "9dab0d2e20988eb8125dc73a21b98eee",
+    "semantic_hash": "9dab0d2e20988eb8125dc73a21b98eee"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "31d334f250af491bfa582811c1314e94",
+    "semantic_hash": "31d334f250af491bfa582811c1314e94"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\resources\\architecture-checklist.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "787bbacfa264f4d382f60fa72eb05e55",
+    "semantic_hash": "787bbacfa264f4d382f60fa72eb05e55"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\react-components\\resources\\stitch-api-reference.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "1b7a2272c61fe6388af3b0ac15ffe0e9",
+    "semantic_hash": "1b7a2272c61fe6388af3b0ac15ffe0e9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\remotion\\README.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "35dad823acae995c32df8c9bc2817c8d",
+    "semantic_hash": "35dad823acae995c32df8c9bc2817c8d"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\remotion\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "06574fc69c2ddfef118faa48dddffecc",
+    "semantic_hash": "06574fc69c2ddfef118faa48dddffecc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\remotion\\resources\\composition-checklist.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "6c49b540c3240a763239aa7bb3b469ed",
+    "semantic_hash": "6c49b540c3240a763239aa7bb3b469ed"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\README.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "a136c345aa29d90441c95b3b1ba9e29e",
+    "semantic_hash": "a136c345aa29d90441c95b3b1ba9e29e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\SKILL.md": {
+    "mtime": 1781074097.1194222,
+    "ast_hash": "530e9aa98171404331b47ae393b32e46",
+    "semantic_hash": "530e9aa98171404331b47ae393b32e46"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\resources\\component-catalog.md": {
+    "mtime": 1781074097.135959,
+    "ast_hash": "e19f26472e164eea7ee3dda940ecaf56",
+    "semantic_hash": "e19f26472e164eea7ee3dda940ecaf56"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\resources\\customization-guide.md": {
+    "mtime": 1781074097.135959,
+    "ast_hash": "21f09241bdaaa84c262e7ed5d76b5f5f",
+    "semantic_hash": "21f09241bdaaa84c262e7ed5d76b5f5f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\resources\\migration-guide.md": {
+    "mtime": 1781074097.135959,
+    "ast_hash": "c088d6bfcab25cabe0f08609df3bf4f4",
+    "semantic_hash": "c088d6bfcab25cabe0f08609df3bf4f4"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\shadcn-ui\\resources\\setup-guide.md": {
+    "mtime": 1781074097.135959,
+    "ast_hash": "bfa28ae827d26eefadc89cf60df32d08",
+    "semantic_hash": "bfa28ae827d26eefadc89cf60df32d08"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-code-to-design\\SKILL.md": {
+    "mtime": 1781074097.135959,
+    "ast_hash": "4fa2dddb2b7977592f13f3f381b46e61",
+    "semantic_hash": "4fa2dddb2b7977592f13f3f381b46e61"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-design-md\\SKILL.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "131e24e998c26c0fadcaf2a7daaa5f4f",
+    "semantic_hash": "131e24e998c26c0fadcaf2a7daaa5f4f"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-design-md\\examples\\DESIGN.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "59a6c0906e5d2075600234e93e84e3b8",
+    "semantic_hash": "59a6c0906e5d2075600234e93e84e3b8"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-design-md\\references\\angular.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "c8fc9ebba709b7b119e5c8d6a794487c",
+    "semantic_hash": "c8fc9ebba709b7b119e5c8d6a794487c"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-design-md\\references\\plain-css.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "6f28b349a3885e9195a6243c29c3fae1",
+    "semantic_hash": "6f28b349a3885e9195a6243c29c3fae1"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-design-md\\references\\react-tailwind.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "1e7422296a416965b56d3fbb903f280e",
+    "semantic_hash": "1e7422296a416965b56d3fbb903f280e"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-design-md\\references\\svelte.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "071ddf7c6beb335dcd60db4c6184ad39",
+    "semantic_hash": "071ddf7c6beb335dcd60db4c6184ad39"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-design-md\\references\\vue.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "aa1007204a4ba4529b122158a56e561b",
+    "semantic_hash": "aa1007204a4ba4529b122158a56e561b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-extract-static-html\\SKILL.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "c26f1bee1477b756b2306b041d4a51c9",
+    "semantic_hash": "c26f1bee1477b756b2306b041d4a51c9"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-generate-design\\SKILL.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "46e4029c8e8c54a8ae620ccbe9e9e5c6",
+    "semantic_hash": "46e4029c8e8c54a8ae620ccbe9e9e5c6"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-generate-design\\examples\\enhanced-prompt.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "450dbfd1139b3a69c71d619de3b52a61",
+    "semantic_hash": "450dbfd1139b3a69c71d619de3b52a61"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-generate-design\\references\\design-mappings.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "5971e25248ca3c62709d310e16479721",
+    "semantic_hash": "5971e25248ca3c62709d310e16479721"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-generate-design\\references\\prompt-keywords.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "5a2468e6fc5b78b7bf86d0937fd73e83",
+    "semantic_hash": "5a2468e6fc5b78b7bf86d0937fd73e83"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-loop\\README.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "bdc8408f806e383be327d7344f0307e5",
+    "semantic_hash": "bdc8408f806e383be327d7344f0307e5"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-loop\\SKILL.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "548f14fc2ca3a067d21f15972232d208",
+    "semantic_hash": "548f14fc2ca3a067d21f15972232d208"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-loop\\examples\\SITE.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "5479810c6a046042d946135616fe5b47",
+    "semantic_hash": "5479810c6a046042d946135616fe5b47"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-loop\\examples\\next-prompt.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "10f8d7ad582bbdb6790719684b821d82",
+    "semantic_hash": "10f8d7ad582bbdb6790719684b821d82"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-loop\\resources\\baton-schema.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "0b96c14f5d73d72706beb78228fdeec7",
+    "semantic_hash": "0b96c14f5d73d72706beb78228fdeec7"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-loop\\resources\\site-template.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "ddfe344ed97183770d102e9b5cd59b82",
+    "semantic_hash": "ddfe344ed97183770d102e9b5cd59b82"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-manage-design-system\\SKILL.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "c83f45df9fecdd6145f95bdae3bd3b06",
+    "semantic_hash": "c83f45df9fecdd6145f95bdae3bd3b06"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-manage-design-system\\reference\\tool-schema.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "23060671ee11d4e6ec23ee674a37ed33",
+    "semantic_hash": "23060671ee11d4e6ec23ee674a37ed33"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\stitch-upload-to-stitch\\SKILL.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "ef3b7860ab44afd73c3d811c11d36cc7",
+    "semantic_hash": "ef3b7860ab44afd73c3d811c11d36cc7"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\taste-design\\SKILL.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "7d594f640bbb722724bb5816027415bc",
+    "semantic_hash": "7d594f640bbb722724bb5816027415bc"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\.claude\\skills\\taste-design\\resources\\DESIGN.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "c091f6ab78955cbe502d45cab9f5feb2",
+    "semantic_hash": "c091f6ab78955cbe502d45cab9f5feb2"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\README.md": {
+    "mtime": 1781074097.1385067,
+    "ast_hash": "ad12c0560e2e514d356da443998e8208",
+    "semantic_hash": "ad12c0560e2e514d356da443998e8208"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\pnpm-workspace.yaml": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "ee6d858740b52f04e01dcceaa241fb62",
+    "semantic_hash": "ee6d858740b52f04e01dcceaa241fb62"
+  },
+  "D:\\electrotrack-saas\\electrotrack-api\\pnpm.yaml": {
+    "mtime": 1781074097.1515193,
+    "ast_hash": "0001cd437a8252c6ea2797aecd78523b",
+    "semantic_hash": "0001cd437a8252c6ea2797aecd78523b"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\index.html": {
+    "mtime": 1781074097.1855586,
+    "ast_hash": "befa76659e03a3a760222b30de63eece",
+    "semantic_hash": "befa76659e03a3a760222b30de63eece"
+  },
+  "D:\\electrotrack-saas\\electrotrack-pos\\public\\robots.txt": {
+    "mtime": 1781074097.1885998,
+    "ast_hash": "e7dbd1c38b158f6fcd817cf27522273f",
+    "semantic_hash": "e7dbd1c38b158f6fcd817cf27522273f"
+  }
+}
