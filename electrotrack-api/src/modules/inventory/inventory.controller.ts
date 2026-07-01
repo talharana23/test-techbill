@@ -42,7 +42,7 @@ export class InventoryController {
   // ─── Dashboard ────────────────────────────────────────────────────────────
 
   @Get('dashboard')
-  @Permissions('pos.read')
+  @Permissions('inventory.read', 'pos.read')
   getDashboard(@Req() req: RequestWithUser) {
     return this.inventoryService.getDashboard(req.user.tenantId);
   }
@@ -90,13 +90,13 @@ export class InventoryController {
   // ─── Units ────────────────────────────────────────────────────────────────
 
   @Get('units')
-  @Permissions('inventory.read')
+  @Permissions('inventory.read', 'pos.sell')
   listUnits(@Query() filter: FilterUnitsDto, @Req() req: RequestWithUser) {
     return this.inventoryService.listUnits(filter, req.user.tenantId);
   }
 
   @Get('units/lookup/:serial')
-  @Permissions('inventory.read')
+  @Permissions('inventory.read', 'pos.sell')
   lookupBySerial(
     @Param('serial') serial: string,
     @Query('anyStatus') anyStatus: string,

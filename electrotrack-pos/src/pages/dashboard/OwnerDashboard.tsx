@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { format } from 'date-fns';
-import { TrendingUp, ShoppingCart, Package, Tag } from 'lucide-react';
+import { TrendingUp, ShoppingCart, Package, Tag, Banknote } from 'lucide-react';
 import { api } from '../../api/client';
 
 import SalesChart from '../../components/dashboard/SalesChart';
@@ -38,6 +38,7 @@ export default function OwnerDashboard() {
   const statCards = summary
     ? [
         { label: "Today's Revenue", value: formatPKR(summary.totalRevenue), icon: TrendingUp, color: 'text-stitch-tertiary', accent: 'bg-stitch-tertiary' },
+        { label: 'Gross Profit', value: formatPKR(summary.totalGrossProfit || 0), icon: Banknote, color: 'text-green-500', accent: 'bg-green-500' },
         { label: 'Total Sales', value: String(summary.totalSales), icon: ShoppingCart, color: 'text-stitch-primary', accent: 'bg-stitch-primary' },
         { label: 'Items Sold', value: String(summary.totalItems), icon: Package, color: 'text-green-400', accent: 'bg-green-400' },
         { label: 'Discounts Given', value: formatPKR(summary.totalDiscounts), icon: Tag, color: 'text-amber-400', accent: 'bg-amber-400' },
@@ -49,7 +50,7 @@ export default function OwnerDashboard() {
       <AiInsights />
 
       {summary ? (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
           {statCards.map((card) => (
             <div key={card.label} className="glass-card rounded-xl p-4 overflow-hidden relative">
               <div className={`absolute top-0 left-0 right-0 h-0.5 ${card.accent}/60`} />
@@ -62,8 +63,8 @@ export default function OwnerDashboard() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="glass-card rounded-xl p-4 h-24 animate-pulse bg-white/5" />
           ))}
         </div>

@@ -158,6 +158,7 @@ export interface Product {
   brand: string | null;
   category: string | null;
   sellingPrice: number;
+  costPrice?: number | null;
   comparePrice?: number | null;
   warrantyMonths: number;
   isActive: boolean;
@@ -209,6 +210,7 @@ export interface Sale {
 export interface SalesSummary {
   period: string;
   totalRevenue: number;
+  totalGrossProfit: number;
   totalSales: number;
   totalItems: number;
   totalDiscounts: number;

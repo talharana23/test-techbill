@@ -535,7 +535,7 @@ export class InventoryService {
       );
     }
 
-    return this.prisma.goodsReceivedNote.create({
+    const grn = await this.prisma.goodsReceivedNote.create({
       data: {
         purchaseOrderId: data.purchaseOrderId,
         receivedById: userId,
@@ -557,5 +557,14 @@ export class InventoryService {
         },
       },
     });
+
+    if (data.purchaseOrderId) {
+      await this.prisma.purchaseOrder.updateMany({
+        where: { id: data.purchaseOrderId, tenantId },
+        data: { status: 'received' },
+      });
+    }
+
+    return grn;
   }
 }

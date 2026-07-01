@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PrismaService } from '../../prisma/prisma.service';
 import { SalesSummaryQueryDto } from './dto/sales-summary-query.dto';
@@ -66,7 +66,8 @@ export class ReportsService {
           sellingPrice: true,
           inventoryUnit: {
             select: {
-              product: { select: { id: true, name: true } },
+              purchasePrice: true,
+              product: { select: { id: true, name: true, costPrice: true } },
             },
           },
         },
@@ -96,9 +97,18 @@ export class ReportsService {
       .sort((a, b) => b.revenue - a.revenue)
       .slice(0, 10);
 
+    let totalCost = 0;
+    for (const item of items) {
+      const cost = item.inventoryUnit.purchasePrice ?? item.inventoryUnit.product.costPrice ?? 0;
+      totalCost += Number(cost);
+    }
+    const totalRevenue = Number(totals._sum.totalAmount ?? 0);
+    const totalGrossProfit = totalRevenue - totalCost;
+
     return {
       period: label,
-      totalRevenue: Number(totals._sum.totalAmount ?? 0),
+      totalRevenue,
+      totalGrossProfit,
       totalSales: totals._count.id,
       totalItems: items.length,
       totalDiscounts: Number(totals._sum.discountAmount ?? 0),
@@ -220,6 +230,48 @@ export class ReportsService {
 
   // ─── Cash Reconciliation ──────────────────────────────────────────────────────
 
+  async getTodayReconciliationState(tenantId: string) {
+    const today = new Date().toISOString().slice(0, 10);
+    const start = new Date(today + 'T00:00:00+05:00');
+    const end = new Date(today + 'T23:59:59+05:00');
+
+    // 1. Get latest actual cash from previous reconciliations
+    const lastRecon = await this.prisma.cashReconciliation.findFirst({
+      where: { tenantId, date: { lt: start } },
+      orderBy: { date: 'desc' },
+    });
+    const defaultOpeningBalance = lastRecon?.actualCash ? Number(lastRecon.actualCash) : 0;
+
+    // 2. Get today's cash sales
+    const cashSales = await this.prisma.sale.aggregate({
+      where: {
+        tenantId,
+        status: SaleStatus.completed,
+        paymentMethod: PaymentMethod.cash,
+        createdAt: { gte: start, lte: end },
+      },
+      _sum: { totalAmount: true },
+    });
+    const totalCashSales = Number(cashSales._sum.totalAmount ?? 0);
+
+    // 3. Get today's expenses
+    const expenses = await this.prisma.expense.aggregate({
+      where: {
+        tenantId,
+        date: { gte: start, lte: end },
+      },
+      _sum: { amount: true },
+    });
+    const totalOutflows = Number(expenses._sum.amount ?? 0);
+
+    return {
+      defaultOpeningBalance,
+      cashSales: totalCashSales,
+      totalOutflows,
+      expectedCash: defaultOpeningBalance + totalCashSales - totalOutflows,
+    };
+  }
+
   async submitReconciliation(
     dto: ReconciliationDto,
     userId: string,
@@ -238,9 +290,38 @@ export class ReportsService {
       _sum: { totalAmount: true },
     });
 
+    const expenses = await this.prisma.expense.aggregate({
+      where: {
+        tenantId,
+        date: { gte: start, lte: end },
+      },
+      _sum: { amount: true },
+    });
+
     const cashIn = Number(cashSales._sum.totalAmount ?? 0);
-    const expectedCash = dto.openingBalance + cashIn;
+    const outflows = Number(expenses._sum.amount ?? 0);
+    const expectedCash = dto.openingBalance + cashIn - outflows;
     const variance = dto.actualCash - expectedCash;
+
+    // Handle Opening Balance Adjustment
+    const lastRecon = await this.prisma.cashReconciliation.findFirst({
+      where: { tenantId, date: { lt: start } },
+      orderBy: { date: 'desc' },
+    });
+    const prevClosing = lastRecon?.actualCash ? Number(lastRecon.actualCash) : 0;
+
+    if (dto.openingBalance < prevClosing) {
+      await this.prisma.expense.create({
+        data: {
+          amount: prevClosing - dto.openingBalance,
+          category: 'adjustment',
+          description: `Opening balance adjustment: ${dto.notes || 'No reason provided'}`,
+          date: new Date(dto.date),
+          createdById: userId,
+          tenantId,
+        },
+      });
+    }
 
     const record = await this.prisma.cashReconciliation.create({
       data: {
@@ -539,5 +620,28 @@ export class ReportsService {
     ]);
 
     return { data: records, meta: { total, page, limit } };
+  }
+
+  async deleteReconciliation(id: string, tenantId: string) {
+    const record = await this.prisma.cashReconciliation.findUnique({
+      where: { id, tenantId },
+    });
+    if (!record) throw new NotFoundException('Reconciliation not found');
+
+    const today = new Date();
+    const isToday =
+      record.date.getFullYear() === today.getFullYear() &&
+      record.date.getMonth() === today.getMonth() &&
+      record.date.getDate() === today.getDate();
+
+    if (!isToday) {
+      throw new BadRequestException(
+        'You can only delete reconciliation records for today.',
+      );
+    }
+
+    return this.prisma.cashReconciliation.delete({
+      where: { id, tenantId },
+    });
   }
 }

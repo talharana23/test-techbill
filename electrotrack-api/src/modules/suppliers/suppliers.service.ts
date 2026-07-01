@@ -69,6 +69,9 @@ export class SuppliersService {
         supplier: { select: { id: true, name: true } },
         createdBy: { select: { id: true, name: true } },
         _count: { select: { items: true } },
+        items: {
+          include: { product: { select: { id: true, name: true } } }
+        }
       },
       orderBy: { createdAt: 'desc' },
       take: 100,

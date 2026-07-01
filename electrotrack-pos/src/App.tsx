@@ -10,6 +10,7 @@ import ReturnsPage from './pages/returns/ReturnsPage';
 import ReturnAnalyticsPage from './pages/returns/ReturnAnalyticsPage';
 import ReportsPage from './pages/reports/ReportsPage';
 import CashReconciliationPage from './pages/reports/CashReconciliationPage';
+import ExpensesPage from './pages/expenses/ExpensesPage';
 import UsersPage from './pages/users/UsersPage';
 import SettingsPage from './pages/settings/SettingsPage';
 import AuditPage from './pages/audit/AuditPage';
@@ -251,6 +252,14 @@ export default function App() {
             element={
               <RequireAuth permission="reports.cash_reconciliation">
                 <CashReconciliationPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="expenses"
+            element={
+              <RequireAuth permission="reports.read">
+                <ExpensesPage />
               </RequireAuth>
             }
           />

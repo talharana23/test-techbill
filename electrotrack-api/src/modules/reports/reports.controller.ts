@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Body,
   Query,
   Param,
@@ -128,6 +129,12 @@ export class ReportsController {
     );
   }
 
+  @Get('cash-reconciliation/today')
+  @Permissions('reports.read')
+  reconciliationTodayState(@Req() req: RequestWithUser) {
+    return this.reportsService.getTodayReconciliationState(req.user.tenantId);
+  }
+
   @Get('cash-reconciliation')
   @Permissions('reports.read')
   listReconciliations(
@@ -145,5 +152,11 @@ export class ReportsController {
       req.user.id,
       req.user.tenantId,
     );
+  }
+
+  @Delete('cash-reconciliation/:id')
+  @Permissions('reports.cash_reconciliation')
+  deleteReconciliation(@Param('id') id: string, @Req() req: RequestWithUser) {
+    return this.reportsService.deleteReconciliation(id, req.user.tenantId);
   }
 }

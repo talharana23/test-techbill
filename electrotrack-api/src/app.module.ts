@@ -19,6 +19,7 @@ import { SuppliersModule } from './modules/suppliers/suppliers.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { AiModule } from './modules/ai/ai.module';
+import { ExpensesModule } from './modules/expenses/expenses.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { AiModule } from './modules/ai/ai.module';
     TenantsModule,
     SettingsModule,
     AiModule,
+    ExpensesModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],

@@ -150,11 +150,11 @@ export default function PosScreen() {
     setUnitPickerUnits([]);
     setUnitPickerLoading(true);
     try {
-      const res = await api.get<InventoryUnit[] | { units: InventoryUnit[] }>(
+      const res = await api.get<any>(
         `/inventory/units?productId=${product.id}&status=in_stock&limit=100`
       );
-      const data = res.data as InventoryUnit[] | { units: InventoryUnit[] };
-      setUnitPickerUnits(Array.isArray(data) ? data : data.units ?? []);
+      const payload = res.data;
+      setUnitPickerUnits(Array.isArray(payload) ? payload : payload.data ?? payload.units ?? []);
     } catch {
       setUnitPickerUnits([]);
     } finally {
@@ -191,11 +191,11 @@ export default function PosScreen() {
 
   const handleSerialAdd = useCallback(async (serial: string) => {
     try {
-      const res = await api.get<InventoryUnit[] | { units: InventoryUnit[] }>(
+      const res = await api.get<any>(
         `/inventory/units?serialNumber=${encodeURIComponent(serial)}&limit=1`
       );
-      const data = res.data as InventoryUnit[] | { units: InventoryUnit[] };
-      const units = Array.isArray(data) ? data : data.units ?? [];
+      const payload = res.data;
+      const units = Array.isArray(payload) ? payload : payload.data ?? payload.units ?? [];
       const unit = units[0];
 
       if (!unit) {

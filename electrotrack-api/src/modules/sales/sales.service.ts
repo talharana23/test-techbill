@@ -141,7 +141,7 @@ export class SalesService {
       });
 
       return created;
-    });
+    }, { maxWait: 10000, timeout: 20000 });
 
     this.eventEmitter.emit('sale.created', {
       id: sale.id,

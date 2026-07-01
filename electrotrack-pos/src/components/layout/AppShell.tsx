@@ -3,7 +3,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import {
   ShoppingCart, BarChart3, LogOut, Package, RotateCcw,
   FileText, Users, Settings, ClipboardList, Bell, UserCircle, Building2, ShoppingBag, ShieldAlert,
-  PackageCheck, ShieldCheck, Star, TrendingDown, Banknote, Menu,
+  PackageCheck, ShieldCheck, Star, TrendingDown, Banknote, Menu, Wallet,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useAuthStore } from '../../store/auth.store';
@@ -231,6 +231,12 @@ export default function AppShell() {
             <NavLink to="/reports" className={navClass}>
               <FileText size={16} />
               Reports
+            </NavLink>
+          )}
+          {canSeeReports && (
+            <NavLink to="/expenses" className={navClass}>
+              <Wallet size={16} />
+              Expenses
             </NavLink>
           )}
           {canSeeCashRecon && (

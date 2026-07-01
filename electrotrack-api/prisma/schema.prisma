@@ -94,6 +94,7 @@ model Tenant {
   sales            Sale[]
   returns          Return[]
   reconciliations  CashReconciliation[]
+  expenses         Expense[]
   auditLogs        AuditLog[]
   notifications    Notification[]
 
@@ -129,6 +130,7 @@ model User {
   returnsReviewed          Return[]             @relation("ReturnsReviewedBy")
   reconciliationsSubmitted CashReconciliation[] @relation("ReconciliationsSubmittedBy")
   reconciliationsReviewed  CashReconciliation[] @relation("ReconciliationsReviewedBy")
+  expenses                 Expense[]            @relation("ExpensesCreatedBy")
 
   @@map("users")
 }
@@ -427,6 +429,25 @@ model CashReconciliation {
   @@index([date])
   @@index([tenantId])
   @@map("cash_reconciliations")
+}
+
+// ─── Table 14.5: expenses ─────────────────────────────────────────────────────
+
+model Expense {
+  id          String   @id @default(uuid()) @db.Uuid
+  amount      Decimal  @db.Decimal(10, 2)
+  category    String   @db.VarChar(100)
+  description String?  @db.Text
+  date        DateTime @db.Date
+  createdById String?  @map("created_by_id") @db.Uuid
+  createdBy   User?    @relation("ExpensesCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  tenantId    String   @map("tenant_id") @db.Uuid
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([date])
+  @@index([tenantId])
+  @@map("expenses")
 }
 
 // ─── Table 15: audit_logs ─────────────────────────────────────────────────────

@@ -142,9 +142,10 @@ export default function ReportsPage() {
 
           {tab === 'sales' && summary && (
             <div className="space-y-5">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {[
                   { label: 'Total Revenue', value: formatPKR(summary.totalRevenue), color: 'text-stitch-tertiary' },
+                  { label: 'Gross Profit', value: formatPKR(summary.totalGrossProfit || 0), color: 'text-green-500' },
                   { label: 'Total Sales', value: String(summary.totalSales), color: 'text-stitch-primary' },
                   { label: 'Items Sold', value: String(summary.totalItems), color: 'text-green-400' },
                   { label: 'Discounts Given', value: formatPKR(summary.totalDiscounts), color: 'text-amber-400' },

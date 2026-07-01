@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Plus, Package, AlertTriangle, CheckCircle, X, Tag, Search, Layers, Trash2, Wand2 } from 'lucide-react';
+import { Plus, Package, AlertTriangle, CheckCircle, X, Tag, Search, Layers, Trash2, Wand2, Pencil } from 'lucide-react';
 import { api } from '../../api/client';
 import { useCan } from '../../lib/permissions';
 import type { Product, InventoryUnit } from '../../types';
@@ -45,6 +45,7 @@ export default function InventoryPage() {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState<ProductWithStock | null>(null);
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [productForm, setProductForm] = useState<AddProductForm>({
@@ -135,15 +136,27 @@ export default function InventoryPage() {
     setLoading(true);
     setError('');
     try {
-      await api.post('/inventory/products', {
-        name: productForm.name,
-        brand: productForm.brand || undefined,
-        category: productForm.category || undefined,
-        sellingPrice: parseFloat(productForm.sellingPrice),
-        warrantyMonths: parseInt(productForm.warrantyMonths),
-      });
-      showSuccess('Product added successfully');
+      if (editingProductId) {
+        await api.patch(`/inventory/products/${editingProductId}`, {
+          name: productForm.name,
+          brand: productForm.brand || undefined,
+          category: productForm.category || undefined,
+          sellingPrice: parseFloat(productForm.sellingPrice),
+          warrantyMonths: parseInt(productForm.warrantyMonths),
+        });
+        showSuccess('Product updated successfully');
+      } else {
+        await api.post('/inventory/products', {
+          name: productForm.name,
+          brand: productForm.brand || undefined,
+          category: productForm.category || undefined,
+          sellingPrice: parseFloat(productForm.sellingPrice),
+          warrantyMonths: parseInt(productForm.warrantyMonths),
+        });
+        showSuccess('Product added successfully');
+      }
       setShowAddProduct(false);
+      setEditingProductId(null);
       setProductForm({ name: '', brand: '', category: productForm.category, sellingPrice: '', warrantyMonths: '0' });
       loadProducts();
       loadCategories();
@@ -242,7 +255,7 @@ export default function InventoryPage() {
         {canWrite && (
           <div className="flex gap-2 flex-wrap">
             <button
-              onClick={() => { setShowAddProduct(true); setShowAddUnit(false); setStockModal(null); }}
+              onClick={() => { setEditingProductId(null); setProductForm({ name: '', brand: '', category: '', sellingPrice: '', warrantyMonths: '0' }); setShowAddProduct(true); setShowAddUnit(false); setStockModal(null); }}
               className="flex items-center gap-1.5 px-4 py-2 bg-stitch-primary text-stitch-on-primary text-sm font-bold rounded-lg hover:bg-stitch-primary/90 transition-all active:scale-95"
             >
               <Plus size={14} /> Add Product
@@ -288,9 +301,9 @@ export default function InventoryPage() {
           <div className="flex items-center justify-between border-b border-white/5 pb-3">
             <h2 className="text-base font-semibold text-stitch-on-surface font-space"
               style={{ borderLeft: '3px solid rgba(192,193,255,0.5)', paddingLeft: '10px' }}>
-              New Product
+              {editingProductId ? 'Edit Product' : 'New Product'}
             </h2>
-            <button onClick={() => setShowAddProduct(false)} className="text-stitch-on-surface-variant hover:text-white transition-colors">
+            <button onClick={() => { setShowAddProduct(false); setEditingProductId(null); }} className="text-stitch-on-surface-variant hover:text-white transition-colors">
               <X size={16} />
             </button>
           </div>
@@ -327,13 +340,13 @@ export default function InventoryPage() {
                 onChange={(e) => setProductForm({ ...productForm, warrantyMonths: e.target.value })} className={inputCls} />
             </div>
             <div className="col-span-1 sm:col-span-2 flex gap-2 justify-end pt-1">
-              <button type="button" onClick={() => setShowAddProduct(false)}
+              <button type="button" onClick={() => { setShowAddProduct(false); setEditingProductId(null); }}
                 className="px-4 py-2 text-sm text-stitch-on-surface-variant hover:text-white hover:bg-white/5 rounded-lg transition-colors">
                 Cancel
               </button>
               <button type="submit" disabled={loading}
                 className="px-4 py-2 text-sm bg-stitch-primary text-stitch-on-primary font-bold rounded-lg hover:bg-stitch-primary/90 disabled:opacity-50 active:scale-95 transition-all">
-                {loading ? 'Saving…' : 'Save Product'}
+                {loading ? 'Saving…' : (editingProductId ? 'Update Product' : 'Save Product')}
               </button>
             </div>
           </form>
@@ -554,6 +567,27 @@ export default function InventoryPage() {
                       {(canWrite || canDelete) && (
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-1.5">
+                            {canWrite && (
+                              <button
+                                onClick={() => {
+                                  setProductForm({
+                                    name: p.name,
+                                    brand: p.brand || '',
+                                    category: p.category || '',
+                                    sellingPrice: String(p.sellingPrice),
+                                    warrantyMonths: String(p.warrantyMonths || 0),
+                                  });
+                                  setEditingProductId(p.id);
+                                  setShowAddProduct(true);
+                                  setShowAddUnit(false);
+                                  setStockModal(null);
+                                }}
+                                title="Edit product"
+                                className="flex items-center justify-center w-7 h-7 text-stitch-on-surface-variant hover:text-blue-400 hover:bg-blue-400/10 border border-white/5 hover:border-blue-400/20 rounded-lg transition-colors"
+                              >
+                                <Pencil size={12} />
+                              </button>
+                            )}
                             {canWrite && (
                               <button
                                 onClick={() => { setStockModal({ productId: p.id, productName: p.name }); setShowAddProduct(false); setShowAddUnit(false); }}

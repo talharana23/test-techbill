@@ -115,12 +115,18 @@ export default function PurchaseOrdersPage() {
       await api.post('/purchase-orders', {
         supplierId: supplierId || undefined,
         notes: notes || undefined,
-        items: validItems,
+        items: validItems.map(i => ({
+          productId: i.productId,
+          quantityOrdered: Number(i.quantityOrdered),
+          unitCostPrice: Number(i.unitCostPrice)
+        })),
       });
       setShowForm(false);
       void fetchOrders();
-    } catch {
-      setError('Failed to create purchase order');
+    } catch (err: any) {
+      console.error(err);
+      const msg = err.response?.data?.message;
+      setError(Array.isArray(msg) ? msg.join(', ') : (msg || err.message || 'Failed to create purchase order'));
     } finally {
       setSaving(false);
     }
@@ -230,8 +236,8 @@ export default function PurchaseOrdersPage() {
                 <div>
                   <label className={labelCls}>Supplier</label>
                   <select value={supplierId} onChange={(e) => setSupplierId(e.target.value)} className={inputCls}>
-                    <option value="">— None —</option>
-                    {suppliers.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                    <option value="" className="bg-stitch-surface text-stitch-on-surface">— None —</option>
+                    {suppliers.map((s) => <option key={s.id} value={s.id} className="bg-stitch-surface text-stitch-on-surface">{s.name}</option>)}
                   </select>
                 </div>
                 <div>
@@ -254,12 +260,12 @@ export default function PurchaseOrdersPage() {
                         value={item.productId}
                         onChange={(e) => {
                           const p = products.find((x) => x.id === e.target.value);
-                          updateItem(idx, { productId: e.target.value, unitCostPrice: p ? p.sellingPrice : 0 });
+                          updateItem(idx, { productId: e.target.value, unitCostPrice: p ? (Number(p.costPrice) || 0) : 0 });
                         }}
                         className="flex-1 bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 min-w-0"
                       >
-                        <option value="">Select product…</option>
-                        {products.map((p) => <option key={p.id} value={p.id}>{p.name}{p.brand ? ` (${p.brand})` : ''}</option>)}
+                        <option value="" className="bg-stitch-surface text-stitch-on-surface">Select product…</option>
+                        {products.map((p) => <option key={p.id} value={p.id} className="bg-stitch-surface text-stitch-on-surface">{p.name}{p.brand ? ` (${p.brand})` : ''}</option>)}
                       </select>
                       <input
                         type="number" min={1} value={item.quantityOrdered}
