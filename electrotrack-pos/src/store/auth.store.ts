@@ -17,7 +17,7 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       accessToken: null,
-      isHydrating: false,
+      isHydrating: true,
       setAuth: (user, accessToken) => set({ user, accessToken, isHydrating: false }),
       setToken: (token) => set({ accessToken: token, isHydrating: false }),
       clearAuth: () => set({ user: null, accessToken: null, isHydrating: false }),
@@ -27,6 +27,13 @@ export const useAuthStore = create<AuthState>()(
       name: 'et-auth',
       // Only persist user — access token lives in memory only
       partialize: (state) => ({ user: state.user }),
+      onRehydrateStorage: () => {
+        return (state) => {
+          if (state) {
+            state.setHydrating(false);
+          }
+        };
+      },
     },
   ),
 );

@@ -4,6 +4,7 @@ import {
   ConflictException,
   BadRequestException,
 } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AiService } from '../ai/ai.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -19,6 +20,7 @@ export class InventoryService {
   constructor(
     private prisma: PrismaService,
     private aiService: AiService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   // ─── Products ────────────────────────────────────────────────────────────────
@@ -338,7 +340,7 @@ export class InventoryService {
     return { ...unitWithoutSaleItems, soldAt };
   }
 
-  async createUnit(dto: CreateUnitDto, tenantId: string) {
+  async createUnit(dto: CreateUnitDto, userId: string, tenantId: string) {
     const existing = await this.prisma.inventoryUnit.findUnique({
       where: {
         tenantId_serialNumber: {
@@ -355,7 +357,7 @@ export class InventoryService {
 
     await this.findProductOrThrow(dto.productId, tenantId);
 
-    return this.prisma.inventoryUnit.create({
+    const unit = await this.prisma.inventoryUnit.create({
       data: {
         serialNumber: dto.serialNumber,
         productId: dto.productId,
@@ -369,9 +371,19 @@ export class InventoryService {
         product: { select: { id: true, name: true, sellingPrice: true } },
       },
     });
+
+    this.eventEmitter.emit('inventory.unit_added', {
+      unitId: unit.id,
+      userId,
+      serialNumber: unit.serialNumber,
+      productId: unit.productId,
+      tenantId,
+    });
+
+    return unit;
   }
 
-  async bulkCreateUnits(dto: BulkCreateUnitsDto, tenantId: string) {
+  async bulkCreateUnits(dto: BulkCreateUnitsDto, userId: string, tenantId: string) {
     const serials = dto.units.map((u) => u.serialNumber);
     const duplicates = serials.filter((s, i) => serials.indexOf(s) !== i);
     if (duplicates.length > 0) {
@@ -393,34 +405,64 @@ export class InventoryService {
       );
     }
 
-    await this.prisma.inventoryUnit.createMany({
-      data: dto.units.map((u) => ({
-        serialNumber: u.serialNumber,
-        productId: u.productId,
-        condition: u.condition,
-        purchasePrice: u.purchasePrice,
-        notes: u.notes,
-        grnId: u.grnId,
-        tenantId,
-      })),
+    const createdUnits = await this.prisma.$transaction(async (tx) => {
+      return Promise.all(
+        dto.units.map((u) =>
+          tx.inventoryUnit.create({
+            data: {
+              serialNumber: u.serialNumber,
+              productId: u.productId,
+              condition: u.condition,
+              purchasePrice: u.purchasePrice,
+              notes: u.notes,
+              grnId: u.grnId,
+              tenantId,
+            },
+          }),
+        ),
+      );
     });
 
-    return { created: dto.units.length };
+    for (const unit of createdUnits) {
+      this.eventEmitter.emit('inventory.unit_added', {
+        unitId: unit.id,
+        userId,
+        serialNumber: unit.serialNumber,
+        productId: unit.productId,
+        tenantId,
+      });
+    }
+
+    return { created: createdUnits.length };
   }
 
-  async updateUnit(id: string, dto: UpdateUnitDto, tenantId: string) {
+  async updateUnit(id: string, dto: UpdateUnitDto, userId: string, tenantId: string) {
     const unit = await this.prisma.inventoryUnit.findFirst({
       where: { id, tenantId },
     });
     if (!unit) throw new NotFoundException(`Unit ${id} not found`);
 
-    return this.prisma.inventoryUnit.update({
+    const oldStatus = unit.status;
+
+    const updated = await this.prisma.inventoryUnit.update({
       where: { id },
       data: { ...dto },
       include: {
         product: { select: { id: true, name: true, sellingPrice: true } },
       },
     });
+
+    if (dto.status && dto.status !== oldStatus) {
+      this.eventEmitter.emit('inventory.status_changed', {
+        unitId: id,
+        userId,
+        oldStatus,
+        newStatus: dto.status,
+        tenantId,
+      });
+    }
+
+    return updated;
   }
 
   async softDeleteProduct(id: string, tenantId: string) {

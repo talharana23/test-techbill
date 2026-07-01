@@ -74,7 +74,7 @@ function RequireAuth({
 }
 
 export default function App() {
-  const { user, accessToken, setToken, clearAuth, setHydrating } = useAuthStore();
+  const { user, accessToken, setToken, clearAuth, setHydrating, isHydrating } = useAuthStore();
   // Guard against React StrictMode double-invocation in dev.
   // Without this, both calls hit /auth/refresh with the same cookie:
   //   Call 1 → revokes token A, creates token B → success
@@ -82,18 +82,19 @@ export default function App() {
   const refreshCalled = useRef(false);
 
   useEffect(() => {
+    if (isHydrating) return;
+    if (!user) return;
+    if (accessToken) return;
+
     if (refreshCalled.current) return;
     refreshCalled.current = true;
 
-    if (user && !accessToken) {
-      setHydrating(true);
-      api
-        .post<{ access_token: string }>('/auth/refresh', null, { timeout: 10_000 })
-        .then(({ data }) => setToken(data.access_token))
-        .catch(() => clearAuth());
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setHydrating(true);
+    api
+      .post<{ access_token: string }>('/auth/refresh', null, { timeout: 10_000 })
+      .then(({ data }) => setToken(data.access_token))
+      .catch(() => clearAuth());
+  }, [isHydrating, user, accessToken, setToken, clearAuth, setHydrating]);
 
   // Root redirect logic
   const getRootRedirect = () => {

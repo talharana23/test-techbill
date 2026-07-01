@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { VoidSaleDto } from './dto/void-sale.dto';
@@ -20,6 +21,7 @@ export class SalesService {
     private prisma: PrismaService,
     private eventEmitter: EventEmitter2,
     private configService: ConfigService,
+    private jwtService: JwtService,
   ) {
     this.stockLowThreshold = parseInt(
       configService.get('STOCK_LOW_THRESHOLD', '3'),
@@ -84,15 +86,32 @@ export class SalesService {
 
     if (total < 0) throw new BadRequestException('Discount exceeds subtotal');
 
+    if (discount > 0) {
+      this.eventEmitter.emit('discount.requested', {
+        userId,
+        amount: discount,
+        tenantId,
+      });
+    }
+
     // Enforce OTP for discounts above configured threshold
     const settings = await this.prisma.shopSettings.findFirst({
       where: { tenantId },
     });
     const maxNoOtp = Number(settings?.maxDiscountWithoutOtp ?? 500);
-    if (discount > maxNoOtp && !dto.otpToken) {
-      throw new BadRequestException(
-        `OTP required for discounts above Rs ${maxNoOtp}. Call /auth/request-otp first.`,
-      );
+    if (discount > maxNoOtp) {
+      if (!dto.otpToken) {
+        throw new BadRequestException(
+          `OTP required for discounts above Rs ${maxNoOtp}. Call /auth/request-otp first.`,
+        );
+      }
+      try {
+        this.jwtService.verify(dto.otpToken, {
+          secret: this.configService.get<string>('JWT_SECRET'),
+        });
+      } catch {
+        throw new BadRequestException('Invalid or expired OTP token');
+      }
     }
 
     const invoiceNumber = this.generateInvoiceNumber();
@@ -151,6 +170,15 @@ export class SalesService {
       cashierId: userId,
       tenantId,
     });
+
+    if (discount > 0) {
+      this.eventEmitter.emit('discount.approved', {
+        saleId: sale.id,
+        userId,
+        amount: discount,
+        tenantId,
+      });
+    }
 
     const productIds = [...new Set(units.map((u) => u.productId))];
     for (const productId of productIds) {
@@ -304,7 +332,7 @@ export class SalesService {
 
     const unitIds = sale.items.map((i) => i.inventoryUnitId);
 
-    return this.prisma.$transaction(async (tx) => {
+    const voided = await this.prisma.$transaction(async (tx) => {
       const voided = await tx.sale.update({
         where: { id },
         data: {
@@ -325,6 +353,14 @@ export class SalesService {
 
       return voided;
     });
+
+    this.eventEmitter.emit('sale.voided', {
+      saleId: id,
+      userId,
+      tenantId,
+    });
+
+    return voided;
   }
 
   async upsertCustomer(dto: UpsertCustomerDto, tenantId: string) {

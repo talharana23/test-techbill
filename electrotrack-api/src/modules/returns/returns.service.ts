@@ -99,6 +99,33 @@ export class ReturnsService {
       tenantId,
     });
 
+    for (const ret of returns) {
+      const unit = unitsToReturn.find((u) => u.id === ret.inventoryUnitId);
+      let productName = 'Unknown Product';
+      if (unit) {
+        const prod = await this.prisma.product.findUnique({
+          where: { id: unit.productId },
+          select: { name: true },
+        });
+        if (prod) productName = prod.name;
+      }
+
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true },
+      });
+
+      this.eventEmitter.emit('return.requested', {
+        returnId: ret.id,
+        userId,
+        saleId: dto.saleId,
+        reason: dto.reason,
+        productName,
+        requestedByName: user?.name,
+        tenantId,
+      });
+    }
+
     return returns;
   }
 
@@ -165,7 +192,7 @@ export class ReturnsService {
       throw new BadRequestException(`Return is already ${ret.status}`);
     }
 
-    return this.prisma.$transaction(async (tx) => {
+    const updated = await this.prisma.$transaction(async (tx) => {
       const updated = await tx.return.update({
         where: { id },
         data: {
@@ -184,6 +211,15 @@ export class ReturnsService {
 
       return updated;
     });
+
+    this.eventEmitter.emit('return.approved', {
+      returnId: id,
+      userId,
+      refundAmount: dto.refundAmount,
+      tenantId,
+    });
+
+    return updated;
   }
 
   async rejectReturn(id: string, dto: ReviewReturnDto, userId: string, tenantId: string) {
@@ -193,7 +229,7 @@ export class ReturnsService {
       throw new BadRequestException(`Return is already ${ret.status}`);
     }
 
-    return this.prisma.$transaction(async (tx) => {
+    const updated = await this.prisma.$transaction(async (tx) => {
       const updated = await tx.return.update({
         where: { id },
         data: {
@@ -211,5 +247,14 @@ export class ReturnsService {
 
       return updated;
     });
+
+    this.eventEmitter.emit('return.rejected', {
+      returnId: id,
+      userId,
+      reviewNotes: dto.reviewNotes || '',
+      tenantId,
+    });
+
+    return updated;
   }
 }
