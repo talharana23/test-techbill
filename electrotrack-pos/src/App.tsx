@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './store/auth.store';
 import { api } from './api/client';
@@ -73,13 +73,14 @@ function RequireAuth({
   return children;
 }
 
+// Guard against React StrictMode double-invocation in dev.
+// Without this, both calls hit /auth/refresh with the same cookie:
+//   Call 1 → revokes token A, creates token B → success
+//   Call 2 → token A already revoked → 401 → clearAuth() → forced logout
+let isRefreshingInProgress = false;
+
 export default function App() {
   const { user, accessToken, refreshToken, setToken, clearAuth, setHydrating, isHydrating, _hasHydrated } = useAuthStore();
-  // Guard against React StrictMode double-invocation in dev.
-  // Without this, both calls hit /auth/refresh with the same cookie:
-  //   Call 1 → revokes token A, creates token B → success
-  //   Call 2 → token A already revoked → 401 → clearAuth() → forced logout
-  const refreshCalled = useRef(false);
 
   useEffect(() => {
     if (!_hasHydrated) return;
@@ -87,8 +88,8 @@ export default function App() {
     if (!user) return;
     if (accessToken) return;
 
-    if (refreshCalled.current) return;
-    refreshCalled.current = true;
+    if (isRefreshingInProgress) return;
+    isRefreshingInProgress = true;
 
     setHydrating(true);
     api
@@ -98,7 +99,10 @@ export default function App() {
         { timeout: 10_000 }
       )
       .then(({ data }) => setToken(data.access_token, data.refresh_token || refreshToken))
-      .catch(() => clearAuth());
+      .catch(() => clearAuth())
+      .finally(() => {
+        isRefreshingInProgress = false;
+      });
   }, [_hasHydrated, isHydrating, user, accessToken, refreshToken, setToken, clearAuth, setHydrating]);
 
   // Root redirect logic
