@@ -25,6 +25,7 @@ interface PublicInvoice {
   discountAmount: number;
   totalAmount: number;
   status: string;
+  shippingStatus?: string;
   customerName: string | null;
   customerPhone: string | null;
   cashierName: string | null;
@@ -42,7 +43,8 @@ const PAYMENT_LABELS: Record<string, string> = {
 
 const formatPKR = (n: number) => `₨ ${Number(n).toLocaleString('en-PK')}`;
 
-function WarrantyBadge({ item }: { item: PublicItem }) {
+function WarrantyBadge({ item, isReturned }: { item: PublicItem; isReturned: boolean }) {
+  if (isReturned) return null;
   if (!item.warrantyMonths || item.warrantyMonths <= 0) {
     return <span className="text-xs text-white/30 italic">No warranty</span>;
   }
@@ -135,9 +137,22 @@ export default function PublicInvoicePage() {
           </div>
         </div>
 
-        <div className="bg-zinc-900/80 border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="bg-zinc-900/80 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
+          
+          {/* Watermark */}
+          {(invoice.status === 'returned' || invoice.status === 'void' || invoice.shippingStatus === 'returned') && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
+              <span
+                className="text-6xl font-black uppercase whitespace-nowrap opacity-[0.15] text-red-500"
+                style={{ transform: 'rotate(-30deg)' }}
+              >
+                {invoice.status === 'void' ? 'VOID' : 'RETURNED'}
+              </span>
+            </div>
+          )}
+
           {/* Invoice meta */}
-          <div className="px-6 pt-6 pb-4 border-b border-white/5">
+          <div className="px-6 pt-6 pb-4 border-b border-white/5 relative z-10">
             <p className="text-[10px] uppercase tracking-widest text-white/40 mb-1">Tax Invoice</p>
             <p className="font-mono font-bold text-white text-lg">{invoice.invoiceNumber}</p>
             <p className="text-xs text-white/50 mt-1 tabular-nums">{format(saleDate, 'dd MMM yyyy, h:mm a')}</p>
@@ -145,7 +160,7 @@ export default function PublicInvoicePage() {
 
           {/* Customer */}
           {(invoice.customerName || invoice.cashierName) && (
-            <div className="px-6 py-4 border-b border-white/5">
+            <div className="px-6 py-4 border-b border-white/5 relative z-10">
               <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2">Sold To</p>
               {invoice.customerName && (
                 <p className="text-sm font-medium text-white">{invoice.customerName}</p>
@@ -160,7 +175,7 @@ export default function PublicInvoicePage() {
           )}
 
           {/* Items with warranty */}
-          <div className="px-6 py-4 border-b border-white/5">
+          <div className="px-6 py-4 border-b border-white/5 relative z-10">
             <p className="text-[10px] uppercase tracking-widest text-white/40 mb-3">Items & Warranty</p>
             <div className="space-y-5">
               {invoice.items.map((item) => (
@@ -176,14 +191,14 @@ export default function PublicInvoicePage() {
                     <p className="text-sm font-bold text-white tabular-nums whitespace-nowrap">{formatPKR(item.sellingPrice)}</p>
                   </div>
                   {/* Warranty status */}
-                  <WarrantyBadge item={item} />
+                  <WarrantyBadge item={item} isReturned={invoice.status === 'returned' || invoice.status === 'void' || invoice.shippingStatus === 'returned'} />
                 </div>
               ))}
             </div>
           </div>
 
           {/* Totals */}
-          <div className="px-6 py-4 space-y-2">
+          <div className="px-6 py-4 space-y-2 relative z-10">
             <div className="flex justify-between text-sm text-white/60">
               <span>Subtotal</span>
               <span className="tabular-nums">{formatPKR(invoice.subtotal)}</span>

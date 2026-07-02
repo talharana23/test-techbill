@@ -206,7 +206,7 @@ export class ReturnsService {
 
       await tx.inventoryUnit.update({
         where: { id: ret.inventoryUnitId },
-        data: { status: UnitStatus.returned },
+        data: { status: UnitStatus.in_stock },
       });
 
       return updated;

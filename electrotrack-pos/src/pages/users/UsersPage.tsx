@@ -21,6 +21,7 @@ const ALL_POSSIBLE_PERMISSIONS: { key: Permission; label: string; desc: string }
   { key: 'pos.sell', label: 'Process Sales', desc: 'Can checkout and record new sales.' },
   { key: 'pos.discount', label: 'Apply Discounts', desc: 'Can apply manual product or cart discounts.' },
   { key: 'pos.void', label: 'Void Transactions', desc: 'Can cancel or void sales.' },
+  { key: 'pos.online_sell', label: 'Online Selling', desc: 'Can process online orders with advance/COD.' },
   { key: 'inventory.read', label: 'View Inventory', desc: 'Can search and view products/stock.' },
   { key: 'inventory.write', label: 'Modify Inventory', desc: 'Can add, edit, and receive inventory units.' },
   { key: 'inventory.delete', label: 'Delete Inventory', desc: 'Can deactivate/delete inventory products.' },

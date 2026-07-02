@@ -6,11 +6,16 @@ import { CreditCard, AlertTriangle } from 'lucide-react';
 import { api } from '../../api/client';
 import { useCartStore } from '../../store/cart.store';
 import { queueSale } from '../../db/offline.db';
-import type { Sale } from '../../types';
+import { useCan } from '../../lib/permissions';
+import type { Sale, ShopSettings } from '../../types';
 
 const schema = z.object({
   customerName: z.string().optional(),
   customerPhone: z.string().optional(),
+  customerCity: z.string().optional(),
+  trackingId: z.string().optional(),
+  deliveryCharge: z.coerce.number().min(0).default(0),
+  advanceAmount: z.coerce.number().min(0).default(0),
   paymentMethod: z.enum(['cash', 'easypaisa', 'jazzcash', 'card', 'bank_transfer']),
   discountAmount: z.coerce.number().min(0).default(0),
   notes: z.string().optional(),
@@ -22,9 +27,10 @@ const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
 const inputCls = 'w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors';
 const labelCls = 'block text-[10px] font-bold text-stitch-on-surface-variant uppercase tracking-wider mb-1';
 
-export default function PaymentForm({ onSaleComplete }: { onSaleComplete: (sale: Sale) => void }) {
+export default function PaymentForm({ onSaleComplete, shopSettings }: { onSaleComplete: (sale: Sale) => void; shopSettings: ShopSettings | null }) {
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const items = useCartStore((s) => s.items);
+  const { isOnlineOrder, setIsOnlineOrder, items } = useCartStore();
+  const canSellOnline = useCan('pos.online_sell') && shopSettings?.tenant?.onlineSellingEnabled;
 
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -32,17 +38,35 @@ export default function PaymentForm({ onSaleComplete }: { onSaleComplete: (sale:
   });
 
   const discount = watch('discountAmount') ?? 0;
+  const delivery = watch('deliveryCharge') ?? 0;
+  const advance = watch('advanceAmount') ?? 0;
   const subtotal = items.reduce((s, i) => s + i.sellingPrice, 0);
-  const total = Math.max(0, subtotal - Number(discount));
+  const total = Math.max(0, subtotal - Number(discount) + (isOnlineOrder ? Number(delivery) : 0));
+  const codAmount = Math.max(0, total - (isOnlineOrder ? Number(advance) : 0));
 
   const onSubmit = async (data: FormData) => {
     setSubmitError(null);
+    if (isOnlineOrder) {
+      if (!data.customerName || !data.customerPhone || !data.customerCity) {
+        setSubmitError('Name, Phone, and City are required for online orders.');
+        return;
+      }
+    }
     const payload = {
       serials: items.map((i) => i.serialNumber),
       paymentMethod: data.paymentMethod,
+      isOnline: isOnlineOrder,
+      ...(isOnlineOrder && {
+        customPrices: items.reduce((acc, i) => ({ ...acc, [i.serialNumber]: i.sellingPrice }), {} as Record<string, number>),
+      }),
       ...(data.customerName && { customerName: data.customerName }),
       ...(data.customerPhone && { customerPhone: data.customerPhone }),
       ...(data.discountAmount && data.discountAmount > 0 && { discountAmount: data.discountAmount }),
+      ...(isOnlineOrder && data.customerCity && { customerCity: data.customerCity }),
+      ...(isOnlineOrder && data.trackingId && { trackingId: data.trackingId }),
+      ...(isOnlineOrder && data.deliveryCharge > 0 && { deliveryCharge: data.deliveryCharge }),
+      ...(isOnlineOrder && data.advanceAmount > 0 && { advanceAmount: data.advanceAmount }),
+      ...(isOnlineOrder && { codAmount }),
     };
     try {
       const res = await api.post<Sale>('/sales', payload);
@@ -60,21 +84,48 @@ export default function PaymentForm({ onSaleComplete }: { onSaleComplete: (sale:
 
   return (
     <div className="glass-card rounded-xl p-4 space-y-4 overflow-auto max-h-full">
-      <div className="flex items-center gap-2 border-b border-white/5 pb-3">
-        <CreditCard size={16} className="text-stitch-primary" />
-        <p className="text-sm font-bold text-stitch-on-surface font-space">Payment Details</p>
+      <div className="flex items-center justify-between border-b border-white/5 pb-3">
+        <div className="flex items-center gap-2">
+          <CreditCard size={16} className="text-stitch-primary" />
+          <p className="text-sm font-bold text-stitch-on-surface font-space">Payment Details</p>
+        </div>
+        {canSellOnline && (
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked={isOnlineOrder} onChange={(e) => setIsOnlineOrder(e.target.checked)} className="rounded border-white/10 bg-white/5 text-indigo-500 focus:ring-indigo-500/50" />
+            <span className="text-xs font-bold text-indigo-400">Online Order</span>
+          </label>
+        )}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
         <div>
-          <label className={labelCls}>Customer Name</label>
-          <input {...register('customerName')} className={inputCls} placeholder="Optional" />
+          <label className={labelCls}>Customer Name {isOnlineOrder && '*'}</label>
+          <input {...register('customerName')} className={inputCls} placeholder="Optional" required={isOnlineOrder} />
         </div>
 
         <div>
-          <label className={labelCls}>Phone</label>
-          <input {...register('customerPhone')} type="tel" className={inputCls} placeholder="03XX-XXXXXXX" />
+          <label className={labelCls}>Phone {isOnlineOrder && '*'}</label>
+          <input {...register('customerPhone')} type="tel" className={inputCls} placeholder="03XX-XXXXXXX" required={isOnlineOrder} />
         </div>
+
+        {isOnlineOrder && (
+          <>
+            <div>
+              <label className={labelCls}>City *</label>
+              <input {...register('customerCity')} className={inputCls} placeholder="e.g. Lahore" required />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className={labelCls}>Delivery Charge</label>
+                <input {...register('deliveryCharge')} type="number" min={0} className={inputCls} placeholder="0" />
+              </div>
+              <div>
+                <label className={labelCls}>Advance Paid</label>
+                <input {...register('advanceAmount')} type="number" min={0} className={inputCls} placeholder="0" />
+              </div>
+            </div>
+          </>
+        )}
 
         <div>
           <label className={labelCls}>Payment Method</label>
@@ -106,9 +157,21 @@ export default function PaymentForm({ onSaleComplete }: { onSaleComplete: (sale:
               <span className="tabular-nums text-stitch-error">− {formatPKR(Number(discount))}</span>
             </div>
           )}
+          {isOnlineOrder && Number(delivery) > 0 && (
+            <div className="flex justify-between text-xs text-stitch-on-surface-variant">
+              <span>Delivery</span>
+              <span className="tabular-nums text-indigo-400">+ {formatPKR(Number(delivery))}</span>
+            </div>
+          )}
+          {isOnlineOrder && Number(advance) > 0 && (
+            <div className="flex justify-between text-xs text-stitch-on-surface-variant">
+              <span>Advance Paid</span>
+              <span className="tabular-nums text-green-400">− {formatPKR(Number(advance))}</span>
+            </div>
+          )}
           <div className="flex justify-between text-sm font-bold text-stitch-on-surface pt-1.5 border-t border-white/5">
-            <span>Total</span>
-            <span className="tabular-nums text-stitch-tertiary font-space">{formatPKR(total)}</span>
+            <span>{isOnlineOrder ? 'COD Amount' : 'Total'}</span>
+            <span className="tabular-nums text-stitch-tertiary font-space">{formatPKR(isOnlineOrder ? codAmount : total)}</span>
           </div>
         </div>
 

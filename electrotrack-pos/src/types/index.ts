@@ -9,7 +9,7 @@ export type Role =
 // ─── Permission Keys ──────────────────────────────────────────────────────────
 
 export type Permission =
-  | 'pos.read' | 'pos.sell' | 'pos.discount' | 'pos.void'
+  | 'pos.read' | 'pos.sell' | 'pos.discount' | 'pos.void' | 'pos.online_sell'
   | 'inventory.read' | 'inventory.write' | 'inventory.delete'
   | 'suppliers.read' | 'suppliers.write'
   | 'customers.read' | 'customers.write'
@@ -21,7 +21,7 @@ export type Permission =
   | 'warranty.read' | 'loyalty.read' | 'loyalty.manage';
 
 export const ALL_PERMISSIONS: Permission[] = [
-  'pos.read', 'pos.sell', 'pos.discount', 'pos.void',
+  'pos.read', 'pos.sell', 'pos.discount', 'pos.void', 'pos.online_sell',
   'inventory.read', 'inventory.write', 'inventory.delete',
   'suppliers.read', 'suppliers.write',
   'customers.read', 'customers.write',
@@ -119,6 +119,9 @@ export interface ShopSettings {
   invoiceFooterNotes: string | null;
   invoiceWatermarkText: string | null;
   invoiceShowWatermark: boolean;
+  tenant?: {
+    onlineSellingEnabled: boolean;
+  };
 }
 
 export interface AuditLog {
@@ -229,6 +232,15 @@ export interface Sale {
   status: string;
   createdAt: string;
   items: SaleItem[];
+  isOnline?: boolean;
+  customerCity?: string | null;
+  trackingId?: string | null;
+  deliveryCharge?: number;
+  advanceAmount?: number;
+  codAmount?: number;
+  shippingStatus?: 'pending' | 'dispatched' | 'delivered' | 'returned';
+  payoutReceivedAt?: string | null;
+  refundLossAmount?: number | null;
 }
 
 export interface SalesSummary {
@@ -238,8 +250,14 @@ export interface SalesSummary {
   totalSales: number;
   totalItems: number;
   totalDiscounts: number;
+  offlineRevenue: number;
+  onlineRevenue: number;
+  courierPayouts: number;
+  onlineSalesCount: number;
+  offlineSalesCount: number;
+  pendingOnlineOrders: number;
   byPaymentMethod: { method: string; count: number; revenue: number }[];
-  soldProducts: { productId: string; name: string; units: number; revenue: number }[];
+  soldProducts: { productId: string; name: string; units: number; revenue: number; onlineUnits?: number }[];
 }
 
 export interface LowStockItem {
@@ -261,11 +279,12 @@ export interface Notification {
 }
 
 export interface WsSaleCreatedPayload {
-  id: string;
+  saleId: string;
   invoiceNumber: string;
   totalAmount: number;
   itemCount: number;
-  cashierId: string;
+  isOnline: boolean;
+  shippingStatus: 'pending' | 'dispatched' | 'delivered' | 'returned';
 }
 
 export interface WsStockLowPayload {
@@ -283,6 +302,7 @@ export interface Tenant {
   status: string;
   plan: string;
   maxUsers: number;
+  onlineSellingEnabled: boolean;
   createdAt: string;
   updatedAt: string;
   _count?: { users: number };

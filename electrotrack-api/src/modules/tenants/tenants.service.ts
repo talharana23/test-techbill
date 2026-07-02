@@ -6,7 +6,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 const BCRYPT_ROUNDS = 12;
 
 const ALL_PERMISSIONS = [
-  'pos.read', 'pos.sell', 'pos.discount', 'pos.void',
+  'pos.read', 'pos.sell', 'pos.discount', 'pos.void', 'pos.online_sell',
   'inventory.read', 'inventory.write', 'inventory.delete',
   'suppliers.read', 'suppliers.write',
   'customers.read', 'customers.write',
@@ -107,6 +107,7 @@ export class TenantsService {
       status?: string;
       plan?: string;
       maxUsers?: number;
+      onlineSellingEnabled?: boolean;
     }
   ) {
     const tenant = await this.prisma.tenant.findUnique({ where: { id } });

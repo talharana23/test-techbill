@@ -24,10 +24,11 @@ export class SettingsService {
   async getSettings(tenantId: string) {
     let settings = await this.prisma.shopSettings.findFirst({
       where: { tenantId },
+      include: { tenant: { select: { onlineSellingEnabled: true } } },
     });
 
     if (!settings) {
-      settings = await this.prisma.shopSettings.create({
+      await this.prisma.shopSettings.create({
         data: {
           tenantId,
           shopName: 'My Shop',
@@ -42,9 +43,16 @@ export class SettingsService {
           invoiceShowWatermark: false,
         },
       });
+      settings = await this.prisma.shopSettings.findFirst({
+        where: { tenantId },
+        include: { tenant: { select: { onlineSellingEnabled: true } } },
+      });
     }
 
-    return settings;
+    return {
+      ...settings,
+      onlineSellingEnabled: settings?.tenant?.onlineSellingEnabled ?? false,
+    };
   }
 
   async updateSettings(tenantId: string, dto: UpdateSettingsDto) {

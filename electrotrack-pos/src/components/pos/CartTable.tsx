@@ -6,6 +6,8 @@ const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
 export default function CartTable() {
   const items = useCartStore((s) => s.items);
   const removeItem = useCartStore((s) => s.removeItem);
+  const updateItemPrice = useCartStore((s) => s.updateItemPrice);
+  const isOnlineOrder = useCartStore((s) => s.isOnlineOrder);
 
   if (items.length === 0) {
     return (
@@ -45,7 +47,16 @@ export default function CartTable() {
                   {item.serialNumber}
                 </td>
                 <td className="px-4 py-2.5 text-right tabular-nums text-sm font-bold text-stitch-on-surface">
-                  {formatPKR(item.sellingPrice)}
+                  {isOnlineOrder ? (
+                    <input
+                      type="number"
+                      className="w-24 bg-stitch-surface-container-high/50 border border-white/10 rounded px-2 py-1 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 text-right ml-auto"
+                      value={item.sellingPrice}
+                      onChange={(e) => updateItemPrice(item.serialNumber, Number(e.target.value) || 0)}
+                    />
+                  ) : (
+                    formatPKR(item.sellingPrice)
+                  )}
                 </td>
                 <td className="px-4 py-2.5 text-right">
                   <button

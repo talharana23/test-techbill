@@ -170,16 +170,19 @@ export default function InvoiceModal({ sale, shopSettings, shopName, onClose }: 
               }}
             >
               {/* Watermark */}
-              {showWatermark && watermarkText && (
+              {(showWatermark && watermarkText) || sale.status === 'returned' || sale.status === 'void' || sale.shippingStatus === 'returned' ? (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
                   <span
-                    className="text-6xl font-black uppercase opacity-[0.04] whitespace-nowrap"
-                    style={{ transform: 'rotate(-30deg)', color: primaryColor }}
+                    className={`text-6xl font-black uppercase whitespace-nowrap ${(sale.status === 'returned' || sale.status === 'void' || sale.shippingStatus === 'returned') ? 'opacity-[0.15]' : 'opacity-[0.04]'}`}
+                    style={{ 
+                      transform: 'rotate(-30deg)', 
+                      color: (sale.status === 'returned' || sale.status === 'void' || sale.shippingStatus === 'returned') ? '#ef4444' : primaryColor 
+                    }}
                   >
-                    {watermarkText}
+                    {sale.status === 'void' ? 'VOID' : (sale.status === 'returned' || sale.shippingStatus === 'returned' ? 'RETURNED' : watermarkText)}
                   </span>
                 </div>
-              )}
+              ) : null}
 
               <div className="px-7 pt-7 pb-5 relative z-10">
                 <div className="flex items-start justify-between gap-3">
@@ -243,7 +246,8 @@ export default function InvoiceModal({ sale, shopSettings, shopName, onClose }: 
                     const product = item.inventoryUnit?.product;
                     const serial = item.inventoryUnit?.serialNumber;
                     const wMonths = product?.warrantyMonths ?? 0;
-                    const warrantyText = getWarrantyText(wMonths, saleDate);
+                    const isSaleReturned = sale.status === 'returned' || sale.status === 'void' || sale.shippingStatus === 'returned';
+                    const warrantyText = isSaleReturned ? '' : getWarrantyText(wMonths, saleDate);
                     return (
                       <div key={item.id ?? idx} className="space-y-1">
                         <div className="flex items-baseline justify-between gap-3">

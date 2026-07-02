@@ -70,25 +70,29 @@ export class ReportsService {
               product: { select: { id: true, name: true, costPrice: true } },
             },
           },
+          sale: { select: { isOnline: true } },
         },
       }),
     ]);
 
     const productMap = new Map<
       string,
-      { name: string; units: number; revenue: number }
+      { name: string; units: number; revenue: number; onlineUnits: number }
     >();
     for (const item of items) {
       const pid = item.inventoryUnit.product.id;
+      const isOnline = item.sale?.isOnline;
       const entry = productMap.get(pid) ?? {
         name: item.inventoryUnit.product.name,
         units: 0,
         revenue: 0,
+        onlineUnits: 0,
       };
       productMap.set(pid, {
         ...entry,
         units: entry.units + 1,
         revenue: entry.revenue + Number(item.sellingPrice),
+        onlineUnits: entry.onlineUnits + (isOnline ? 1 : 0),
       });
     }
 
@@ -101,8 +105,59 @@ export class ReportsService {
       const cost = item.inventoryUnit.purchasePrice ?? item.inventoryUnit.product.costPrice ?? 0;
       totalCost += Number(cost);
     }
-    const totalRevenue = Number(totals._sum.totalAmount ?? 0);
+    const salesList = await this.prisma.sale.findMany({
+      where,
+      select: {
+        isOnline: true,
+        totalAmount: true,
+        advanceAmount: true,
+        codAmount: true,
+        payoutReceivedAt: true,
+        discountAmount: true,
+      },
+    });
+
+    let totalRevenue = 0;
+    let totalDiscounts = 0;
+    let offlineRevenue = 0;
+    let onlineRevenue = 0;
+    let offlineSalesCount = 0;
+    let onlineSalesCount = 0;
+
+    for (const s of salesList) {
+      totalDiscounts += Number(s.discountAmount ?? 0);
+      if (s.isOnline) {
+        onlineRevenue += Number(s.advanceAmount ?? 0);
+        onlineSalesCount += 1;
+      } else {
+        offlineRevenue += Number(s.totalAmount ?? 0);
+        offlineSalesCount += 1;
+      }
+    }
+
+    // Add Courier Payouts to Revenue for this period
+    const payouts = await this.prisma.courierPayout.aggregate({
+      where: {
+        tenantId,
+        date: { gte: start, lte: end }
+      },
+      _sum: { amount: true },
+    });
+    const courierPayouts = Number(payouts._sum.amount ?? 0);
+    onlineRevenue += courierPayouts;
+    
+    totalRevenue = offlineRevenue + onlineRevenue;
+
     const totalGrossProfit = totalRevenue - totalCost;
+
+    const pendingOnlineOrders = await this.prisma.sale.count({
+      where: {
+        tenantId,
+        isOnline: true,
+        shippingStatus: 'pending',
+        createdAt: { gte: start, lte: end },
+      }
+    });
 
     return {
       period: label,
@@ -110,7 +165,13 @@ export class ReportsService {
       totalGrossProfit,
       totalSales: totals._count.id,
       totalItems: items.length,
-      totalDiscounts: Number(totals._sum.discountAmount ?? 0),
+      totalDiscounts,
+      offlineRevenue,
+      onlineRevenue,
+      courierPayouts,
+      onlineSalesCount,
+      offlineSalesCount,
+      pendingOnlineOrders,
       byPaymentMethod: byPayment.map((g) => ({
         method: g.paymentMethod,
         count: g._count.id,
@@ -247,6 +308,7 @@ export class ReportsService {
         tenantId,
         status: SaleStatus.completed,
         paymentMethod: PaymentMethod.cash,
+        isOnline: false,
         createdAt: { gte: start, lte: end },
       },
       _sum: { totalAmount: true },
@@ -284,6 +346,7 @@ export class ReportsService {
         tenantId,
         status: SaleStatus.completed,
         paymentMethod: PaymentMethod.cash,
+        isOnline: false,
         createdAt: { gte: start, lte: end },
       },
       _sum: { totalAmount: true },

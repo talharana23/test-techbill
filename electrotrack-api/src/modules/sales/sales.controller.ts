@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Param,
   Body,
   Query,
@@ -87,5 +88,57 @@ export class SalesController {
     @Req() req: RequestWithUser,
   ) {
     return this.salesService.voidSale(id, dto, req.user.id, req.user.tenantId);
+  }
+
+  @Patch(':id/dispatch')
+  @Permissions('pos.online_sell')
+  dispatchSale(
+    @Param('id') id: string,
+    @Body('trackingId') trackingId: string,
+    @Req() req: RequestWithUser,
+  ) {
+    return this.salesService.dispatchSale(id, trackingId, req.user.tenantId, req.user.id);
+  }
+
+  @Patch(':id/deliver')
+  @Permissions('pos.online_sell')
+  markDelivered(
+    @Param('id') id: string,
+    @Req() req: RequestWithUser,
+  ) {
+    return this.salesService.markDelivered(id, req.user.tenantId);
+  }
+
+  @Get('payouts/ledger')
+  @Permissions('pos.online_sell')
+  getCourierLedger(@Req() req: RequestWithUser) {
+    return this.salesService.getCourierLedger(req.user.tenantId);
+  }
+
+  @Post('payouts')
+  @Permissions('pos.online_sell')
+  recordCourierPayout(
+    @Body('amount') amount: number,
+    @Body('courierName') courierName: string,
+    @Body('date') date: string,
+    @Req() req: RequestWithUser,
+  ) {
+    return this.salesService.recordCourierPayout(
+      req.user.tenantId,
+      req.user.id,
+      Number(amount),
+      courierName,
+      date,
+    );
+  }
+
+  @Patch(':id/return')
+  @Permissions('pos.online_sell')
+  returnOnlineOrder(
+    @Param('id') id: string,
+    @Body('refundLossAmount') refundLossAmount: number,
+    @Req() req: RequestWithUser,
+  ) {
+    return this.salesService.returnOnlineOrder(id, Number(refundLossAmount) || 0, req.user.tenantId, req.user.id);
   }
 }

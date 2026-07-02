@@ -79,6 +79,7 @@ export class PublicSalesController {
       discountAmount: Number(sale.discountAmount),
       totalAmount: Number(sale.totalAmount),
       status: sale.status,
+      shippingStatus: sale.shippingStatus,
       customerName: sale.customer?.name ?? null,
       customerPhone: sale.customer?.phone ?? null,
       cashierName: sale.soldBy?.name ?? null,

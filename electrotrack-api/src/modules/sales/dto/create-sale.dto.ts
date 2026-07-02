@@ -17,6 +17,9 @@ export class CreateSaleDto {
   @IsString({ each: true })
   serials: string[];
 
+  @IsOptional()
+  customPrices?: Record<string, number>;
+
   @IsEnum(PaymentMethod)
   paymentMethod: PaymentMethod;
 
@@ -41,4 +44,33 @@ export class CreateSaleDto {
   @IsString()
   @IsOptional()
   otpToken?: string;
+
+  @IsOptional()
+  isOnline?: boolean;
+
+  @IsString()
+  @IsOptional()
+  customerCity?: string;
+
+  @IsString()
+  @IsOptional()
+  trackingId?: string;
+
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  @IsOptional()
+  @Type(() => Number)
+  deliveryCharge?: number;
+
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  @IsOptional()
+  @Type(() => Number)
+  advanceAmount?: number;
+
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  @IsOptional()
+  @Type(() => Number)
+  codAmount?: number;
 }

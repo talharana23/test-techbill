@@ -56,6 +56,7 @@ export class TenantsController {
       status?: string;
       plan?: string;
       maxUsers?: number;
+      onlineSellingEnabled?: boolean;
     },
   ) {
     return this.tenantsService.updateTenant(id, dto);

@@ -70,6 +70,13 @@ enum POStatus {
   cancelled
 }
 
+enum ShippingStatus {
+  pending
+  dispatched
+  delivered
+  returned
+}
+
 // ─── Tenant model ──────────────────────────────────────────────────────────
 
 model Tenant {
@@ -81,6 +88,7 @@ model Tenant {
   trialEndsAt      DateTime? @map("trial_ends_at")
   currentPeriodEnd DateTime? @map("current_period_end")
   maxUsers         Int      @default(5) @map("max_users")
+  onlineSellingEnabled Boolean  @default(false) @map("online_selling_enabled")
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
@@ -96,6 +104,7 @@ model Tenant {
   returns          Return[]
   reconciliations  CashReconciliation[]
   expenses         Expense[]
+  courierPayouts   CourierPayout[]
   auditLogs        AuditLog[]
   notifications    Notification[]
 
@@ -132,6 +141,7 @@ model User {
   reconciliationsSubmitted CashReconciliation[] @relation("ReconciliationsSubmittedBy")
   reconciliationsReviewed  CashReconciliation[] @relation("ReconciliationsReviewedBy")
   expenses                 Expense[]            @relation("ExpensesCreatedBy")
+  courierPayouts           CourierPayout[]      @relation("PayoutsCreatedBy")
 
   @@map("users")
 }
@@ -352,6 +362,15 @@ model Sale {
   voidedBy             User?         @relation("SalesVoided", fields: [voidedById], references: [id], onDelete: SetNull)
   tenantId             String        @map("tenant_id") @db.Uuid
   tenant               Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  isOnline             Boolean       @default(false) @map("is_online")
+  customerCity         String?       @map("customer_city") @db.VarChar(100)
+  trackingId           String?       @map("tracking_id") @db.VarChar(100)
+  deliveryCharge       Decimal       @default(0) @map("delivery_charge") @db.Decimal(10, 2)
+  advanceAmount        Decimal       @default(0) @map("advance_amount") @db.Decimal(10, 2)
+  codAmount            Decimal       @default(0) @map("cod_amount") @db.Decimal(10, 2)
+  shippingStatus       ShippingStatus @default(pending) @map("shipping_status")
+  payoutReceivedAt     DateTime?      @map("payout_received_at")
+  refundLossAmount     Decimal?       @map("refund_loss_amount") @db.Decimal(10, 2)
   createdAt            DateTime      @default(now()) @map("created_at")
 
   items   SaleItem[]
@@ -449,6 +468,24 @@ model Expense {
   @@index([date])
   @@index([tenantId])
   @@map("expenses")
+}
+
+// ─── Table 14.6: courier_payouts ──────────────────────────────────────────────
+
+model CourierPayout {
+  id          String   @id @default(uuid()) @db.Uuid
+  amount      Decimal  @db.Decimal(10, 2)
+  courierName String?  @map("courier_name") @db.VarChar(100)
+  date        DateTime @db.Date
+  createdById String?  @map("created_by_id") @db.Uuid
+  createdBy   User?    @relation("PayoutsCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  tenantId    String   @map("tenant_id") @db.Uuid
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([date])
+  @@index([tenantId])
+  @@map("courier_payouts")
 }
 
 // ─── Table 15: audit_logs ─────────────────────────────────────────────────────

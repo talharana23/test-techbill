@@ -3,6 +3,7 @@ import { format, subDays } from 'date-fns';
 import { FileText, TrendingUp, Users, Package, AlertTriangle } from 'lucide-react';
 import { api } from '../../api/client';
 import type { SalesSummary, StaffPerformance, DeadStockItem } from '../../types';
+import { useCan } from '../../lib/permissions';
 import gsap from 'gsap';
 
 const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
@@ -18,6 +19,7 @@ export default function ReportsPage() {
   const [staff, setStaff] = useState<StaffPerformance[]>([]);
   const [deadStock, setDeadStock] = useState<DeadStockItem[]>([]);
   const [error, setError] = useState('');
+  const isOnlineEnabled = useCan('pos.online_sell');
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -156,6 +158,46 @@ export default function ReportsPage() {
                   </div>
                 ))}
               </div>
+
+              {isOnlineEnabled && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="glass-card rounded-xl p-5 border border-white/5 bg-white/[0.01]">
+                    <h3 className="text-xs font-bold text-stitch-on-surface-variant uppercase tracking-wider mb-2">Offline vs Online Revenue</h3>
+                    <div className="space-y-3 mt-4">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-stitch-on-surface-variant">Offline Sales</span>
+                        <span className="font-bold text-white tabular-nums">{formatPKR(summary.offlineRevenue)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-stitch-on-surface-variant">Online Sales (Advances)</span>
+                        <span className="font-bold text-emerald-400 tabular-nums">{formatPKR(summary.onlineRevenue - summary.courierPayouts)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm border-t border-white/10 pt-2">
+                        <span className="text-stitch-on-surface-variant">Bulk Courier Payouts</span>
+                        <span className="font-bold text-indigo-400 tabular-nums">{formatPKR(summary.courierPayouts)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="glass-card rounded-xl p-5 border border-white/5 bg-white/[0.01]">
+                    <h3 className="text-xs font-bold text-stitch-on-surface-variant uppercase tracking-wider mb-2">Sales Volume</h3>
+                    <div className="space-y-3 mt-4 flex flex-col justify-center h-full pb-4">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-stitch-on-surface-variant">Offline Orders</span>
+                        <span className="font-bold text-white tabular-nums">{summary.offlineSalesCount}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-stitch-on-surface-variant">Online Orders</span>
+                        <span className="font-bold text-emerald-400 tabular-nums">{summary.onlineSalesCount}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="glass-card rounded-xl p-5 border border-indigo-500/20 bg-indigo-500/5 flex flex-col items-center justify-center">
+                    <p className="text-xs text-indigo-400 font-bold uppercase tracking-wider mb-1">New Pending Online</p>
+                    <p className="text-3xl font-bold text-white tabular-nums">{summary.pendingOnlineOrders}</p>
+                    <p className="text-[10px] text-stitch-on-surface-variant mt-2 text-center">Orders created in this period</p>
+                  </div>
+                </div>
+              )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="glass-card rounded-xl p-5">

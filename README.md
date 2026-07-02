@@ -105,6 +105,13 @@ It ships as two apps:
 - Suspicious flag auto-raised on repeat returns within a configurable window
 - Return analytics: reason breakdown, most-returned products, high-risk customers table
 
+### E-commerce & Online Selling
+- **Online Order Management**: Dedicated tab for dispatching, tracking, and completing online orders.
+- **Courier Ledgers**: Bulk payout logging to reconcile cash received from couriers vs pending COD amounts.
+- **Customizable Online Pricing**: Dynamic ability to adjust individual product selling prices directly on the POS screen specifically for online orders (supporting price divergence from the physical shop).
+- **Split Reporting**: Detailed dashboard metrics and reports cleanly separating online revenue vs offline revenue.
+- **Access Control**: These interconnected features strictly activate only when the Super Admin enables `onlineSellingEnabled` for a tenant and grants the `pos.online_sell` permission.
+
 ### Warranty Lookup
 - Search any serial number across ALL statuses (in_stock, sold, returned)
 - Shows warranty expiry, customer name, and original sale invoice

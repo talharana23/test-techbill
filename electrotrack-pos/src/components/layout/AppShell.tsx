@@ -3,7 +3,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import {
   ShoppingCart, BarChart3, LogOut, Package, RotateCcw,
   FileText, Users, Settings, ClipboardList, Bell, UserCircle, Building2, ShoppingBag, ShieldAlert,
-  PackageCheck, ShieldCheck, Star, TrendingDown, Banknote, Menu, Wallet,
+  PackageCheck, ShieldCheck, Star, TrendingDown, Banknote, Menu, Wallet, Truck,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useAuthStore } from '../../store/auth.store';
@@ -39,6 +39,7 @@ export default function AppShell() {
   const canSeeLoyalty = useCan('loyalty.read') && !isPlatformAdmin;
   const canSeeReturnAnalytics = useCan('returns.read') && !isPlatformAdmin;
   const canSeeCashRecon = useCan('reports.cash_reconciliation') && !isPlatformAdmin;
+  const canSeeOnlineOrders = useCan('pos.online_sell') && !isPlatformAdmin;
 
   const fetchNotifications = useCallback(async () => {
     if (isPlatformAdmin) return;
@@ -217,6 +218,12 @@ export default function AppShell() {
             <NavLink to="/invoices" className={navClass}>
               <FileText size={16} />
               Invoices
+            </NavLink>
+          )}
+          {canSeeOnlineOrders && (
+            <NavLink to="/online-orders" className={navClass}>
+              <Truck size={16} />
+              Online Orders
             </NavLink>
           )}
           {canSeeInventory && (

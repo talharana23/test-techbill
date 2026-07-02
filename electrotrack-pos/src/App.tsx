@@ -23,6 +23,7 @@ import WarrantyPage from './pages/warranty/WarrantyPage';
 import TenantsPage from './pages/tenants/TenantsPage';
 import InvoiceHistoryPage from './pages/sales/InvoiceHistoryPage';
 import PublicInvoicePage from './pages/sales/PublicInvoicePage';
+import OnlineOrdersPage from './pages/sales/OnlineOrdersPage';
 import AppShell from './components/layout/AppShell';
 import { can } from './lib/permissions';
 import type { Role, Permission } from './types';
@@ -283,6 +284,14 @@ export default function App() {
             element={
               <RequireAuth roles={['owner']}>
                 <InvoiceHistoryPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="online-orders"
+            element={
+              <RequireAuth permission="pos.online_sell">
+                <OnlineOrdersPage />
               </RequireAuth>
             }
           />

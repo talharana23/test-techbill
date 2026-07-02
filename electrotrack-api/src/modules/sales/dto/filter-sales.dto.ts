@@ -8,10 +8,20 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { SaleStatus } from '@prisma/client';
+import { Type, Transform } from 'class-transformer';
+import { SaleStatus, ShippingStatus } from '@prisma/client';
 
 export class FilterSalesDto {
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (value === undefined || value === null || value === '') return undefined;
+    return value === 'true' || value === true;
+  })
+  isOnline?: boolean;
+
+  @IsEnum(ShippingStatus)
+  @IsOptional()
+  shippingStatus?: ShippingStatus;
   @IsString()
   @IsOptional()
   search?: string;

@@ -19,6 +19,8 @@ interface SaleListItem {
   customer: { id: string; name: string; phone: string } | null;
   soldBy: { id: string; name: string } | null;
   _count: { items: number };
+  isOnline: boolean;
+  codAmount?: number;
 }
 
 interface SaleDetail {
@@ -272,6 +274,7 @@ export default function InvoiceHistoryPage() {
                   >
                     <td className="px-4 py-3 font-mono text-sm text-stitch-primary font-bold whitespace-nowrap">
                       {s.invoiceNumber}
+                      {s.isOnline && <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-sans">Online</span>}
                     </td>
                     <td className="px-4 py-3 text-xs text-stitch-on-surface-variant whitespace-nowrap">
                       {format(new Date(s.createdAt), 'dd MMM yyyy')}<br />
@@ -297,13 +300,26 @@ export default function InvoiceHistoryPage() {
                       {PAYMENT_LABELS[s.paymentMethod] ?? s.paymentMethod}
                     </td>
                     <td className="px-4 py-3">
-                      <p className="text-sm font-bold font-mono tabular-nums text-stitch-on-surface whitespace-nowrap">
-                        {formatPKR(Number(s.totalAmount))}
-                      </p>
-                      {Number(s.discountAmount) > 0 && (
-                        <p className="text-[10px] font-mono tabular-nums text-stitch-error whitespace-nowrap">
-                          −{formatPKR(Number(s.discountAmount))} disc.
-                        </p>
+                      {s.isOnline ? (
+                        <>
+                          <p className="text-sm font-bold font-mono tabular-nums text-stitch-on-surface whitespace-nowrap">
+                            {formatPKR(Number(s.codAmount ?? 0))}
+                          </p>
+                          <p className="text-[10px] font-mono tabular-nums text-emerald-400 whitespace-nowrap">
+                            COD Value
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-sm font-bold font-mono tabular-nums text-stitch-on-surface whitespace-nowrap">
+                            {formatPKR(Number(s.totalAmount))}
+                          </p>
+                          {Number(s.discountAmount) > 0 && (
+                            <p className="text-[10px] font-mono tabular-nums text-stitch-error whitespace-nowrap">
+                              −{formatPKR(Number(s.discountAmount))} disc.
+                            </p>
+                          )}
+                        </>
                       )}
                     </td>
                     <td className="px-4 py-3">

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { TrendingUp, ShoppingCart, Package, Tag, Banknote, X, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDashboardStore } from '../../store/dashboard.store';
+import { useCan } from '../../lib/permissions';
 
 import SalesChart from '../../components/dashboard/SalesChart';
 import SalesFeed from '../../components/dashboard/SalesFeed';
@@ -14,6 +15,7 @@ const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
 export default function OwnerDashboard() {
   const navigate = useNavigate();
   const summary = useDashboardStore((s) => s.summary);
+  const isOnlineEnabled = useCan('pos.online_sell');
   const syncDashboard = useDashboardStore((s) => s.syncDashboard);
   const fetchAiInsight = useDashboardStore((s) => s.fetchAiInsight);
   const [showItemsModal, setShowItemsModal] = useState(false);
@@ -91,6 +93,23 @@ export default function OwnerDashboard() {
         </div>
       )}
 
+      {summary && isOnlineEnabled && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="glass-card rounded-xl p-4 border border-indigo-500/20 bg-indigo-500/5">
+            <p className="text-xs text-indigo-400 font-bold uppercase tracking-wider mb-1">Pending Online Orders</p>
+            <p className="text-2xl font-bold text-white tabular-nums">{summary.pendingOnlineOrders || 0}</p>
+          </div>
+          <div className="glass-card rounded-xl p-4 border border-emerald-500/20 bg-emerald-500/5">
+            <p className="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-1">Online Sales Value</p>
+            <p className="text-2xl font-bold text-white tabular-nums">{formatPKR(summary.onlineRevenue || 0)}</p>
+          </div>
+          <div className="glass-card rounded-xl p-4 border border-white/5 bg-white/[0.02]">
+            <p className="text-xs text-stitch-on-surface-variant font-bold uppercase tracking-wider mb-1">Offline Sales Value</p>
+            <p className="text-2xl font-bold text-white tabular-nums">{formatPKR(summary.offlineRevenue || 0)}</p>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 glass-card rounded-xl p-4">
           <SalesChart />
@@ -118,7 +137,14 @@ export default function OwnerDashboard() {
                 summary.soldProducts.map((p) => (
                   <div key={p.productId} className="flex flex-col gap-1 p-3 rounded-xl bg-white/[0.02] border border-white/5">
                     <div className="flex items-start justify-between gap-3">
-                      <p className="text-sm font-bold text-white truncate leading-tight">{p.name}</p>
+                      <p className="text-sm font-bold text-white leading-tight">
+                        {p.name}
+                        {p.onlineUnits && p.onlineUnits > 0 ? (
+                          <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-sans">
+                            {p.onlineUnits === p.units ? 'Online' : `${p.onlineUnits} Online`}
+                          </span>
+                        ) : null}
+                      </p>
                       <div className="shrink-0 flex items-center gap-1.5 px-2 py-0.5 rounded bg-green-500/10 border border-green-500/20 text-green-400">
                         <span className="text-xs font-bold font-space">{p.units}x</span>
                       </div>

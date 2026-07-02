@@ -12,7 +12,7 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 import { VoidSaleDto } from './dto/void-sale.dto';
 import { FilterSalesDto } from './dto/filter-sales.dto';
 import { UpsertCustomerDto } from './dto/upsert-customer.dto';
-import { SaleStatus, UnitStatus } from '@prisma/client';
+import { Prisma, SaleStatus, UnitStatus } from '@prisma/client';
 
 @Injectable()
 export class SalesService {
@@ -28,6 +28,8 @@ export class SalesService {
       configService.get('STOCK_LOW_THRESHOLD', '3'),
     );
   }
+
+
 
   async createSale(dto: CreateSaleDto, userId: string, tenantId: string) {
     const uniqueSerials = [...new Set(dto.serials)];
@@ -83,7 +85,8 @@ export class SalesService {
       0,
     );
     const discount = dto.discountAmount ?? 0;
-    const total = subtotal - discount;
+    const deliveryCharge = dto.deliveryCharge ?? 0;
+    const total = subtotal - discount + deliveryCharge;
 
     if (total < 0) throw new BadRequestException('Discount exceeds subtotal');
 
@@ -143,10 +146,16 @@ export class SalesService {
           discountAmount: discount,
           totalAmount: total,
           tenantId,
+          isOnline: dto.isOnline ?? false,
+          customerCity: dto.customerCity,
+          trackingId: dto.trackingId,
+          deliveryCharge,
+          advanceAmount: dto.advanceAmount ?? 0,
+          codAmount: dto.codAmount ?? 0,
           items: {
             create: units.map((u) => ({
               inventoryUnitId: u.id,
-              sellingPrice: u.product.sellingPrice,
+              sellingPrice: dto.customPrices?.[u.serialNumber] ?? u.product.sellingPrice,
               discount: 0,
             })),
           },
@@ -179,12 +188,14 @@ export class SalesService {
     }, { maxWait: 10000, timeout: 20000 });
 
     this.eventEmitter.emit('sale.created', {
-      id: sale.id,
+      saleId: sale.id,
       invoiceNumber: sale.invoiceNumber,
       totalAmount: Number(sale.totalAmount),
       itemCount: units.length,
       cashierId: userId,
       tenantId,
+      isOnline: sale.isOnline,
+      shippingStatus: sale.shippingStatus,
     });
 
     if (discount > 0) {
@@ -218,51 +229,47 @@ export class SalesService {
     return sale;
   }
 
-  async listSales(filter: FilterSalesDto, tenantId: string) {
-    const {
-      search,
-      status,
-      soldById,
-      customerId,
-      from,
-      to,
-      page = 1,
-      limit = 50,
-    } = filter;
+  async listSales(dto: FilterSalesDto, tenantId: string) {
+    const { search, status, isOnline, shippingStatus, soldById, customerId, from, to, page = 1, limit = 50 } = dto;
     const skip = (page - 1) * limit;
 
-    const where = {
-      tenantId,
-      ...(status && { status }),
-      ...(soldById && { soldById }),
-      ...(customerId && { customerId }),
-      ...(from || to
-        ? {
-            createdAt: {
-              ...(from && { gte: new Date(from) }),
-              ...(to && { lte: new Date(to + 'T23:59:59.999Z') }),
-            },
-          }
-        : {}),
-      ...(search
-        ? {
-            OR: [
-              {
-                invoiceNumber: {
-                  contains: search,
-                  mode: 'insensitive' as const,
-                },
-              },
-              {
-                customer: {
-                  name: { contains: search, mode: 'insensitive' as const },
-                },
-              },
-              { customer: { phone: { contains: search } } },
-            ],
-          }
-        : {}),
-    };
+    const conditions: Prisma.SaleWhereInput[] = [{ tenantId }];
+
+    if (status) conditions.push({ status });
+    if (shippingStatus) conditions.push({ shippingStatus });
+    if (soldById) conditions.push({ soldById });
+    if (customerId) conditions.push({ customerId });
+    if (from || to) {
+      conditions.push({
+        createdAt: {
+          ...(from && { gte: new Date(from) }),
+          ...(to && { lte: new Date(to + 'T23:59:59.999Z') }),
+        },
+      });
+    }
+
+    if (isOnline !== undefined) {
+      conditions.push({ isOnline });
+    } else {
+      conditions.push({
+        OR: [
+          { isOnline: false },
+          { isOnline: true, shippingStatus: { in: ['delivered', 'returned'] } },
+        ],
+      });
+    }
+
+    if (search) {
+      conditions.push({
+        OR: [
+          { invoiceNumber: { contains: search, mode: 'insensitive' as const } },
+          { customer: { name: { contains: search, mode: 'insensitive' as const } } },
+          { customer: { phone: { contains: search } } },
+        ],
+      });
+    }
+
+    const where: Prisma.SaleWhereInput = { AND: conditions };
 
     const [sales, total] = await this.prisma.$transaction([
       this.prisma.sale.findMany({
@@ -426,5 +433,130 @@ export class SalesService {
     const date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
     const tick = now.getTime().toString(36).toUpperCase().slice(-6);
     return `INV-${date}-${tick}`;
+  }
+
+  async dispatchSale(id: string, trackingId: string, tenantId: string, userId: string) {
+    const sale = await this.prisma.sale.findFirst({
+      where: { id, tenantId },
+    });
+    if (!sale) throw new NotFoundException('Sale not found');
+    if (!sale.isOnline) throw new BadRequestException('Not an online sale');
+
+    // Create an expense for the delivery charge if there is one
+    if (sale.deliveryCharge && sale.deliveryCharge.toNumber() > 0) {
+      await this.prisma.expense.create({
+        data: {
+          tenantId,
+          createdById: userId,
+          amount: sale.deliveryCharge,
+          category: 'Courier Delivery',
+          description: `Delivery charge for online order #${sale.invoiceNumber}`,
+          date: new Date(),
+        },
+      });
+    }
+
+    return this.prisma.sale.update({
+      where: { id },
+      data: {
+        trackingId,
+        shippingStatus: 'dispatched',
+      },
+    });
+  }
+
+  async markDelivered(id: string, tenantId: string) {
+    const sale = await this.prisma.sale.findFirst({
+      where: { id, tenantId },
+    });
+    if (!sale) throw new NotFoundException('Sale not found');
+    if (!sale.isOnline) throw new BadRequestException('Not an online sale');
+
+    return this.prisma.sale.update({
+      where: { id },
+      data: {
+        shippingStatus: 'delivered',
+      },
+    });
+  }
+
+  async getCourierLedger(tenantId: string) {
+    const deliveredSales = await this.prisma.sale.aggregate({
+      where: { tenantId, isOnline: true, shippingStatus: 'delivered' },
+      _sum: { codAmount: true },
+    });
+    const payouts = await this.prisma.courierPayout.aggregate({
+      where: { tenantId },
+      _sum: { amount: true },
+    });
+    const totalDeliveredCod = Number(deliveredSales._sum.codAmount ?? 0);
+    const totalPayouts = Number(payouts._sum.amount ?? 0);
+    return {
+      totalDeliveredCod,
+      totalPayouts,
+      dueFromCouriers: totalDeliveredCod - totalPayouts,
+    };
+  }
+
+  async recordCourierPayout(
+    tenantId: string,
+    userId: string,
+    amount: number,
+    courierName: string,
+    date: string,
+  ) {
+    return this.prisma.courierPayout.create({
+      data: {
+        tenantId,
+        createdById: userId,
+        amount,
+        courierName,
+        date: new Date(date),
+      },
+    });
+  }
+
+  async returnOnlineOrder(id: string, refundLossAmount: number, tenantId: string, userId: string) {
+    const sale = await this.prisma.sale.findFirst({
+      where: { id, tenantId },
+      include: { items: true },
+    });
+    if (!sale) throw new NotFoundException('Sale not found');
+    if (!sale.isOnline) throw new BadRequestException('Not an online sale');
+
+    // Return the items to stock
+    const itemIds = sale.items.map((i) => i.inventoryUnitId);
+    await this.prisma.inventoryUnit.updateMany({
+      where: { id: { in: itemIds }, tenantId },
+      data: { status: 'in_stock' },
+    });
+
+    // Void the sale to remove it from regular revenue completely
+    await this.prisma.sale.update({
+      where: { id },
+      data: {
+        status: 'voided',
+        shippingStatus: 'returned',
+        refundLossAmount,
+        voidReason: 'Online order returned by courier',
+        voidedById: userId,
+      },
+    });
+
+    // Record the loss as an expense if applicable
+    if (refundLossAmount > 0) {
+      await this.prisma.expense.create({
+        data: {
+          tenantId,
+          createdById: userId,
+          amount: refundLossAmount,
+          category: 'Courier Return Loss',
+          description: `Wasted delivery/return charge for online order #${sale.invoiceNumber}`,
+          date: new Date(),
+        },
+      });
+    }
+
+    return { success: true };
   }
 }

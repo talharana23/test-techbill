@@ -38,7 +38,7 @@ export default function TenantsPage() {
     ownerName: '', ownerEmail: '', ownerPasswordHashOrText: '',
   });
 
-  const [editForm, setEditForm] = useState({ plan: 'trial', maxUsers: 5, status: 'active' });
+  const [editForm, setEditForm] = useState({ plan: 'trial', maxUsers: 5, status: 'active', onlineSellingEnabled: false });
 
   const load = () => {
     setLoading(true);
@@ -257,6 +257,13 @@ export default function TenantsPage() {
                   onChange={(e) => setEditForm({ ...editForm, maxUsers: parseInt(e.target.value) || 1 })}
                   className={inputCls} />
               </div>
+              <div className="flex items-center gap-2 mt-2">
+                <input type="checkbox" id="onlineSellingEnabled" 
+                  checked={editForm.onlineSellingEnabled}
+                  onChange={(e) => setEditForm({ ...editForm, onlineSellingEnabled: e.target.checked })}
+                  className="rounded border-white/10 bg-white/5 text-indigo-500 focus:ring-indigo-500/50" />
+                <label htmlFor="onlineSellingEnabled" className="text-sm font-medium text-stitch-on-surface">Enable Online Selling</label>
+              </div>
               <div className="flex gap-2 justify-end pt-2 border-t border-white/5">
                 <button type="button" onClick={() => setEditingTenant(null)}
                   className="px-4 py-2 text-sm text-stitch-on-surface-variant border border-white/10 rounded-lg hover:bg-white/5 transition-colors">
@@ -323,7 +330,7 @@ export default function TenantsPage() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1.5">
                         <button
-                          onClick={() => { setEditingTenant(t); setEditForm({ plan: t.plan, maxUsers: t.maxUsers, status: t.status }); }}
+                          onClick={() => { setEditingTenant(t); setEditForm({ plan: t.plan, maxUsers: t.maxUsers, status: t.status, onlineSellingEnabled: t.onlineSellingEnabled }); }}
                           title="Edit Tenant"
                           className="p-1.5 text-stitch-on-surface-variant hover:text-indigo-400 rounded-lg hover:bg-indigo-500/10 transition-colors">
                           <Edit3 size={14} />
