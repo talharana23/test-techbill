@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Settings, CheckCircle, AlertTriangle } from 'lucide-react';
 import { api } from '../../api/client';
 import { useAuthStore } from '../../store/auth.store';
+import { useLockStore } from '../../store/lock.store';
 import type { ShopSettings } from '../../types';
 import gsap from 'gsap';
 
@@ -42,10 +43,18 @@ const FONT_OPTIONS = ['Inter', 'system-ui', 'Georgia', 'Courier New', 'Helvetica
 
 export default function SettingsPage() {
   const { user, accessToken, setAuth } = useAuthStore();
+  const { isPinSet, setPin, clearPin, autoLockMinutes, setAutoLockMinutes } = useLockStore();
+
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+
+  // App Lock PIN Settings state
+  const [settingsPin, setSettingsPin] = useState('');
+  const [settingsConfirmPin, setSettingsConfirmPin] = useState('');
+  const [pinError, setPinError] = useState('');
+  const [pinSuccess, setPinSuccess] = useState('');
   const [form, setForm] = useState<SettingsForm>({
     shopName: '',
     lowStockThreshold: '2',
@@ -134,6 +143,29 @@ export default function SettingsPage() {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleUpdatePin = () => {
+    if (settingsPin.length !== 4) {
+      setPinError('PIN must be exactly 4 digits.');
+      return;
+    }
+    if (settingsPin !== settingsConfirmPin) {
+      setPinError('PINs do not match.');
+      return;
+    }
+    setPin(settingsPin);
+    setSettingsPin('');
+    setSettingsConfirmPin('');
+    setPinError('');
+    setPinSuccess('PIN updated successfully!');
+    setTimeout(() => setPinSuccess(''), 3000);
+  };
+
+  const handleDisableLock = () => {
+    clearPin();
+    setPinSuccess('App lock disabled successfully.');
+    setTimeout(() => setPinSuccess(''), 3000);
   };
 
   if (loading) {
@@ -284,6 +316,101 @@ export default function SettingsPage() {
                 </div>
                 <span className="text-xs text-stitch-on-surface-variant">Show watermark</span>
               </label>
+            </div>
+          </div>
+        </FieldGroup>
+
+        <FieldGroup title="App Lock Security">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center bg-white/[0.02] border border-white/5 p-3 rounded-lg">
+              <div>
+                <p className="text-xs font-semibold text-white">App Lock Status</p>
+                <p className="text-[11px] text-stitch-on-surface-variant/80 mt-0.5">
+                  {isPinSet
+                    ? 'Security PIN is set and active.'
+                    : 'PIN is not set. Screen lock is disabled.'}
+                </p>
+              </div>
+              {isPinSet && (
+                <button
+                  type="button"
+                  onClick={handleDisableLock}
+                  className="px-3 py-1 bg-stitch-error/15 text-stitch-error hover:bg-stitch-error/25 border border-stitch-error/20 rounded-lg text-xs font-semibold transition-colors"
+                >
+                  Disable App Lock
+                </button>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className={labelCls}>{isPinSet ? 'Change PIN (4 digits)' : 'Set PIN (4 digits)'}</label>
+                <input
+                  type="password"
+                  maxLength={4}
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  value={settingsPin}
+                  onChange={(e) => setSettingsPin(e.target.value.replace(/\D/g, ''))}
+                  placeholder="••••"
+                  className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-base font-bold"
+                />
+              </div>
+              <div>
+                <label className={labelCls}>Confirm PIN</label>
+                <input
+                  type="password"
+                  maxLength={4}
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  value={settingsConfirmPin}
+                  onChange={(e) => setSettingsConfirmPin(e.target.value.replace(/\D/g, ''))}
+                  placeholder="••••"
+                  className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-base font-bold"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center pt-2">
+              <button
+                type="button"
+                onClick={handleUpdatePin}
+                disabled={settingsPin.length !== 4 || settingsConfirmPin.length !== 4}
+                className="px-4 py-1.5 bg-stitch-primary/10 text-stitch-primary border border-stitch-primary/20 rounded-lg text-xs font-semibold hover:bg-stitch-primary/25 disabled:opacity-40 transition-colors"
+              >
+                {isPinSet ? 'Update PIN' : 'Save PIN'}
+              </button>
+            </div>
+
+            {pinError && (
+              <div className="flex items-center gap-2 text-xs text-stitch-error bg-stitch-error/10 border border-stitch-error/20 p-2 rounded-lg leading-none">
+                <AlertTriangle size={12} className="shrink-0" />
+                <span>{pinError}</span>
+              </div>
+            )}
+            {pinSuccess && (
+              <div className="flex items-center gap-2 text-xs text-green-400 bg-green-500/10 border border-green-500/20 p-2 rounded-lg leading-none">
+                <CheckCircle size={12} className="shrink-0" />
+                <span>{pinSuccess}</span>
+              </div>
+            )}
+
+            <div className="pt-2 border-t border-white/5">
+              <label className={labelCls}>Auto-Lock Inactivity Timer</label>
+              <select
+                value={autoLockMinutes}
+                onChange={(e) => setAutoLockMinutes(parseInt(e.target.value))}
+                className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors"
+              >
+                <option value={0}>Disabled</option>
+                <option value={1}>1 Minute</option>
+                <option value={5}>5 Minutes</option>
+                <option value={10}>10 Minutes</option>
+                <option value={30}>30 Minutes</option>
+              </select>
+              <p className="text-[10px] text-stitch-on-surface-variant/60 mt-1">
+                Automatically lock screen if no activity (clicks, keys, mouse movement) is detected.
+              </p>
             </div>
           </div>
         </FieldGroup>

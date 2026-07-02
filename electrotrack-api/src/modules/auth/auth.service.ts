@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 import * as nodemailer from 'nodemailer';
 import { Role } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -304,5 +305,15 @@ export class AuthService {
     });
 
     return { message: 'Password reset successful' };
+  }
+
+  async verifyPassword(userId: string, password: string): Promise<boolean> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user || !user.passwordHash) {
+      return false;
+    }
+    return bcrypt.compare(password, user.passwordHash);
   }
 }

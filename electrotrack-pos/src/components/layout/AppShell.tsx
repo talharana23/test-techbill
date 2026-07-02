@@ -3,10 +3,11 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import {
   ShoppingCart, BarChart3, LogOut, Package, RotateCcw,
   FileText, Users, Settings, ClipboardList, Bell, UserCircle, Building2, ShoppingBag, ShieldAlert,
-  PackageCheck, ShieldCheck, Star, TrendingDown, Banknote, Menu, Wallet, Truck,
+  PackageCheck, ShieldCheck, Star, TrendingDown, Banknote, Menu, Wallet, Truck, Lock
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useAuthStore } from '../../store/auth.store';
+import { useLockStore } from '../../store/lock.store';
 import { disconnectSocket } from '../../api/socket';
 import { api } from '../../api/client';
 import { useCan } from '../../lib/permissions';
@@ -14,11 +15,44 @@ import type { Notification } from '../../types';
 
 export default function AppShell() {
   const { user, clearAuth } = useAuthStore();
+  const { isPinSet, lock, setPin } = useLockStore();
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [bellOpen, setBellOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const bellRef = useRef<HTMLDivElement>(null);
+
+  const [showSetPinModal, setShowSetPinModal] = useState(false);
+  const [newPin, setNewPin] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
+  const [lockErrorMsg, setLockErrorMsg] = useState('');
+
+  const handleLockClick = () => {
+    if (isPinSet) {
+      lock();
+    } else {
+      setShowSetPinModal(true);
+    }
+  };
+
+  const handleSavePin = () => {
+    if (newPin.length !== 4) {
+      setLockErrorMsg('PIN must be exactly 4 digits.');
+      return;
+    }
+    if (newPin !== confirmPin) {
+      setLockErrorMsg('PINs do not match.');
+      return;
+    }
+    setPin(newPin);
+    setNewPin('');
+    setConfirmPin('');
+    setLockErrorMsg('');
+    setShowSetPinModal(false);
+    setTimeout(() => {
+      lock();
+    }, 100);
+  };
 
   const isPlatformAdmin = user?.role === 'platform_admin';
   const isOwner = user?.role === 'owner';
@@ -326,7 +360,16 @@ export default function AppShell() {
           )}
         </nav>
 
-        <div className="p-2 border-t border-white/5 shrink-0 bg-white/[0.01]">
+        <div className="p-2 border-t border-white/5 shrink-0 bg-white/[0.01] space-y-1">
+          {!isPlatformAdmin && (
+            <button
+              onClick={handleLockClick}
+              className="flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-stitch-on-surface-variant hover:bg-white/5 hover:text-white transition-all font-semibold"
+            >
+              <Lock size={16} />
+              Lock App
+            </button>
+          )}
           <button
             onClick={handleLogout}
             className="flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-stitch-on-surface-variant hover:bg-white/5 hover:text-white transition-all font-semibold"
@@ -355,6 +398,90 @@ export default function AppShell() {
           <Outlet />
         </div>
       </main>
+
+      {showSetPinModal && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
+          <div className="glass-modal w-full max-w-sm rounded-xl p-6 border border-white/10 shadow-2xl animate-fade-in">
+            <h3 className="text-base font-bold text-white font-space mb-2 flex items-center gap-1.5">
+              <Lock className="text-stitch-primary" size={18} /> Set App Lock PIN
+            </h3>
+            <p className="text-xs text-stitch-on-surface-variant leading-relaxed mb-4">
+              Create a 4-digit PIN to secure your application when you step away.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold text-stitch-on-surface-variant uppercase tracking-wider mb-1">
+                  Choose PIN (4 digits)
+                </label>
+                <input
+                  type="password"
+                  maxLength={4}
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  value={newPin}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    setNewPin(val);
+                    setLockErrorMsg('');
+                  }}
+                  className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-lg font-bold"
+                  placeholder="••••"
+                  autoFocus
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold text-stitch-on-surface-variant uppercase tracking-wider mb-1">
+                  Confirm PIN
+                </label>
+                <input
+                  type="password"
+                  maxLength={4}
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  value={confirmPin}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    setConfirmPin(val);
+                    setLockErrorMsg('');
+                  }}
+                  className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-lg font-bold"
+                  placeholder="••••"
+                />
+              </div>
+
+              {lockErrorMsg && (
+                <div className="flex gap-2 bg-stitch-error/10 border border-stitch-error/20 p-2.5 rounded-lg text-xs text-stitch-error items-center leading-normal">
+                  <p>{lockErrorMsg}</p>
+                </div>
+              )}
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowSetPinModal(false);
+                    setNewPin('');
+                    setConfirmPin('');
+                    setLockErrorMsg('');
+                  }}
+                  className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-stitch-on-surface-variant hover:text-white transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSavePin}
+                  className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-stitch-primary text-white hover:bg-stitch-primary/80 transition-colors"
+                >
+                  Save & Lock
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

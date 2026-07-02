@@ -108,6 +108,18 @@ export class AuthController {
     return this.authService.verifyOtp(user.id, dto.code);
   }
 
+  @Post('verify-password')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  async verifyPassword(@Req() req: Request, @Body() body: { password?: string }) {
+    const user = (req as unknown as { user: { id: string } }).user;
+    if (!body.password) {
+      return { valid: false };
+    }
+    const valid = await this.authService.verifyPassword(user.id, body.password);
+    return { valid };
+  }
+
   // ─── Password Reset (public endpoints) ──────────────────────────────────────
 
   @Post('password-reset/request')

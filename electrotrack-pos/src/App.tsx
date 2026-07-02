@@ -27,6 +27,8 @@ import OnlineOrdersPage from './pages/sales/OnlineOrdersPage';
 import AppShell from './components/layout/AppShell';
 import { can } from './lib/permissions';
 import type { Role, Permission } from './types';
+import LockOverlay from './components/auth/LockOverlay';
+import { useLockStore } from './store/lock.store';
 
 function RequireAuth({
   children,
@@ -106,6 +108,37 @@ export default function App() {
       });
   }, [_hasHydrated, isHydrating, user, accessToken, refreshToken, setToken, clearAuth, setHydrating]);
 
+  // Auto-lock inactivity handler
+  const { isLocked, isPinSet, lock, autoLockMinutes } = useLockStore();
+
+  useEffect(() => {
+    if (!isPinSet || autoLockMinutes <= 0 || isLocked) return;
+
+    let timeoutId: number;
+
+    const resetTimer = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        lock();
+      }, autoLockMinutes * 60 * 1000);
+    };
+
+    const activityEvents = ['mousemove', 'keydown', 'mousedown', 'touchstart', 'scroll'];
+
+    activityEvents.forEach((event) => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    resetTimer();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      activityEvents.forEach((event) => {
+        window.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [isPinSet, autoLockMinutes, isLocked, lock]);
+
   // Root redirect logic
   const getRootRedirect = () => {
     if (!user) return '/login';
@@ -117,6 +150,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <LockOverlay />
       <Routes>
         <Route path="/login" element={<Login />} />
         {/* Public unauthenticated route for QR code invoice verification */}
