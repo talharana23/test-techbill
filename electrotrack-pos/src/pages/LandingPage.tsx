@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useTransform, AnimatePresence, useMotionTemplate } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { usePublicTheme } from '../components/layout/PublicLayout';
 import { 
@@ -7,6 +7,43 @@ import {
   Check, ArrowRight, Zap, Linkedin, 
   ChevronRight, Activity, AlertCircle, CheckCircle2, Network, X
 } from 'lucide-react';
+
+function BentoCard({ children, className, variants }: { children: React.ReactNode, className?: string, variants?: any }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <motion.div
+      variants={variants}
+      onMouseMove={handleMouseMove}
+      whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
+      className={`group relative overflow-hidden rounded-2xl border border-white/15 bg-white/5 dark:bg-[#0c1020]/20 backdrop-blur-xl p-8 transition-colors duration-300 flex flex-col justify-between min-h-[300px] ${className}`}
+    >
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-350"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              300px circle at ${mouseX}px ${mouseY}px,
+              rgba(139, 92, 246, 0.12) 0%,
+              rgba(6, 182, 212, 0.08) 50%,
+              transparent 100%
+            )
+          `,
+        }}
+      />
+      <div className="relative z-10 flex flex-col justify-between h-full flex-1">
+        {children}
+      </div>
+    </motion.div>
+  );
+}
 
 interface CartItem {
   id: string;
@@ -215,7 +252,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-space text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-5xl mx-auto text-slate-900 dark:text-white"
+            className="font-space text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tighter leading-[1.08] max-w-5xl mx-auto text-slate-900 dark:text-white"
           >
             Industrial-Grade OS for{' '}
             <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-[#2fd9f4] dark:from-[#c0c1ff] dark:via-indigo-400 dark:to-[#2fd9f4] bg-clip-text text-transparent">
@@ -289,15 +326,19 @@ export default function LandingPage() {
               <span className="text-[11px] text-slate-400 dark:text-white/30 font-medium ml-3 font-mono">
                 electrotrack_live_terminal_v1.2.sh
               </span>
+              <span className="inline-flex items-center gap-1.5 text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-2.5 py-0.5 rounded-full animate-pulse ml-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                LIVE SYSTEM FEED
+              </span>
             </div>
             
             {/* Tab Swappers */}
-            <div className="flex items-center gap-1 bg-slate-200/50 dark:bg-white/5 p-1 rounded-lg self-start sm:self-auto">
+            <div className="flex items-center gap-1 bg-white/5 dark:bg-white/5 p-1 rounded-lg self-start sm:self-auto border border-white/10 backdrop-blur-md">
               <button
                 onClick={() => setMockupTab('analytics')}
                 className={`px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-semibold tracking-wide transition-all ${
                   mockupTab === 'analytics'
-                    ? 'bg-white text-indigo-600 dark:bg-white/10 dark:text-[#2fd9f4] shadow'
+                    ? 'bg-white/10 text-indigo-600 dark:bg-white/20 dark:text-[#2fd9f4] shadow-inner border border-white/10'
                     : 'text-slate-500 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white'
                 }`}
               >
@@ -307,7 +348,7 @@ export default function LandingPage() {
                 onClick={() => setMockupTab('pos')}
                 className={`px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-semibold tracking-wide transition-all ${
                   mockupTab === 'pos'
-                    ? 'bg-white text-indigo-600 dark:bg-white/10 dark:text-[#2fd9f4] shadow'
+                    ? 'bg-white/10 text-indigo-600 dark:bg-white/20 dark:text-[#2fd9f4] shadow-inner border border-white/10'
                     : 'text-slate-500 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white'
                 }`}
               >
@@ -317,7 +358,7 @@ export default function LandingPage() {
                 onClick={() => setMockupTab('sync')}
                 className={`px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-semibold tracking-wide transition-all ${
                   mockupTab === 'sync'
-                    ? 'bg-white text-indigo-600 dark:bg-white/10 dark:text-[#2fd9f4] shadow'
+                    ? 'bg-white/10 text-indigo-600 dark:bg-white/20 dark:text-[#2fd9f4] shadow-inner border border-white/10'
                     : 'text-slate-500 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white'
                 }`}
               >
@@ -347,7 +388,7 @@ export default function LandingPage() {
                     </div>
                     
                     {/* Live Waveform SVG Data Stream */}
-                    <div className="h-12 mt-4 relative overflow-hidden">
+                    <div className="h-12 mt-4 relative overflow-hidden drop-shadow-[0_0_8px_rgba(128,131,255,0.6)]">
                       <svg className="w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
                         <motion.path
                           animate={{
@@ -433,15 +474,15 @@ export default function LandingPage() {
                       
                       const heightPercent = isVisible ? item.val : 5;
                       const colColor = item.status === 'critical' 
-                        ? 'from-red-500 to-rose-600' 
-                        : 'from-indigo-500 to-[#2fd9f4] dark:from-[#25293a] dark:to-[#2fd9f4]';
+                        ? 'from-red-500 to-rose-600 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]' 
+                        : 'from-indigo-500 to-[#2fd9f4] dark:from-[#25293a] dark:to-[#2fd9f4] drop-shadow-[0_0_8px_rgba(6,182,212,0.4)]';
 
                       return (
                         <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end">
                           <motion.div
                             animate={{ height: `${heightPercent}%` }}
                             transition={{ type: 'spring', stiffness: 80, damping: 12 }}
-                            className={`w-full rounded-t-md bg-gradient-to-t ${colColor} shadow-md opacity-85 hover:opacity-100 transition-opacity`}
+                            className={`w-full rounded-t-md bg-gradient-to-t ${colColor} shadow-md opacity-85 hover:opacity-100 transition-all`}
                           />
                           <span className="text-[9px] text-slate-400 dark:text-white/30 font-semibold font-mono tracking-tighter">
                             {item.node}
@@ -702,11 +743,8 @@ export default function LandingPage() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {/* Bento 1: Real-time Analytics (Wide) */}
-          <motion.div 
-            variants={itemVariants}
-            className="md:col-span-2 group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] hover:bg-slate-100/50 dark:hover:bg-white/[0.02] p-8 transition-all hover:scale-[1.01] duration-300 flex flex-col justify-between min-h-[300px]"
-          >
-            <div className="max-w-md">
+          <BentoCard variants={itemVariants} className="md:col-span-2">
+            <div>
               <div className="w-10 h-10 rounded-lg bg-indigo-500/10 dark:bg-[#c0c1ff]/10 text-indigo-600 dark:text-[#c0c1ff] flex items-center justify-center mb-6">
                 <BarChart3 size={20} />
               </div>
@@ -718,17 +756,14 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={() => handleFeatureLinkClick('analytics')}
-              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left"
+              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left self-start"
             >
               Learn more about analytics <ChevronRight size={14} />
             </button>
-          </motion.div>
+          </BentoCard>
 
           {/* Bento 2: Advanced Inventory */}
-          <motion.div 
-            variants={itemVariants}
-            className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] hover:bg-slate-100/50 dark:hover:bg-white/[0.02] p-8 transition-all hover:scale-[1.01] duration-300 flex flex-col justify-between min-h-[300px]"
-          >
+          <BentoCard variants={itemVariants}>
             <div>
               <div className="w-10 h-10 rounded-lg bg-emerald-500/10 dark:bg-[#2fd9f4]/10 text-emerald-600 dark:text-[#2fd9f4] flex items-center justify-center mb-6">
                 <ShoppingCart size={20} />
@@ -741,17 +776,14 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={() => handleFeatureLinkClick('pos')}
-              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left"
+              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left self-start"
             >
               POS details <ChevronRight size={14} />
             </button>
-          </motion.div>
+          </BentoCard>
 
           {/* Bento 3: Automated Invoicing */}
-          <motion.div 
-            variants={itemVariants}
-            className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] hover:bg-slate-100/50 dark:hover:bg-white/[0.02] p-8 transition-all hover:scale-[1.01] duration-300 flex flex-col justify-between min-h-[300px]"
-          >
+          <BentoCard variants={itemVariants}>
             <div>
               <div className="w-10 h-10 rounded-lg bg-indigo-500/10 dark:bg-[#c0c1ff]/10 text-indigo-600 dark:text-[#c0c1ff] flex items-center justify-center mb-6">
                 <FileText size={20} />
@@ -764,18 +796,15 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={() => handleFeatureLinkClick('sync')}
-              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left"
+              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left self-start"
             >
               Invoicing specs <ChevronRight size={14} />
             </button>
-          </motion.div>
+          </BentoCard>
 
           {/* Bento 4: Multi-location (Wide) */}
-          <motion.div 
-            variants={itemVariants}
-            className="md:col-span-2 group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] hover:bg-slate-100/50 dark:hover:bg-white/[0.02] p-8 transition-all hover:scale-[1.01] duration-300 flex flex-col justify-between min-h-[300px]"
-          >
-            <div className="max-w-md">
+          <BentoCard variants={itemVariants} className="md:col-span-2">
+            <div>
               <div className="w-10 h-10 rounded-lg bg-emerald-500/10 dark:bg-[#2fd9f4]/10 text-emerald-600 dark:text-[#2fd9f4] flex items-center justify-center mb-6">
                 <Globe size={20} />
               </div>
@@ -787,11 +816,11 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={() => handleFeatureLinkClick('sync')}
-              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left"
+              className="mt-6 flex items-center text-xs font-bold text-indigo-600 dark:text-[#c0c1ff] gap-1 group-hover:gap-2 hover:gap-2 transition-all cursor-pointer text-left self-start"
             >
               Learn more about sync <ChevronRight size={14} />
             </button>
-          </motion.div>
+          </BentoCard>
         </motion.div>
       </section>
 
@@ -881,22 +910,32 @@ export default function LandingPage() {
             </div>
 
           </div>
-        </div>
-
-        {/* Pricing Grid */}
+          {/* Pricing Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {/* Starter Plan */}
-          <div className="rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] p-8 flex flex-col justify-between min-h-[480px] hover:border-slate-300 dark:hover:border-white/10 transition-colors">
+          <div className="rounded-2xl border border-white/15 bg-white/5 dark:bg-[#0c1020]/20 backdrop-blur-xl p-8 flex flex-col justify-between min-h-[480px] hover:border-white/30 transition-all hover:scale-[1.01] duration-300">
             <div>
-              <p className="text-xs font-bold tracking-wider text-slate-400 dark:text-white/40 uppercase">Starter Plan</p>
+              <p className="text-xs font-bold tracking-wider text-slate-450 dark:text-white/40 uppercase">Starter Plan</p>
               <h3 className="font-space text-2xl font-bold text-slate-900 dark:text-white mt-1">Starter Boutique</h3>
               <p className="text-sm text-slate-500 dark:text-[#c7c4d7] mt-3">Ideal for single local electronics outlets.</p>
               
-              <div className="mt-6 flex items-baseline gap-1">
-                <span className="text-4xl font-extrabold text-slate-900 dark:text-white font-space">
-                  {currencyInfo.symbol}{starterPrice}
+              <div className="mt-6 flex items-baseline gap-1 overflow-hidden h-12">
+                <span className="text-4xl font-extrabold text-slate-900 dark:text-white font-space flex items-center">
+                  {currencyInfo.symbol}
+                  <AnimatePresence mode="popLayout">
+                    <motion.span
+                      key={starterPrice}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      className="inline-block"
+                    >
+                      {starterPrice}
+                    </motion.span>
+                  </AnimatePresence>
                 </span>
-                <span className="text-sm text-slate-400 dark:text-white/30 font-medium">/ month</span>
+                <span className="text-sm text-slate-450 dark:text-white/30 font-medium">/ month</span>
               </div>
 
               <ul className="mt-8 space-y-4">
@@ -925,59 +964,75 @@ export default function LandingPage() {
             </button>
           </div>
 
-          {/* Pro Tier (Highlighted) */}
-          <div className="rounded-2xl border-2 border-indigo-600 dark:border-[#c0c1ff] bg-indigo-50/10 dark:bg-[#c0c1ff]/[0.01] p-8 flex flex-col justify-between min-h-[480px] relative shadow-xl dark:shadow-none hover:bg-indigo-50/20 dark:hover:bg-[#c0c1ff]/[0.02] transition-colors">
-            <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 bg-indigo-600 dark:bg-[#c0c1ff] text-white dark:text-[#1000a9] text-[9px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
-              RECOMMENDED BEST VALUE
-            </div>
-            <div>
-              <p className="text-xs font-bold tracking-wider text-indigo-600 dark:text-[#c0c1ff] uppercase">Enterprise Scale</p>
-              <h3 className="font-space text-2xl font-bold text-slate-900 dark:text-white mt-1">ElectroTrack Pro</h3>
-              <p className="text-sm text-slate-500 dark:text-[#c7c4d7] mt-3">Tailored for fast-growing electronic chain retailers.</p>
-              
-              <div className="mt-6 flex items-baseline gap-1">
-                <span className="text-4xl font-extrabold text-slate-900 dark:text-white font-space">
-                  {currencyInfo.symbol}{proPrice}
-                </span>
-                <span className="text-sm text-slate-400 dark:text-white/30 font-medium">/ month</span>
+          {/* Pro Tier (Highlighted - Wrap in rotating neon border card) */}
+          <div className="relative p-[2px] rounded-2xl overflow-hidden group flex flex-col min-h-[480px]">
+            {/* Animated rotating border */}
+            <div className="absolute inset-[-1000%] bg-[conic-gradient(from_0deg,transparent_20%,#818cf8_40%,#2fd9f4_60%,transparent_80%)] animate-[spin_6s_linear_infinite] opacity-70 group-hover:opacity-100 transition-opacity" />
+            <div className="relative rounded-[14px] bg-white/10 dark:bg-[#0c1020]/40 backdrop-blur-2xl p-8 flex flex-col justify-between flex-1 border border-white/20 hover:bg-white/15 dark:hover:bg-[#0c1020]/50 transition-colors">
+              <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 bg-indigo-600 dark:bg-[#c0c1ff] text-white dark:text-[#1000a9] text-[9px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
+                RECOMMENDED BEST VALUE
               </div>
+              <div>
+                <p className="text-xs font-bold tracking-wider text-indigo-600 dark:text-[#c0c1ff] uppercase">Enterprise Scale</p>
+                <h3 className="font-space text-2xl font-bold text-slate-900 dark:text-white mt-1">ElectroTrack Pro</h3>
+                <p className="text-sm text-slate-500 dark:text-[#c7c4d7] mt-3">Tailored for fast-growing electronic chain retailers.</p>
+                
+                <div className="mt-6 flex items-baseline gap-1 overflow-hidden h-12">
+                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white font-space flex items-center">
+                    {currencyInfo.symbol}
+                    <AnimatePresence mode="popLayout">
+                      <motion.span
+                        key={proPrice}
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -20, opacity: 0 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        className="inline-block"
+                      >
+                        {proPrice}
+                      </motion.span>
+                    </AnimatePresence>
+                  </span>
+                  <span className="text-sm text-slate-450 dark:text-white/30 font-medium">/ month</span>
+                </div>
 
-              <ul className="mt-8 space-y-4">
-                {[
-                  'Up to 3 Physical Locations',
-                  'Unlimited Cashier & Owner Accounts',
-                  'Full Telemetry Analytics Dashboard',
-                  'Automated Purchase Requisitions',
-                  'Advanced QR-coded Digital Invoices',
-                  'Priority Email & Discord Support',
-                ].map((feat, i) => (
-                  <li key={i} className="flex items-center text-xs text-slate-700 dark:text-white">
-                    <Check size={14} className="text-[#2fd9f4] mr-2.5 shrink-0" />
-                    <strong>{feat}</strong>
-                  </li>
-                ))}
-              </ul>
+                <ul className="mt-8 space-y-4">
+                  {[
+                    'Up to 3 Physical Locations',
+                    'Unlimited Cashier & Owner Accounts',
+                    'Full Telemetry Analytics Dashboard',
+                    'Automated Purchase Requisitions',
+                    'Advanced QR-coded Digital Invoices',
+                    'Priority Email & Discord Support',
+                  ].map((feat, i) => (
+                    <li key={i} className="flex items-center text-xs text-slate-700 dark:text-white">
+                      <Check size={14} className="text-[#2fd9f4] mr-2.5 shrink-0" />
+                      <strong>{feat}</strong>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <button
+                onClick={() => {
+                  navigate(`/checkout?plan=pro&billing=${billingPeriod}`);
+                }}
+                className="w-full inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-[#c0c1ff] dark:text-[#1000a9] dark:hover:bg-[#c0c1ff]/90 transition-all mt-8"
+              >
+                Provision Pro Core
+              </button>
             </div>
-            
-            <button
-              onClick={() => {
-                navigate(`/checkout?plan=pro&billing=${billingPeriod}`);
-              }}
-              className="w-full inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-[#c0c1ff] dark:text-[#1000a9] dark:hover:bg-[#c0c1ff]/90 transition-all mt-8"
-            >
-              Provision Pro Core
-            </button>
           </div>
 
           {/* Enterprise Tier */}
-          <div className="rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] p-8 flex flex-col justify-between min-h-[480px] hover:border-slate-300 dark:hover:border-white/10 transition-colors">
+          <div className="rounded-2xl border border-white/15 bg-white/5 dark:bg-[#0c1020]/20 backdrop-blur-xl p-8 flex flex-col justify-between min-h-[480px] hover:border-white/30 transition-all hover:scale-[1.01] duration-300">
             <div>
-              <p className="text-xs font-bold tracking-wider text-slate-400 dark:text-white/40 uppercase">Custom Deployment</p>
+              <p className="text-xs font-bold tracking-wider text-slate-450 dark:text-white/40 uppercase">Custom Deployment</p>
               <h3 className="font-space text-2xl font-bold text-slate-900 dark:text-white mt-1">Industrial Enterprise</h3>
               <p className="text-sm text-slate-500 dark:text-[#c7c4d7] mt-3">Built for large-scale distributor chains & logistics hubs.</p>
               
               <div className="mt-6 flex items-baseline gap-1">
-                <span className="text-4xl font-extrabold text-slate-900 dark:text-white font-space">Custom</span>
+                <span className="text-4xl font-extrabold text-slate-900 dark:text-white font-space flex items-center">Custom</span>
               </div>
 
               <ul className="mt-8 space-y-4">
@@ -1004,7 +1059,7 @@ export default function LandingPage() {
               Request Enterprise Quote
             </a>
           </div>
-        </div>
+        </div>        </div>
       </section>
 
       {/* The Architects Section */}
@@ -1016,20 +1071,20 @@ export default function LandingPage() {
           <p className="mt-4 text-base text-slate-600 dark:text-[#c7c4d7]">
             Co-founded by elite system designers with a vision of creating ultra-scalable, low-latency, industrial-grade AI and SaaS infrastructure.
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* TalhaRana */}
-          <div className="group relative rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] hover:bg-slate-100/50 dark:hover:bg-white/[0.02] p-8 transition-all hover:scale-[1.01] duration-300">
+          <div className="group relative rounded-2xl border border-white/15 bg-white/5 dark:bg-[#0c1020]/20 backdrop-blur-xl p-8 transition-all hover:scale-[1.01] duration-300 overflow-hidden">
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-600 to-violet-600 dark:from-[#c0c1ff] dark:to-indigo-500 flex items-center justify-center text-white dark:text-[#1000a9] font-space text-2xl font-extrabold shadow-lg shrink-0">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-600 to-violet-600 dark:from-[#c0c1ff] dark:to-indigo-500 flex items-center justify-center text-white dark:text-[#1000a9] font-space text-2xl font-extrabold shadow-lg shrink-0 relative">
+                {/* Glow ring */}
+                <div className="absolute inset-[-4px] rounded-full bg-indigo-500/20 dark:bg-[#c0c1ff]/20 blur-md -z-10 group-hover:scale-110 transition-transform" />
                 TR
               </div>
               <div>
                 <h3 className="font-space text-xl font-bold text-slate-900 dark:text-white">TalhaRana</h3>
                 <p className="text-sm font-semibold text-indigo-600 dark:text-[#2fd9f4] mt-0.5">Co-Founder & Chief System Architect</p>
                 <div className="flex items-center gap-2 mt-3">
-                  <a href="https://www.linkedin.com/in/talharana32/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-slate-600 dark:hover:text-white p-1 rounded-md hover:bg-slate-200/50 dark:hover:bg-white/5">
+                  <a href="https://www.linkedin.com/in/talharana32/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-slate-650 dark:hover:text-white p-1 rounded-md hover:bg-slate-200/50 dark:hover:bg-white/5">
                     <Linkedin size={16} />
                   </a>
                 </div>
@@ -1040,7 +1095,7 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-wrap gap-2 mt-6">
               {['Distributed APIs', 'DB Optimization', 'Tenant Security', 'SaaS Scaling'].map((tag, i) => (
-                <span key={i} className="px-2.5 py-0.5 rounded bg-slate-200/60 dark:bg-white/5 text-[10px] font-semibold tracking-wide text-slate-500 dark:text-[#c7c4d7] border border-slate-300 dark:border-white/5">
+                <span key={i} className="px-2.5 py-0.5 rounded bg-white/5 text-[10px] font-semibold tracking-wide text-slate-500 dark:text-[#c7c4d7] border border-white/10 hover:border-cyan-400/40 hover:shadow-[0_0_8px_rgba(34,211,238,0.25)] transition-all">
                   {tag}
                 </span>
               ))}
@@ -1048,16 +1103,18 @@ export default function LandingPage() {
           </div>
 
           {/* KrishBaresha */}
-          <div className="group relative rounded-2xl border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-white/[0.01] hover:bg-slate-100/50 dark:hover:bg-white/[0.02] p-8 transition-all hover:scale-[1.01] duration-300">
+          <div className="group relative rounded-2xl border border-white/15 bg-white/5 dark:bg-[#0c1020]/20 backdrop-blur-xl p-8 transition-all hover:scale-[1.01] duration-300 overflow-hidden">
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-violet-600 to-[#2fd9f4] dark:from-indigo-500 dark:to-[#2fd9f4] flex items-center justify-center text-white dark:text-[#1000a9] font-space text-2xl font-extrabold shadow-lg shrink-0">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-violet-600 to-[#2fd9f4] dark:from-indigo-500 dark:to-[#2fd9f4] flex items-center justify-center text-white dark:text-[#1000a9] font-space text-2xl font-extrabold shadow-lg shrink-0 relative">
+                {/* Glow ring */}
+                <div className="absolute inset-[-4px] rounded-full bg-cyan-500/20 dark:bg-[#2fd9f4]/20 blur-md -z-10 group-hover:scale-110 transition-transform" />
                 KB
               </div>
               <div>
                 <h3 className="font-space text-xl font-bold text-slate-900 dark:text-white">KrishBaresha</h3>
                 <p className="text-sm font-semibold text-indigo-600 dark:text-[#2fd9f4] mt-0.5">Co-Founder & Chief Frontend Architect / UI/UX Visionary</p>
                 <div className="flex items-center gap-2 mt-3">
-                  <a href="https://www.linkedin.com/in/krish-baresha/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-slate-600 dark:hover:text-white p-1 rounded-md hover:bg-slate-200/50 dark:hover:bg-white/5">
+                  <a href="https://www.linkedin.com/in/krish-baresha/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-slate-650 dark:hover:text-white p-1 rounded-md hover:bg-slate-200/50 dark:hover:bg-white/5">
                     <Linkedin size={16} />
                   </a>
                 </div>
@@ -1069,13 +1126,13 @@ export default function LandingPage() {
 
             <div className="flex flex-wrap gap-2 mt-6">
               {['React / TypeScript', 'Tailwind Styling', 'Interaction UX', 'Performance Tuning'].map((tag, i) => (
-                <span key={i} className="px-2.5 py-0.5 rounded bg-slate-200/60 dark:bg-white/5 text-[10px] font-semibold tracking-wide text-slate-500 dark:text-[#c7c4d7] border border-slate-300 dark:border-white/5">
+                <span key={i} className="px-2.5 py-0.5 rounded bg-white/5 text-[10px] font-semibold tracking-wide text-slate-500 dark:text-[#c7c4d7] border border-white/10 hover:border-cyan-400/40 hover:shadow-[0_0_8px_rgba(34,211,238,0.25)] transition-all">
                   {tag}
                 </span>
               ))}
             </div>
           </div>
-        </div>
+        </div>        </div>
       </section>
 
       {/* Subscription Checkout Modal removed: Checkout flow migrated to dedicated route /checkout */}

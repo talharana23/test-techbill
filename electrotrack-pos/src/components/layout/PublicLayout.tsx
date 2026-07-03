@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import { can } from '../../lib/permissions';
@@ -17,6 +17,71 @@ export function usePublicTheme() {
     throw new Error('usePublicTheme must be used within a PublicThemeProvider');
   }
   return context;
+}
+
+function Starfield() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let stars: { x: number; y: number; size: number; speed: number; opacity: number }[] = [];
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stars = Array.from({ length: 120 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.5 + 0.3,
+        speed: Math.random() * 0.05 + 0.015,
+        opacity: Math.random() * 0.5 + 0.1,
+      }));
+    };
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+
+      stars.forEach((star) => {
+        ctx.save();
+        ctx.globalAlpha = star.opacity;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        star.y -= star.speed;
+        if (star.y < 0) {
+          star.y = canvas.height;
+          star.x = Math.random() * canvas.width;
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-none z-0 opacity-20 dark:opacity-30 mix-blend-screen"
+    />
+  );
 }
 
 export default function PublicLayout() {
@@ -78,10 +143,20 @@ export default function PublicLayout() {
   return (
     <PublicThemeContext.Provider value={{ isDark, setIsDark }}>
       <div className={isDark ? 'dark' : ''}>
-        <div className="w-full min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0e1322] dark:text-[#dee1f7] transition-colors duration-300 font-sans selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-200 flex flex-col justify-between">
+        <div className="w-full min-h-screen bg-slate-50 text-slate-900 dark:bg-[#060813] dark:text-[#dee1f7] transition-colors duration-300 font-sans selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-200 flex flex-col justify-between relative overflow-hidden">
           
+          {/* Starfield Animated Background */}
+          <Starfield />
+
+          {/* Deep violet and cyan orbital gradient mesh texture at sub-5% opacity */}
+          <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+            <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[50%] bg-violet-600/3 dark:bg-violet-600/4 rounded-full blur-[140px]" />
+            <div className="absolute bottom-[20%] right-[-10%] w-[55%] h-[50%] bg-cyan-500/3 dark:bg-cyan-500/4 rounded-full blur-[140px]" />
+            <div className="absolute top-[40%] right-[10%] w-[45%] h-[40%] bg-indigo-500/2 dark:bg-indigo-500/3 rounded-full blur-[160px]" />
+          </div>
+
           {/* Header */}
-          <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/75 dark:bg-[#0e1322]/75 border-b border-slate-200/50 dark:border-white/10 transition-colors duration-300">
+          <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/5 dark:bg-[#0c1020]/40 border-b border-white/10 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
               {/* Logo */}
               <Link to="/" className="flex items-center cursor-pointer">
@@ -93,16 +168,16 @@ export default function PublicLayout() {
 
               {/* Desktop Nav Links */}
               <nav className="hidden md:flex items-center space-x-8">
-                <button onClick={() => handleNavClick('features')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white transition-colors">
+                <button onClick={() => handleNavClick('features')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.6)] transition-all">
                   Features
                 </button>
-                <button onClick={() => handleNavClick('mockup')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white transition-colors">
+                <button onClick={() => handleNavClick('mockup')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.6)] transition-all">
                   Interface
                 </button>
-                <button onClick={() => handleNavClick('pricing')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white transition-colors">
+                <button onClick={() => handleNavClick('pricing')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.6)] transition-all">
                   Pricing
                 </button>
-                <button onClick={() => handleNavClick('architects')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white transition-colors">
+                <button onClick={() => handleNavClick('architects')} className="text-sm font-medium text-slate-600 dark:text-[#c7c4d7] hover:text-indigo-600 dark:hover:text-white hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.6)] transition-all">
                   Architects
                 </button>
               </nav>
@@ -147,7 +222,7 @@ export default function PublicLayout() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden border-t border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#0e1322] px-4 pt-2 pb-4 space-y-2">
+            <div className="md:hidden border-t border-slate-200 dark:border-white/5 bg-slate-50/90 dark:bg-[#060813]/95 backdrop-blur-lg px-4 pt-2 pb-4 space-y-2 relative z-50">
               <button onClick={() => handleNavClick('features')} className="block w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-[#c7c4d7] hover:bg-slate-100 dark:hover:bg-white/5">
                 Features
               </button>
@@ -174,12 +249,12 @@ export default function PublicLayout() {
           )}
 
           {/* Page Content */}
-          <main className="flex-grow">
+          <main className="flex-grow relative z-10">
             <Outlet />
           </main>
 
           {/* Footer */}
-          <footer className="border-t border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-[#090e1c] py-12 transition-colors duration-300">
+          <footer className="border-t border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-[#060813]/60 backdrop-blur-md py-12 transition-colors duration-300 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center">
                 <img src="/favicon.svg" alt="ElectroTrack Logo" className="h-6 w-auto" />

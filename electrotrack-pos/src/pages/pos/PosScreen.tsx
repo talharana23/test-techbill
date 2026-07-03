@@ -352,9 +352,15 @@ export default function PosScreen() {
               {items.length} {items.length === 1 ? 'item' : 'items'}
             </span>
           </div>
-          <div className="flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-4">
-            <div className="min-h-[180px]"><CartTable /></div>
-            {items.length > 0 && <PaymentForm onSaleComplete={(sale: Sale) => setCompletedSale(sale)} shopSettings={shopSettings} />}
+          <div className={`flex-1 min-h-0 ${items.length === 0 ? 'flex flex-col' : 'overflow-y-auto px-4 py-4 space-y-4'}`}>
+            {items.length === 0 ? (
+              <div className="flex-1 flex flex-col p-4"><CartTable /></div>
+            ) : (
+              <>
+                <div className="min-h-[180px]"><CartTable /></div>
+                <PaymentForm onSaleComplete={(sale: Sale) => setCompletedSale(sale)} shopSettings={shopSettings} />
+              </>
+            )}
           </div>
         </aside>
       </div>

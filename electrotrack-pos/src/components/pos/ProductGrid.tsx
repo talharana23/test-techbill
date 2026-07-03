@@ -1,7 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { Plus, Package, PackageX, Tag, Cpu, HardDrive, MemoryStick, Sparkles } from 'lucide-react';
+import { Plus, Package, PackageX, Tag, Cpu, HardDrive, MemoryStick, Sparkles, Laptop } from 'lucide-react';
 import { gsap } from 'gsap';
 import type { ProductSpecifications } from '../../types';
+
+const cleanText = (str: string | null | undefined): string => {
+  if (!str) return '';
+  return str
+    .replace(/Chroome\s*Book/gi, 'Chromebook')
+    .replace(/Chroomebook/gi, 'Chromebook')
+    .replace(/\b(\d+)\s*(gb|Gb|gB|gb)\b/g, '$1GB');
+};
 
 export interface ProductCard {
   id: string;
@@ -28,16 +36,6 @@ interface Props {
   selectedCategory: string | null;
 }
 
-const AVATAR_PALETTE = [
-  'from-indigo-500/40 to-violet-600/40 text-indigo-200',
-  'from-violet-500/40 to-fuchsia-600/40 text-violet-200',
-  'from-rose-500/40 to-pink-600/40 text-rose-200',
-  'from-amber-500/40 to-orange-600/40 text-amber-200',
-  'from-emerald-500/40 to-teal-600/40 text-emerald-200',
-  'from-sky-500/40 to-blue-600/40 text-sky-200',
-  'from-teal-500/40 to-cyan-600/40 text-teal-200',
-  'from-pink-500/40 to-rose-600/40 text-pink-200',
-];
 
 const SPEC_ICONS: Record<string, React.ReactNode> = {
   cpu:     <Cpu size={9} />,
@@ -54,21 +52,13 @@ function SpecChips({ specs }: { specs: ProductSpecifications }) {
     <div className="flex flex-wrap gap-1 mt-1.5">
       {chips.map(({ key, val }) => (
         <span key={key} className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/[0.06] text-[10px] text-stitch-on-surface-variant font-mono">
-          {SPEC_ICONS[key]}{val}
+          {SPEC_ICONS[key]}{cleanText(val)}
         </span>
       ))}
     </div>
   );
 }
 
-function hashString(value: string): number {
-  let hash = 0;
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash << 5) - hash + value.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash);
-}
 
 
 function formatPkr(value: number): string {
@@ -153,35 +143,42 @@ export default function ProductGrid({
     <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
       {products.map((product) => {
         const outOfStock = product.inStockCount === 0;
-        const palette = AVATAR_PALETTE[hashString(product.name) % AVATAR_PALETTE.length];
         const hasDiscount = product.comparePrice && product.comparePrice > product.sellingPrice;
 
         return (
           <div
             key={product.id}
             data-product-card
-            onClick={() => onViewUnits(product)}
-            className="glass-card rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-stitch-primary/30 hover:shadow-lg hover:shadow-stitch-primary/5 transition-all duration-200 group flex flex-col"
+            onClick={() => { if (!outOfStock) onViewUnits(product); }}
+            className={`glass-card rounded-xl overflow-hidden border border-white/5 hover:shadow-lg transition-all duration-200 group flex flex-col ${
+              outOfStock 
+                ? 'opacity-60 border-white/5 hover:border-white/5 hover:shadow-none cursor-not-allowed' 
+                : 'cursor-pointer hover:border-stitch-primary/30 hover:shadow-stitch-primary/5'
+            }`}
           >
             {/* Hero image / gradient avatar */}
             <div className="relative h-28 shrink-0 overflow-hidden">
               {product.imageUrl ? (
                 <img
                   src={product.imageUrl}
-                  alt={product.name}
+                  alt={cleanText(product.name)}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                 />
               ) : (
-                <div className={`w-full h-full bg-gradient-to-br ${palette} flex items-center justify-center`}>
-                  <span className="text-3xl font-black opacity-60 select-none">
-                    {product.name.charAt(0).toUpperCase()}
-                  </span>
+                <div className="w-full h-full bg-slate-900/40 flex items-center justify-center border-b border-white/5">
+                  {(() => {
+                    const isLaptop = product.category?.toLowerCase().includes('laptop') ||
+                                    product.name?.toLowerCase().includes('laptop') ||
+                                    product.name?.toLowerCase().includes('chromebook');
+                    const IconComponent = isLaptop ? Laptop : Package;
+                    return <IconComponent className="w-10 h-10 text-slate-500/30 animate-pulse" strokeWidth={1.5} />;
+                  })()}
                 </div>
               )}
               {product.category && (
                 <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/50 backdrop-blur-sm text-[10px] font-medium text-white/70">
-                  <Tag size={8} />{product.category}
+                  <Tag size={8} />{cleanText(product.category)}
                 </span>
               )}
               {product.aiSummary && (
@@ -199,15 +196,15 @@ export default function ProductGrid({
             {/* Body */}
             <div className="p-3 flex flex-col flex-1 gap-1.5">
               <div>
-                <p className="text-sm font-bold text-stitch-on-surface truncate leading-snug">{product.name}</p>
-                {product.brand && <p className="text-[11px] text-stitch-on-surface-variant truncate">{product.brand}</p>}
+                <p className="text-sm font-bold text-stitch-on-surface truncate leading-snug">{cleanText(product.name)}</p>
+                {product.brand && <p className="text-[11px] text-stitch-on-surface-variant truncate">{cleanText(product.brand)}</p>}
               </div>
 
               {product.specifications
                 ? <SpecChips specs={product.specifications} />
                 : product.shortDescription && (
                   <p className="text-[11px] text-stitch-on-surface-variant leading-normal line-clamp-2 mt-0.5">
-                    {product.shortDescription}
+                    {cleanText(product.shortDescription)}
                   </p>
                 )
               }
