@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+﻿import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { format, subDays, parseISO } from 'date-fns';
 import { api } from '../api/client';
@@ -116,7 +116,7 @@ export const useDashboardStore = create<DashboardState>()(
       },
     }),
     {
-      name: 'electrotrack-dashboard-cache',
+      name: 'techbill-dashboard-cache',
     }
   )
 );

@@ -1,4 +1,4 @@
-import { Scale, FileText, HelpCircle, ShieldAlert } from 'lucide-react';
+﻿import { Scale, FileText, HelpCircle, ShieldAlert } from 'lucide-react';
 
 export default function TermsOfService() {
   return (
@@ -23,7 +23,7 @@ export default function TermsOfService() {
             <h2 className="font-space text-lg font-bold text-slate-900 dark:text-white m-0">1. Acceptance of Terms</h2>
           </div>
           <p>
-            By establishing a tenant account, deploying an ElectroTrack node, or accessing the point-of-sale platform, you agree to be bound by these Terms of Service. These terms apply to all owners, managers, accountants, cashiers, and platform administrators across our multi-tenant SaaS environments.
+            By establishing a tenant account, deploying an TechBill node, or accessing the point-of-sale platform, you agree to be bound by these Terms of Service. These terms apply to all owners, managers, accountants, cashiers, and platform administrators across our multi-tenant SaaS environments.
           </p>
         </section>
 
@@ -58,7 +58,7 @@ export default function TermsOfService() {
             <h2 className="font-space text-lg font-bold text-slate-900 dark:text-white m-0">4. Liability & Support</h2>
           </div>
           <p>
-            ElectroTrack SaaS is provided "as is" and "as available". We do not guarantee continuous offline execution where local storage configurations are modified by the end-user. Please consult your Service Level Agreements (SLAs) regarding hardware integration, database backups, and custom Merchant of Record support timelines.
+            TechBill SaaS is provided "as is" and "as available". We do not guarantee continuous offline execution where local storage configurations are modified by the end-user. Please consult your Service Level Agreements (SLAs) regarding hardware integration, database backups, and custom Merchant of Record support timelines.
           </p>
         </section>
       </div>

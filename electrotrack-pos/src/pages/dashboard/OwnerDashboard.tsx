@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { TrendingUp, ShoppingCart, Package, Tag, Banknote, X, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDashboardStore } from '../../store/dashboard.store';
@@ -11,7 +11,7 @@ import StockAlerts from '../../components/dashboard/StockAlerts';
 import AiInsights from '../../components/dashboard/AiInsights';
 import gsap from 'gsap';
 
-const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
+const formatPKR = (n: number) => `â‚¨ ${n.toLocaleString('en-PK')}`;
 
 export default function OwnerDashboard() {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ export default function OwnerDashboard() {
             </div>
             <h2 className="text-lg font-bold text-white font-space">Unlock Advanced Telemetry Analytics</h2>
             <p className="text-xs text-white/60 mt-3 leading-relaxed">
-              Get real-time performance insights, dead stock analysis, sales forecasting, and custom cashier performance analytics. Upgrade to ElectroTrack Pro Core to unlock.
+              Get real-time performance insights, dead stock analysis, sales forecasting, and custom cashier performance analytics. Upgrade to TechBill Pro Core to unlock.
             </p>
             <button
               type="button"

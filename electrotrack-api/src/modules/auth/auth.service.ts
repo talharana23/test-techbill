@@ -1,4 +1,4 @@
-import {
+﻿import {
   Injectable,
   UnauthorizedException,
   BadRequestException,
@@ -41,7 +41,7 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
       include: {
-        tenant: { select: { id: true, name: true, status: true, plan: true } },
+        tenant: { select: { id: true, name: true, status: true, plan: true, slug: true } },
       },
     });
 
@@ -105,6 +105,7 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
+      subdomain: user.tenant?.slug ?? null,
       user: {
         id: user.id,
         email: user.email,
@@ -210,7 +211,7 @@ export class AuthService {
 
     // Dev bypass: set OTP_LOG_TO_CONSOLE=true in .env to skip email during development
     if (this.configService.get('OTP_LOG_TO_CONSOLE') === 'true') {
-      console.log(`[DEV OTP] ${user.email} → ${code} (valid ${ttl}s)`);
+      console.log(`[DEV OTP] ${user.email} â†’ ${code} (valid ${ttl}s)`);
       return;
     }
 
@@ -218,14 +219,14 @@ export class AuthService {
       await this.mailer.sendMail({
         from: this.configService.get('SMTP_FROM'),
         to: user.email,
-        subject: 'ElectroTrack — Your OTP Code',
+        subject: 'TechBill â€” Your OTP Code',
         text: `Your OTP is: ${code}\n\nValid for ${ttl} seconds. Do not share this code.`,
         html: `<p>Your OTP is: <strong style="font-size:24px;letter-spacing:4px">${code}</strong></p><p>Valid for ${ttl} seconds.</p>`,
       });
     } catch {
       // Invalidate the generated OTP so it doesn't persist without delivery
       await this.otpService.invalidate(userId);
-      throw new BadRequestException('Failed to send OTP — please try again');
+      throw new BadRequestException('Failed to send OTP â€” please try again');
     }
   }
 
@@ -249,7 +250,7 @@ export class AuthService {
     return { otpToken };
   }
 
-  // ─── Password Reset (admin/owner self-reset via OTP) ──────────────────────
+  // â”€â”€â”€ Password Reset (admin/owner self-reset via OTP) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   async requestPasswordReset(email: string) {
     // Always return generic message to prevent enumeration
@@ -266,11 +267,11 @@ export class AuthService {
         await this.mailer.sendMail({
           from: this.configService.get('SMTP_FROM'),
           to: user.email,
-          subject: 'ElectroTrack Password Reset',
+          subject: 'TechBill Password Reset',
           text: `Your password reset OTP is: ${code}. Valid for ${this.configService.get('OTP_TTL_SECONDS', '300')} seconds.`,
         });
       } catch {
-        // Silently fail — don't reveal email delivery status
+        // Silently fail â€” don't reveal email delivery status
       }
     }
 

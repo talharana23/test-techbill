@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+﻿import { useRef, useEffect, useState } from 'react';
 import { format, subDays } from 'date-fns';
 import { FileText, TrendingUp, Users, Package, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { useCan } from '../../lib/permissions';
 import { useFeatureGate } from '../../hooks/useFeatureGate';
 import gsap from 'gsap';
 
-const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
+const formatPKR = (n: number) => `â‚¨ ${n.toLocaleString('en-PK')}`;
 
 type Tab = 'sales' | 'staff' | 'deadstock';
 
@@ -95,7 +95,7 @@ export default function ReportsPage() {
             </div>
             <h2 className="text-lg font-bold text-white font-space">Unlock Advanced Telemetry Analytics</h2>
             <p className="text-xs text-white/60 mt-3 leading-relaxed">
-              Get real-time performance insights, dead stock analysis, sales forecasting, and custom cashier performance analytics. Upgrade to ElectroTrack Pro Core to unlock.
+              Get real-time performance insights, dead stock analysis, sales forecasting, and custom cashier performance analytics. Upgrade to TechBill Pro Core to unlock.
             </p>
             <button
               type="button"
@@ -154,7 +154,7 @@ export default function ReportsPage() {
                 onClick={tab === 'sales' ? loadSales : loadStaff}
                 disabled={loading}
                 className="px-4 py-2 bg-stitch-primary text-stitch-on-primary text-sm font-bold rounded-lg hover:bg-stitch-primary/90 disabled:opacity-50 transition-all active:scale-95">
-                {loading ? 'Loading…' : 'Run Report'}
+                {loading ? 'Loadingâ€¦' : 'Run Report'}
               </button>
             </div>
           )}
@@ -293,12 +293,12 @@ export default function ReportsPage() {
             <div className="space-y-4">
               <button onClick={loadDeadStock} disabled={loading}
                 className="px-4 py-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 text-sm font-bold rounded-lg hover:bg-amber-500/30 disabled:opacity-50 transition-all active:scale-95">
-                {loading ? 'Loading…' : 'Load Dead Stock (60+ days unsold)'}
+                {loading ? 'Loadingâ€¦' : 'Load Dead Stock (60+ days unsold)'}
               </button>
               {deadStock.length === 0 && !loading && (
                 <div className="py-12 text-center">
                   <Package size={32} className="mx-auto mb-2 text-stitch-on-surface-variant/30" />
-                  <p className="text-sm text-stitch-on-surface-variant">No dead stock found — run analysis above</p>
+                  <p className="text-sm text-stitch-on-surface-variant">No dead stock found â€” run analysis above</p>
                 </div>
               )}
               {deadStock.length > 0 && (
@@ -316,7 +316,7 @@ export default function ReportsPage() {
                         <tr key={u.unitId} className="hover:bg-white/5 transition-colors">
                           <td className="px-4 py-3 font-mono text-xs text-stitch-tertiary">{u.serialNumber}</td>
                           <td className="px-4 py-3 text-sm font-medium text-stitch-on-surface">{u.productName}</td>
-                          <td className="px-4 py-3 text-sm text-stitch-on-surface-variant">{u.brand ?? '—'}</td>
+                          <td className="px-4 py-3 text-sm text-stitch-on-surface-variant">{u.brand ?? 'â€”'}</td>
                           <td className="px-4 py-3">
                             <span className={`text-sm font-bold font-mono ${u.daysInStock > 90 ? 'text-stitch-error' : 'text-amber-400'}`}>
                               {u.daysInStock}d

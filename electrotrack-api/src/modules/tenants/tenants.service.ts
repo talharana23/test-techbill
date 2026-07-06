@@ -35,26 +35,28 @@ export class TenantsService {
 
   async createTenant(dto: {
     name: string;
-    slug: string;
+    username: string;
     plan?: string;
     maxUsers?: number;
     ownerName: string;
-    ownerEmail: string;
     ownerPasswordHashOrText: string;
   }) {
+    const slug = dto.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const ownerEmail = `${dto.username}@${slug}.techbill.app`;
+
     // 1. Check if tenant slug or owner email already exists
     const existingTenant = await this.prisma.tenant.findUnique({
-      where: { slug: dto.slug }
+      where: { slug }
     });
     if (existingTenant) {
-      throw new ConflictException(`Tenant slug "${dto.slug}" is already in use`);
+      throw new ConflictException(`Tenant slug "${slug}" is already in use`);
     }
 
     const existingUser = await this.prisma.user.findUnique({
-      where: { email: dto.ownerEmail }
+      where: { email: ownerEmail }
     });
     if (existingUser) {
-      throw new ConflictException(`Email "${dto.ownerEmail}" is already in use`);
+      throw new ConflictException(`Email "${ownerEmail}" is already in use`);
     }
 
     const passwordHash = await bcrypt.hash(dto.ownerPasswordHashOrText, BCRYPT_ROUNDS);
@@ -64,7 +66,7 @@ export class TenantsService {
       const tenant = await tx.tenant.create({
         data: {
           name: dto.name,
-          slug: dto.slug,
+          slug,
           plan: dto.plan || 'trial',
           maxUsers: dto.maxUsers || 5,
         }
@@ -73,7 +75,7 @@ export class TenantsService {
       const owner = await tx.user.create({
         data: {
           name: dto.ownerName,
-          email: dto.ownerEmail,
+          email: ownerEmail,
           passwordHash,
           role: Role.owner,
           tenantId: tenant.id,

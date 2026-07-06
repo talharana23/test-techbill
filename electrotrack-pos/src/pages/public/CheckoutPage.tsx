@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, CreditCard, Loader2, CheckCircle2, ArrowLeft } from 'lucide-react';
@@ -20,19 +20,19 @@ const currencies: Record<CurrencyCode, CurrencyDetails> = {
     label: 'US / Global (USD)',
   },
   PKR: {
-    symbol: '₨',
+    symbol: 'â‚¨',
     starterPrice: { monthly: 13900, annual: 10900 },
     proPrice: { monthly: 27900, annual: 22000 },
     label: 'Pakistan (PKR)',
   },
   EUR: {
-    symbol: '€',
+    symbol: 'â‚¬',
     starterPrice: { monthly: 46, annual: 36 },
     proPrice: { monthly: 92, annual: 74 },
     label: 'Europe (EUR)',
   },
   GBP: {
-    symbol: '£',
+    symbol: 'Â£',
     starterPrice: { monthly: 39, annual: 31 },
     proPrice: { monthly: 79, annual: 63 },
     label: 'United Kingdom (GBP)',
@@ -55,10 +55,10 @@ const detectCurrency = (): CurrencyCode => {
 // When integrating live stores, redirect the user directly to these URLs
 // e.g., window.location.href = LEMON_SQUEEZY_STORE_URLS[`${plan}_${billing}`]
 export const LEMON_SQUEEZY_STORE_URLS = {
-  starter_monthly: 'https://electrotrack.lemonsqueezy.com/checkout/buy/starter-monthly-placeholder-id',
-  starter_annual: 'https://electrotrack.lemonsqueezy.com/checkout/buy/starter-annual-placeholder-id',
-  pro_monthly: 'https://electrotrack.lemonsqueezy.com/checkout/buy/pro-monthly-placeholder-id',
-  pro_annual: 'https://electrotrack.lemonsqueezy.com/checkout/buy/pro-annual-placeholder-id',
+  starter_monthly: 'https://techbill.lemonsqueezy.com/checkout/buy/starter-monthly-placeholder-id',
+  starter_annual: 'https://techbill.lemonsqueezy.com/checkout/buy/starter-annual-placeholder-id',
+  pro_monthly: 'https://techbill.lemonsqueezy.com/checkout/buy/pro-monthly-placeholder-id',
+  pro_annual: 'https://techbill.lemonsqueezy.com/checkout/buy/pro-annual-placeholder-id',
 };
 
 export default function CheckoutPage() {
@@ -89,7 +89,7 @@ export default function CheckoutPage() {
     ? (billing === 'annual' ? currencyInfo.starterPrice.annual : currencyInfo.starterPrice.monthly)
     : (billing === 'annual' ? currencyInfo.proPrice.annual : currencyInfo.proPrice.monthly);
 
-  const planDisplayName = plan === 'starter' ? 'Starter Boutique Plan' : 'ElectroTrack Pro Plan';
+  const planDisplayName = plan === 'starter' ? 'Starter Boutique Plan' : 'TechBill Pro Plan';
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,9 +133,9 @@ export default function CheckoutPage() {
         <div className="w-full md:w-5/12 bg-slate-50 dark:bg-[#0c101f] p-8 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5 flex flex-col justify-between">
           <div className="space-y-8">
             <div className="flex items-center gap-2">
-              <img src="/favicon.svg" alt="ElectroTrack" className="h-6 w-6" />
+              <img src="/favicon.svg" alt="TechBill" className="h-6 w-6" />
               <span className="font-space text-sm font-bold text-slate-900 dark:text-white">
-                ElectroTrack Pay
+                TechBill Pay
               </span>
             </div>
 
@@ -366,7 +366,7 @@ export default function CheckoutPage() {
                 type="submit"
                 className="w-full inline-flex items-center justify-center py-3 text-xs font-bold rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-[#c0c1ff] dark:text-[#1000a9] dark:hover:bg-[#c0c1ff]/90 transition-all active:scale-[0.98] shadow-lg shadow-indigo-600/10 dark:shadow-none mt-4"
               >
-                Subscribe with ElectroTrack Pay
+                Subscribe with TechBill Pay
               </button>
             </form>
           )}

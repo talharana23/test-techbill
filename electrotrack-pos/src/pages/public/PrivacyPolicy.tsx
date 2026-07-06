@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, FileText, Globe } from 'lucide-react';
+﻿import { Shield, Eye, Lock, FileText, Globe } from 'lucide-react';
 
 export default function PrivacyPolicy() {
   return (
@@ -39,7 +39,7 @@ export default function PrivacyPolicy() {
             <h2 className="font-space text-lg font-bold text-slate-900 dark:text-white m-0">2. How We Use Information</h2>
           </div>
           <p>
-            ElectroTrack SaaS utilizes the collected data to provide, maintain, and optimize our multi-tenant retail platform. Specifically, we use information to:
+            TechBill SaaS utilizes the collected data to provide, maintain, and optimize our multi-tenant retail platform. Specifically, we use information to:
           </p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
             <li>Authorize account access and maintain isolated secure schema boundaries for each tenant.</li>
@@ -65,7 +65,7 @@ export default function PrivacyPolicy() {
             <h2 className="font-space text-lg font-bold text-slate-900 dark:text-white m-0">4. Contact & Compliance</h2>
           </div>
           <p>
-            If you have questions about this policy, require data export assistance, or wish to report a security event, please contact our administrative team at support@electrotrack.io.
+            If you have questions about this policy, require data export assistance, or wish to report a security event, please contact our administrative team at support@techbill.io.
           </p>
         </section>
       </div>

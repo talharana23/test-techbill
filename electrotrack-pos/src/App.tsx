@@ -89,7 +89,24 @@ function RequireAuth({
 let isRefreshingInProgress = false;
 
 export default function App() {
-  const { user, accessToken, refreshToken, setToken, clearAuth, setHydrating, isHydrating, _hasHydrated } = useAuthStore();
+  const { user, accessToken, refreshToken, setToken, setAuth, clearAuth, setHydrating, isHydrating, _hasHydrated } = useAuthStore();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tokenUrl = params.get('token');
+    const refreshUrl = params.get('refresh_token');
+    const uUrl = params.get('u');
+
+    if (tokenUrl && uUrl) {
+      try {
+        const decodedUser = JSON.parse(atob(decodeURIComponent(uUrl)));
+        setAuth(decodedUser, tokenUrl, refreshUrl);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {
+        console.error('Failed to parse user from URL', e);
+      }
+    }
+  }, [setAuth]);
 
   useEffect(() => {
     if (!_hasHydrated) return;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, AnimatePresence, useMotionTemplate } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { usePublicTheme } from '../components/layout/PublicLayout';
@@ -69,19 +69,19 @@ const currencies: Record<CurrencyCode, CurrencyDetails> = {
     label: 'US / Global (USD)',
   },
   PKR: {
-    symbol: '₨',
+    symbol: 'â‚¨',
     starterPrice: { monthly: 13900, annual: 10900 },
     proPrice: { monthly: 27900, annual: 22000 },
     label: 'Pakistan (PKR)',
   },
   EUR: {
-    symbol: '€',
+    symbol: 'â‚¬',
     starterPrice: { monthly: 46, annual: 36 },
     proPrice: { monthly: 92, annual: 74 },
     label: 'Europe (EUR)',
   },
   GBP: {
-    symbol: '£',
+    symbol: 'Â£',
     starterPrice: { monthly: 39, annual: 31 },
     proPrice: { monthly: 79, annual: 63 },
     label: 'United Kingdom (GBP)',
@@ -324,7 +324,7 @@ export default function LandingPage() {
               <span className="w-3 h-3 rounded-full bg-amber-500/80" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
               <span className="text-[11px] text-slate-400 dark:text-white/30 font-medium ml-3 font-mono">
-                electrotrack_live_terminal_v1.2.sh
+                techbill_live_terminal_v1.2.sh
               </span>
               <span className="inline-flex items-center gap-1.5 text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-2.5 py-0.5 rounded-full animate-pulse ml-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -574,7 +574,7 @@ export default function LandingPage() {
 
                 <div className="p-3.5 rounded-xl border border-dashed border-slate-300 dark:border-white/10 bg-slate-100/10 dark:bg-white/[0.003]">
                   <p className="text-[11px] text-slate-500 dark:text-[#c7c4d7] text-center">
-                    💡 Click <strong>"+ Cart"</strong> on the catalog cards above to instantly feed the sandbox checkout receipt on the right.
+                    ðŸ’¡ Click <strong>"+ Cart"</strong> on the catalog cards above to instantly feed the sandbox checkout receipt on the right.
                   </p>
                 </div>
               </div>
@@ -659,9 +659,9 @@ export default function LandingPage() {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                     {[
-                      { node: 'Downtown Register', status: 'Online', desc: 'DT-01 • 12ms', color: 'bg-emerald-500' },
-                      { node: 'Uptown Boutique', status: 'Online', desc: 'UT-02 • 24ms', color: 'bg-emerald-500' },
-                      { node: 'Warehouse Depot', status: 'Online', desc: 'WH-09 • 110ms', color: 'bg-indigo-500' },
+                      { node: 'Downtown Register', status: 'Online', desc: 'DT-01 â€¢ 12ms', color: 'bg-emerald-500' },
+                      { node: 'Uptown Boutique', status: 'Online', desc: 'UT-02 â€¢ 24ms', color: 'bg-emerald-500' },
+                      { node: 'Warehouse Depot', status: 'Online', desc: 'WH-09 â€¢ 110ms', color: 'bg-indigo-500' },
                     ].map((node, i) => (
                       <div key={i} className="p-4 rounded-xl bg-slate-200/40 dark:bg-white/[0.005] border border-slate-200 dark:border-white/5 flex flex-col justify-between">
                         <div className="flex items-center justify-between">
@@ -684,7 +684,7 @@ export default function LandingPage() {
                 <div className="p-4 rounded-lg bg-indigo-500/5 border border-indigo-500/10 mt-6 flex gap-2.5">
                   <Network size={18} className="text-[#2fd9f4] shrink-0 mt-0.5" />
                   <p className="text-xs text-slate-500 dark:text-[#c7c4d7] leading-relaxed">
-                    ElectroTrack is completely decentralized. In-store registers sync transactions to localized browser IndexedDB layers when internet access drops, automatically batch-reconciling upon gateway reconnection.
+                    TechBill is completely decentralized. In-store registers sync transactions to localized browser IndexedDB layers when internet access drops, automatically batch-reconciling upon gateway reconnection.
                   </p>
                 </div>
               </div>
@@ -974,7 +974,7 @@ export default function LandingPage() {
               </div>
               <div>
                 <p className="text-xs font-bold tracking-wider text-indigo-600 dark:text-[#c0c1ff] uppercase">Enterprise Scale</p>
-                <h3 className="font-space text-2xl font-bold text-slate-900 dark:text-white mt-1">ElectroTrack Pro</h3>
+                <h3 className="font-space text-2xl font-bold text-slate-900 dark:text-white mt-1">TechBill Pro</h3>
                 <p className="text-sm text-slate-500 dark:text-[#c7c4d7] mt-3">Tailored for fast-growing electronic chain retailers.</p>
                 
                 <div className="mt-6 flex items-baseline gap-1 overflow-hidden h-12">
@@ -1053,7 +1053,7 @@ export default function LandingPage() {
             </div>
             
             <a
-              href="mailto:enterprise@electrotrack.io?subject=Enterprise%20Quote%20Request"
+              href="mailto:enterprise@techbill.io?subject=Enterprise%20Quote%20Request"
               className="w-full inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold rounded-lg border border-slate-300 dark:border-white/10 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all mt-8 text-center"
             >
               Request Enterprise Quote
@@ -1066,7 +1066,7 @@ export default function LandingPage() {
       <section id="architects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-t border-slate-200 dark:border-white/5">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="font-space text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
-            The Architects Behind ElectroTrack
+            The Architects Behind TechBill
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-[#c7c4d7]">
             Co-founded by elite system designers with a vision of creating ultra-scalable, low-latency, industrial-grade AI and SaaS infrastructure.
