@@ -39,6 +39,7 @@ export class AuthController {
       access_token: result.accessToken,
       user: result.user,
       refresh_token: result.refreshToken,
+      subdomain: result.subdomain,
     });
   }
 

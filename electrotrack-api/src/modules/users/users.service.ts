@@ -31,17 +31,22 @@ export class UsersService {
   }
 
   async createUser(dto: CreateUserDto, tenantId: string) {
+    const tenant = await this.prisma.tenant.findUnique({ where: { id: tenantId } });
+    if (!tenant) throw new NotFoundException('Tenant not found');
+
+    const email = `${dto.username}@${tenant.slug}.techbill.app`;
+
     const existing = await this.prisma.user.findUnique({
-      where: { email: dto.email },
+      where: { email },
     });
     if (existing)
-      throw new ConflictException(`Email ${dto.email} already in use`);
+      throw new ConflictException(`Email ${email} already in use`);
 
     const passwordHash = await bcrypt.hash(dto.password, BCRYPT_ROUNDS);
     return this.prisma.user.create({
       data: {
         name: dto.name,
-        email: dto.email,
+        email,
         passwordHash,
         role: dto.role,
         tenantId,

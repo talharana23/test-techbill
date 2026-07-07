@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+﻿import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { api } from '../api/client';
 import type { SearchProduct } from '../components/pos/UniversalSearch';
@@ -31,7 +31,7 @@ export const useInventoryStore = create<InventoryState>()(
       clearCache: () => set({ products: [], lastSynced: null }),
     }),
     {
-      name: 'electrotrack-inventory-cache',
+      name: 'techbill-inventory-cache',
     }
   )
 );

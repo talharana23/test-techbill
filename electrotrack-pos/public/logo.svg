@@ -9,9 +9,9 @@
     <path d="M27 11L16.5 24.5h7.5L21 37L31.5 23.5h-7.5L27 11z" fill="url(#bolt-grad)" stroke="#c0c1ff" stroke-width="0.5" stroke-linejoin="round" />
   </g>
   
-  <!-- Text "ElectroTrack" -->
+  <!-- Text "TechBill" -->
   <text x="72" y="34" font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#ffffff" letter-spacing="-0.03em">
-    Electro<tspan fill="#2fd9f4">Track</tspan>
+    Tech<tspan fill="#2fd9f4">Bill</tspan>
   </text>
   <!-- Subtitle "POS" or "SaaS" -->
   <text x="72" y="47" font-family="'DM Sans', system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#908fa0" letter-spacing="0.15em">

@@ -73,7 +73,7 @@ export default function AppShell() {
   const canSeeLoyalty = useCan('loyalty.read') && !isPlatformAdmin;
   const canSeeReturnAnalytics = useCan('returns.read') && !isPlatformAdmin;
   const canSeeCashRecon = useCan('reports.cash_reconciliation') && !isPlatformAdmin;
-  const canSeeOnlineOrders = useCan('pos.online_sell') && !isPlatformAdmin;
+  const canSeeOnlineOrders = useCan('pos.online_sell') && !isPlatformAdmin && !!user?.onlineSellingEnabled;
 
   const fetchNotifications = useCallback(async () => {
     if (isPlatformAdmin) return;
@@ -81,7 +81,7 @@ export default function AppShell() {
       const res = await api.get<{ notifications: Notification[] }>('/notifications');
       setNotifications(res.data.notifications ?? []);
     } catch {
-      // silently ignore — bell is non-critical
+      // silently ignore â€” bell is non-critical
     }
   }, [isPlatformAdmin]);
 
@@ -159,10 +159,10 @@ export default function AppShell() {
       `}>
         <div className="p-4 border-b border-white/5 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
-            <img src="/favicon.svg" alt="ElectroTrack Icon" className="w-6 h-6 object-contain shrink-0" />
+            <img src="/favicon.svg" alt="TechBill Icon" className="w-6 h-6 object-contain shrink-0" />
             <div className="min-w-0 flex-1">
               <p className="font-bold text-white text-sm tracking-tight font-space truncate">
-                {isPlatformAdmin ? 'SaaS Admin Console' : user?.tenantName || 'ElectroTrack'}
+                {isPlatformAdmin ? 'SaaS Admin Console' : user?.tenantName || 'TechBill'}
               </p>
               <p className="text-[10px] text-stitch-on-surface-variant mt-0.5 truncate font-semibold uppercase tracking-wider font-mono">
                 {user?.role?.replace('_', ' ')}
@@ -391,7 +391,7 @@ export default function AppShell() {
             <Menu size={18} />
           </button>
           <p className="font-bold text-white text-sm font-space truncate">
-            {isPlatformAdmin ? 'SaaS Admin Console' : user?.tenantName || 'ElectroTrack'}
+            {isPlatformAdmin ? 'SaaS Admin Console' : user?.tenantName || 'TechBill'}
           </p>
         </div>
         <div className="flex-1 overflow-auto">
@@ -426,7 +426,7 @@ export default function AppShell() {
                     setLockErrorMsg('');
                   }}
                   className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-lg font-bold"
-                  placeholder="••••"
+                  placeholder="â€¢â€¢â€¢â€¢"
                   autoFocus
                 />
               </div>
@@ -447,7 +447,7 @@ export default function AppShell() {
                     setLockErrorMsg('');
                   }}
                   className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-lg font-bold"
-                  placeholder="••••"
+                  placeholder="â€¢â€¢â€¢â€¢"
                 />
               </div>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, useRef } from 'react';
+﻿import { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import { can } from '../../lib/permissions';
@@ -95,7 +95,7 @@ export default function PublicLayout() {
   useKeepAlive();
   
   const [isDark, setIsDark] = useState<boolean>(() => {
-    const saved = localStorage.getItem('electrotrack_theme');
+    const saved = localStorage.getItem('techbill_theme');
     if (saved) return saved === 'dark';
     return true; // default dark for tech premium aesthetic
   });
@@ -103,7 +103,7 @@ export default function PublicLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('electrotrack_theme', isDark ? 'dark' : 'light');
+    localStorage.setItem('techbill_theme', isDark ? 'dark' : 'light');
     if (isDark) {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
@@ -165,9 +165,9 @@ export default function PublicLayout() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
               {/* Logo */}
               <Link to="/" className="flex items-center cursor-pointer">
-                <img src="/favicon.svg" alt="ElectroTrack Logo" className="h-9 w-auto" />
+                <img src="/favicon.svg" alt="TechBill Logo" className="h-9 w-auto" />
                 <span className="ml-2.5 font-space text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-                  ElectroTrack<span className="text-[#2fd9f4] font-extrabold">.</span>
+                  TechBill<span className="text-[#2fd9f4] font-extrabold">.</span>
                 </span>
               </Link>
 
@@ -262,14 +262,14 @@ export default function PublicLayout() {
           <footer className="border-t border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-[#060813]/60 backdrop-blur-md py-12 transition-colors duration-300 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center">
-                <img src="/favicon.svg" alt="ElectroTrack Logo" className="h-6 w-auto" />
+                <img src="/favicon.svg" alt="TechBill Logo" className="h-6 w-auto" />
                 <span className="ml-2 font-space text-sm font-bold tracking-tight text-slate-900 dark:text-white">
-                  ElectroTrack<span className="text-[#2fd9f4]">.</span>
+                  TechBill<span className="text-[#2fd9f4]">.</span>
                 </span>
               </div>
 
               <p className="text-xs text-slate-500 dark:text-white/30 font-medium text-center md:text-left leading-relaxed">
-                &copy; {new Date().getFullYear()} ElectroTrack SaaS. Built with enterprise grade standards by{' '}
+                &copy; {new Date().getFullYear()} TechBill SaaS. Built with enterprise grade standards by{' '}
                 <span className="text-slate-700 dark:text-white/60 font-semibold">TalhaRana</span> &amp;{' '}
                 <span className="text-slate-700 dark:text-white/60 font-semibold">KrishBaresha</span>. All rights reserved.
               </p>

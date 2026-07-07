@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { Plus, UserX, UserCheck, RefreshCw, Key, Shield, Edit, X, Users, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/client';
@@ -312,7 +312,7 @@ export default function UsersPage() {
             <div>
               <h3 className="text-xs font-bold text-white font-space uppercase tracking-wider">Staff Limit Reached ({users.length}/{limits.staffUsers})</h3>
               <p className="text-xs text-white/70 mt-1 leading-relaxed">
-                Your current plan (<strong>{plan}</strong>) only allows up to {limits.staffUsers} active staff accounts. Upgrade to <strong>ElectroTrack Pro Core</strong> to get unlimited staff and cashier users.
+                Your current plan (<strong>{plan}</strong>) only allows up to {limits.staffUsers} active staff accounts. Upgrade to <strong>TechBill Pro Core</strong> to get unlimited staff and cashier users.
               </p>
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function UsersPage() {
               </button>
               <button type="submit" disabled={loading}
                 className="px-4 py-2 text-sm bg-stitch-primary text-stitch-on-primary font-bold rounded-lg hover:bg-stitch-primary/90 disabled:opacity-50 transition-all active:scale-95">
-                {loading ? 'Creating…' : 'Create User'}
+                {loading ? 'Creatingâ€¦' : 'Create User'}
               </button>
             </div>
           </form>
@@ -441,7 +441,7 @@ export default function UsersPage() {
                   {!canAssignPermissions && <span className="text-stitch-error font-normal normal-case ml-2">(Requires users.permissions)</span>}
                 </p>
                 {editingUser.role === 'owner' ? (
-                  <p className="text-xs text-stitch-primary/70 italic">Owner has full operational bypass — individual toggles do not apply.</p>
+                  <p className="text-xs text-stitch-primary/70 italic">Owner has full operational bypass â€” individual toggles do not apply.</p>
                 ) : (
                   <PermissionGrid permissions={editForm.permissions} canAssign={canAssignPermissions}
                     onToggle={(p) => handlePermissionToggle(p, true)} />
@@ -455,7 +455,7 @@ export default function UsersPage() {
                 </button>
                 <button type="submit" disabled={loading}
                   className="px-4 py-2 text-sm bg-stitch-primary text-stitch-on-primary font-bold rounded-lg hover:bg-stitch-primary/90 disabled:opacity-50 transition-all active:scale-95">
-                  {loading ? 'Saving…' : 'Save Changes'}
+                  {loading ? 'Savingâ€¦' : 'Save Changes'}
                 </button>
               </div>
             </form>
@@ -491,7 +491,7 @@ export default function UsersPage() {
                 </button>
                 <button type="submit" disabled={loading || newPassword.length < 8}
                   className="px-4 py-2 text-sm bg-amber-500 text-white font-bold rounded-lg hover:bg-amber-600 disabled:opacity-50 transition-all active:scale-95">
-                  {loading ? 'Updating…' : 'Set Password'}
+                  {loading ? 'Updatingâ€¦' : 'Set Password'}
                 </button>
               </div>
             </form>

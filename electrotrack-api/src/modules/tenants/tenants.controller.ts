@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Param,
   Body,
   UseGuards,
@@ -32,11 +33,10 @@ export class TenantsController {
     @Body()
     dto: {
       name: string;
-      slug: string;
+      username: string;
       plan?: string;
       maxUsers?: number;
       ownerName: string;
-      ownerEmail: string;
       ownerPasswordHashOrText: string;
     },
   ) {
@@ -60,5 +60,15 @@ export class TenantsController {
     },
   ) {
     return this.tenantsService.updateTenant(id, dto);
+  }
+
+  @Delete(':id')
+  deleteTenant(@Param('id') id: string, @Body('force') force: boolean) {
+    return this.tenantsService.deleteTenant(id, force);
+  }
+
+  @Patch(':id/restore')
+  restoreTenant(@Param('id') id: string) {
+    return this.tenantsService.restoreTenant(id);
   }
 }

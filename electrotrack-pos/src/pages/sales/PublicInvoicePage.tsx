@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ShieldCheck, ShieldX, Clock, Package, CheckCircle } from 'lucide-react';
@@ -41,7 +41,7 @@ const PAYMENT_LABELS: Record<string, string> = {
   bank_transfer: 'Bank Transfer',
 };
 
-const formatPKR = (n: number) => `₨ ${Number(n).toLocaleString('en-PK')}`;
+const formatPKR = (n: number) => `â‚¨ ${Number(n).toLocaleString('en-PK')}`;
 
 function WarrantyBadge({ item, isReturned }: { item: PublicItem; isReturned: boolean }) {
   if (isReturned) return null;
@@ -128,7 +128,7 @@ export default function PublicInvoicePage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-xs uppercase tracking-widest text-teal-400 font-semibold font-mono">ElectroTrack · Verified Invoice</p>
+            <p className="text-xs uppercase tracking-widest text-teal-400 font-semibold font-mono">TechBill Â· Verified Invoice</p>
             <h1 className="text-2xl font-bold text-white mt-1">{invoice.shopName}</h1>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-semibold">
@@ -169,7 +169,7 @@ export default function PublicInvoicePage() {
                 <p className="text-xs font-mono text-white/50 mt-0.5">{invoice.customerPhone}</p>
               )}
               {invoice.cashierName && (
-                <p className="text-xs text-white/40 mt-1">Cashier · {invoice.cashierName}</p>
+                <p className="text-xs text-white/40 mt-1">Cashier Â· {invoice.cashierName}</p>
               )}
             </div>
           )}
@@ -186,7 +186,7 @@ export default function PublicInvoicePage() {
                       {item.productBrand && (
                         <p className="text-[11px] text-white/40">{item.productBrand}</p>
                       )}
-                      <p className="text-[11px] font-mono text-teal-400/80 mt-0.5">SN · {item.serialNumber}</p>
+                      <p className="text-[11px] font-mono text-teal-400/80 mt-0.5">SN Â· {item.serialNumber}</p>
                     </div>
                     <p className="text-sm font-bold text-white tabular-nums whitespace-nowrap">{formatPKR(item.sellingPrice)}</p>
                   </div>
@@ -206,7 +206,7 @@ export default function PublicInvoicePage() {
             {hasDiscount && (
               <div className="flex justify-between text-sm text-rose-400">
                 <span>Discount</span>
-                <span className="tabular-nums">− {formatPKR(invoice.discountAmount)}</span>
+                <span className="tabular-nums">âˆ’ {formatPKR(invoice.discountAmount)}</span>
               </div>
             )}
             <div className="h-px bg-white/10 my-2" />
@@ -229,7 +229,7 @@ export default function PublicInvoicePage() {
             <Package size={14} />
             <p className="text-xs">Thank you for your purchase</p>
           </div>
-          <p className="text-[10px] uppercase tracking-widest text-white/20">{invoice.shopName} · ElectroTrack POS</p>
+          <p className="text-[10px] uppercase tracking-widest text-white/20">{invoice.shopName} Â· TechBill POS</p>
         </div>
       </div>
     </div>

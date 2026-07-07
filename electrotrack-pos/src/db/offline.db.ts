@@ -1,4 +1,4 @@
-import Dexie, { type Table } from 'dexie';
+﻿import Dexie, { type Table } from 'dexie';
 
 const MAX_RETRIES = 3;
 
@@ -10,17 +10,17 @@ interface PendingSale {
   status: 'pending' | 'failed';
 }
 
-class ElectroTrackDB extends Dexie {
+class TechBillDB extends Dexie {
   pendingSales!: Table<PendingSale>;
 
   constructor() {
-    super('electrotrack');
+    super('techbill');
     this.version(1).stores({ pendingSales: '++id, createdAt' });
     this.version(2).stores({ pendingSales: '++id, createdAt, status' });
   }
 }
 
-const db = new ElectroTrackDB();
+const db = new TechBillDB();
 
 export async function queueSale(payload: unknown): Promise<void> {
   await db.pendingSales.add({

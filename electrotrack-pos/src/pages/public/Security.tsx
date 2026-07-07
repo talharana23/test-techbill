@@ -1,4 +1,4 @@
-import { ShieldCheck, Server, Key, HeartHandshake } from 'lucide-react';
+﻿import { ShieldCheck, Server, Key, HeartHandshake } from 'lucide-react';
 
 export default function Security() {
   return (
@@ -23,7 +23,7 @@ export default function Security() {
             <h2 className="font-space text-lg font-bold text-slate-900 dark:text-white m-0">1. Architectural Isolation & Multi-Tenancy</h2>
           </div>
           <p>
-            ElectroTrack is built on a multi-tenant database design. To ensure complete tenant isolation:
+            TechBill is built on a multi-tenant database design. To ensure complete tenant isolation:
           </p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
             <li>Database transactions utilize tenant-scoped Row-Level Security (RLS) policies.</li>
@@ -64,7 +64,7 @@ export default function Security() {
             <h2 className="font-space text-lg font-bold text-slate-900 dark:text-white m-0">4. Continuous Auditing</h2>
           </div>
           <p>
-            ElectroTrack registers complete system audits. Every cashier checkout, stock adjust, manual database reconcile, and supplier request generates a signed, non-repudiable log audit path. Owners can verify administrative history inside the system's Audit log panel to prevent internal shrinkage or system misuse.
+            TechBill registers complete system audits. Every cashier checkout, stock adjust, manual database reconcile, and supplier request generates a signed, non-repudiable log audit path. Owners can verify administrative history inside the system's Audit log panel to prevent internal shrinkage or system misuse.
           </p>
         </section>
       </div>

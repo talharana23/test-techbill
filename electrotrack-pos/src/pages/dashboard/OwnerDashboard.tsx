@@ -3,6 +3,7 @@ import { TrendingUp, ShoppingCart, Package, Tag, Banknote, X, FileText } from 'l
 import { useNavigate } from 'react-router-dom';
 import { useDashboardStore } from '../../store/dashboard.store';
 import { useCan } from '../../lib/permissions';
+import { useAuthStore } from '../../store/auth.store';
 import { useFeatureGate } from '../../hooks/useFeatureGate';
 
 import SalesChart from '../../components/dashboard/SalesChart';
@@ -11,12 +12,13 @@ import StockAlerts from '../../components/dashboard/StockAlerts';
 import AiInsights from '../../components/dashboard/AiInsights';
 import gsap from 'gsap';
 
-const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
+const formatPKR = (n: number) => `â‚¨ ${n.toLocaleString('en-PK')}`;
 
 export default function OwnerDashboard() {
   const navigate = useNavigate();
   const summary = useDashboardStore((s) => s.summary);
-  const isOnlineEnabled = useCan('pos.online_sell');
+  const user = useAuthStore((s) => s.user);
+  const isOnlineEnabled = useCan('pos.online_sell') && !!user?.onlineSellingEnabled;
   const syncDashboard = useDashboardStore((s) => s.syncDashboard);
   const fetchAiInsight = useDashboardStore((s) => s.fetchAiInsight);
   const [showItemsModal, setShowItemsModal] = useState(false);
@@ -63,7 +65,7 @@ export default function OwnerDashboard() {
             </div>
             <h2 className="text-lg font-bold text-white font-space">Unlock Advanced Telemetry Analytics</h2>
             <p className="text-xs text-white/60 mt-3 leading-relaxed">
-              Get real-time performance insights, dead stock analysis, sales forecasting, and custom cashier performance analytics. Upgrade to ElectroTrack Pro Core to unlock.
+              Get real-time performance insights, dead stock analysis, sales forecasting, and custom cashier performance analytics. Upgrade to TechBill Pro Core to unlock.
             </p>
             <button
               type="button"

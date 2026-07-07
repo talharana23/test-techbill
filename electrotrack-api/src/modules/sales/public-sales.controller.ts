@@ -1,4 +1,4 @@
-import {
+﻿import {
   Controller,
   Get,
   Param,
@@ -7,7 +7,7 @@ import {
 import { PrismaService } from '../../prisma/prisma.service';
 
 /**
- * Public controller — no auth required.
+ * Public controller â€” no auth required.
  * Exposes a single endpoint to fetch a sale by its UUID for the QR code
  * verification flow. Uses non-guessable UUIDs, preventing IDOR attacks.
  */
@@ -83,7 +83,7 @@ export class PublicSalesController {
       customerName: sale.customer?.name ?? null,
       customerPhone: sale.customer?.phone ?? null,
       cashierName: sale.soldBy?.name ?? null,
-      shopName: sale.tenant?.name ?? 'ElectroTrack',
+      shopName: sale.tenant?.name ?? 'TechBill',
       items,
     };
   }

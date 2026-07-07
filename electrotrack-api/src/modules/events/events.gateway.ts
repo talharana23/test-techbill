@@ -32,7 +32,8 @@ import { Server, Socket } from 'socket.io';
         } catch {
           return false;
         }
-      });
+      }) || origin.endsWith('.techbill.app') || origin === 'https://techbill.app';
+
       if (isAllowed) {
         callback(null, true);
       } else {

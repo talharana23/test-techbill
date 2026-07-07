@@ -48,7 +48,9 @@ function RequireAuth({
   const { user, accessToken, isHydrating, _hasHydrated } = useAuthStore();
   // user restored from localStorage but token not yet refreshed — wait for App effect
   const pendingRefresh = !!user && !accessToken;
-  if (!_hasHydrated || isHydrating || pendingRefresh) {
+  const hasUrlAuth = new URLSearchParams(window.location.search).has('token');
+
+  if (!_hasHydrated || isHydrating || pendingRefresh || hasUrlAuth) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <span className="w-8 h-8 border-2 border-stitch-primary/30 border-t-stitch-primary rounded-full animate-spin" />
@@ -89,7 +91,24 @@ function RequireAuth({
 let isRefreshingInProgress = false;
 
 export default function App() {
-  const { user, accessToken, refreshToken, setToken, clearAuth, setHydrating, isHydrating, _hasHydrated } = useAuthStore();
+  const { user, accessToken, refreshToken, setToken, setAuth, clearAuth, setHydrating, isHydrating, _hasHydrated } = useAuthStore();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tokenUrl = params.get('token');
+    const refreshUrl = params.get('refresh_token');
+    const uUrl = params.get('u');
+
+    if (tokenUrl && uUrl) {
+      try {
+        const decodedUser = JSON.parse(atob(decodeURIComponent(uUrl)));
+        setAuth(decodedUser, tokenUrl, refreshUrl);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {
+        console.error('Failed to parse user from URL', e);
+      }
+    }
+  }, [setAuth]);
 
   useEffect(() => {
     if (!_hasHydrated) return;

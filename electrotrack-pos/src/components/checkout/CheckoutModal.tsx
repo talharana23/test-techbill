@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShieldCheck, CreditCard, Loader2, CheckCircle2 } from 'lucide-react';
 
@@ -73,9 +73,9 @@ export default function CheckoutModal({
             <div className="w-full md:w-5/12 bg-slate-50 dark:bg-[#0c101f] p-6 border-r border-slate-200 dark:border-white/5 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-1.5">
-                  <img src="/logo.svg" alt="ElectroTrack" className="h-5 w-auto" />
+                  <img src="/logo.svg" alt="TechBill" className="h-5 w-auto" />
                   <span className="font-space text-xs font-bold text-slate-900 dark:text-white">
-                    ElectroTrack Pay
+                    TechBill Pay
                   </span>
                 </div>
 
@@ -187,7 +187,7 @@ export default function CheckoutModal({
                     type="submit"
                     className="w-full inline-flex items-center justify-center py-2.5 text-xs font-bold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-[#c0c1ff] dark:text-[#1000a9] dark:hover:bg-[#c0c1ff]/90 transition-all active:scale-[0.98] shadow shadow-indigo-600/10"
                   >
-                    Subscribe with ElectroTrack Pay
+                    Subscribe with TechBill Pay
                   </button>
                 </form>
               )}
@@ -215,7 +215,7 @@ export default function CheckoutModal({
                     Subscription Successful!
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-[#c7c4d7] max-w-[200px]">
-                    Welcome onboard. Redirecting back to ElectroTrack landing portal...
+                    Welcome onboard. Redirecting back to TechBill landing portal...
                   </p>
                 </motion.div>
               )}
