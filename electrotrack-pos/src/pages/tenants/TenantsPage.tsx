@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Plus, RefreshCw, X, ShieldAlert, CheckCircle, Ban, Edit3, Building2 } from 'lucide-react';
+import { Plus, RefreshCw, X, ShieldAlert, CheckCircle, Ban, Edit3, Building2, Trash2, RotateCcw } from 'lucide-react';
 import { api } from '../../api/client';
 import type { Tenant } from '../../types';
 import gsap from 'gsap';
@@ -31,6 +31,9 @@ export default function TenantsPage() {
   const [editingTenant, setEditingTenant] = useState<Tenant | null>(null);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [tenantToDelete, setTenantToDelete] = useState<Tenant | null>(null);
+  const [deleteConfirmation, setDeleteConfirmation] = useState('');
+  const [deleteNow, setDeleteNow] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [form, setForm] = useState<CreateTenantForm>({
@@ -112,6 +115,47 @@ export default function TenantsPage() {
     } catch (err: unknown) {
       const e = err as { response?: { data?: { message?: string } } };
       setError(e.response?.data?.message ?? 'Failed to change status.');
+    }
+  };
+
+  const handleDeleteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!tenantToDelete) return;
+    if (deleteConfirmation !== 'Delete') {
+      setError('You must type exactly "Delete" to confirm.');
+      return;
+    }
+    setLoading(true);
+    setError('');
+    try {
+      await api.delete(`/tenants/${tenantToDelete.id}`, { data: { force: deleteNow } });
+      setSuccessMsg(`Tenant "${tenantToDelete.name}" ${deleteNow ? 'deleted permanently' : 'scheduled for deletion'}.`);
+      setTenantToDelete(null);
+      setDeleteConfirmation('');
+      setDeleteNow(false);
+      load();
+      setTimeout(() => setSuccessMsg(''), 4000);
+    } catch (err: unknown) {
+      const e = err as { response?: { data?: { message?: string } } };
+      setError(e.response?.data?.message ?? 'Failed to delete tenant.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRestore = async (tenant: Tenant) => {
+    setLoading(true);
+    setError('');
+    try {
+      await api.patch(`/tenants/${tenant.id}/restore`);
+      setSuccessMsg(`Tenant "${tenant.name}" restored successfully.`);
+      load();
+      setTimeout(() => setSuccessMsg(''), 4000);
+    } catch (err: unknown) {
+      const e = err as { response?: { data?: { message?: string } } };
+      setError(e.response?.data?.message ?? 'Failed to restore tenant.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -279,6 +323,54 @@ export default function TenantsPage() {
         </div>
       )}
 
+      {/* DELETE MODAL */}
+      {tenantToDelete && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="glass-modal rounded-xl p-6 w-full max-w-md border border-stitch-error/30 space-y-4 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-stitch-error/5 to-transparent pointer-events-none" />
+            <div className="relative z-10">
+              <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                <h2 className="font-bold text-stitch-error font-space flex items-center gap-2">
+                  <ShieldAlert size={16} /> Delete: {tenantToDelete.name}
+                </h2>
+                <button onClick={() => setTenantToDelete(null)} className="text-stitch-on-surface-variant hover:text-white transition-colors">
+                  <X size={18} />
+                </button>
+              </div>
+              <form onSubmit={handleDeleteSubmit} className="space-y-4">
+                <p className="text-sm text-stitch-on-surface-variant">
+                  This action is highly destructive.
+                  <br />
+                  If <strong>Delete now</strong> is unchecked, the shop will be suspended and deleted after 30 days (it can be restored before then).
+                </p>
+                <div>
+                  <label className={labelCls}>Type "Delete" to confirm</label>
+                  <input value={deleteConfirmation} onChange={(e) => setDeleteConfirmation(e.target.value)}
+                    required placeholder="Delete" className={inputCls} />
+                </div>
+                <div className="flex items-center gap-2 mt-2">
+                  <input type="checkbox" id="deleteNow" 
+                    checked={deleteNow}
+                    onChange={(e) => setDeleteNow(e.target.checked)}
+                    className="rounded border-white/10 bg-white/5 text-stitch-error focus:ring-stitch-error/50" />
+                  <label htmlFor="deleteNow" className="text-sm font-medium text-stitch-on-surface">Delete now (permanently erase data)</label>
+                </div>
+                <div className="flex gap-2 justify-end pt-2 border-t border-white/5 mt-4">
+                  <button type="button" onClick={() => setTenantToDelete(null)}
+                    className="px-4 py-2 text-sm text-stitch-on-surface-variant border border-white/10 rounded-lg hover:bg-white/5 transition-colors">
+                    Cancel
+                  </button>
+                  <button type="submit" disabled={loading || deleteConfirmation !== 'Delete'}
+                    className="px-4 py-2 text-sm bg-stitch-error text-white font-bold rounded-lg hover:bg-red-600 disabled:opacity-50 transition-all active:scale-95">
+                    {loading ? 'Deleting…' : 'Confirm Delete'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* TENANTS TABLE */}
       <div className="glass-card rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
@@ -344,6 +436,19 @@ export default function TenantsPage() {
                           }`}>
                           {t.status === 'active' ? <Ban size={14} /> : <CheckCircle size={14} />}
                         </button>
+                        {t.status === 'pending_deletion' ? (
+                          <button onClick={() => handleRestore(t)}
+                            title="Restore Tenant"
+                            className="p-1.5 text-stitch-on-surface-variant hover:text-green-400 rounded-lg hover:bg-green-500/10 transition-colors">
+                            <RotateCcw size={14} />
+                          </button>
+                        ) : (
+                          <button onClick={() => { setTenantToDelete(t); setDeleteConfirmation(''); setDeleteNow(false); }}
+                            title="Delete Tenant"
+                            className="p-1.5 text-stitch-on-surface-variant hover:text-stitch-error rounded-lg hover:bg-stitch-error/10 transition-colors">
+                            <Trash2 size={14} />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

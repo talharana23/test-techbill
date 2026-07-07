@@ -1,4 +1,5 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException, Logger } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import * as bcrypt from 'bcrypt';
 import { Role } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -142,5 +143,58 @@ export class TenantsService {
       throw new NotFoundException(`Tenant with ID "${id}" not found`);
     }
     return tenant;
+  }
+
+  async deleteTenant(id: string, force: boolean) {
+    const tenant = await this.prisma.tenant.findUnique({ where: { id } });
+    if (!tenant) {
+      throw new NotFoundException(`Tenant with ID "${id}" not found`);
+    }
+
+    if (force) {
+      return this.prisma.tenant.delete({ where: { id } });
+    } else {
+      return this.prisma.tenant.update({
+        where: { id },
+        data: { status: 'pending_deletion' },
+      });
+    }
+  }
+
+  async restoreTenant(id: string) {
+    const tenant = await this.prisma.tenant.findUnique({ where: { id } });
+    if (!tenant) {
+      throw new NotFoundException(`Tenant with ID "${id}" not found`);
+    }
+
+    return this.prisma.tenant.update({
+      where: { id },
+      data: { status: 'active' },
+    });
+  }
+
+  private readonly logger = new Logger(TenantsService.name);
+
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  async handleCleanupPendingDeletions() {
+    this.logger.log('Running daily cleanup for pending_deletion tenants...');
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const tenantsToDelete = await this.prisma.tenant.findMany({
+      where: {
+        status: 'pending_deletion',
+        updatedAt: { lte: thirtyDaysAgo },
+      },
+    });
+
+    for (const tenant of tenantsToDelete) {
+      try {
+        await this.prisma.tenant.delete({ where: { id: tenant.id } });
+        this.logger.log(`Hard deleted tenant ${tenant.id} (${tenant.name})`);
+      } catch (err) {
+        this.logger.error(`Failed to delete tenant ${tenant.id}`, err);
+      }
+    }
   }
 }
