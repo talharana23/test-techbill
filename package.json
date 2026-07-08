@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build": "npm install --prefix techbill-pos && npm run build --prefix techbill-pos && node -e \"const fs = require('fs'); fs.cpSync('techbill-pos/dist', 'dist', { recursive: true });\"",
     "migrate": "prisma migrate dev",
     "seed": "ts-node prisma/seed.ts",
     "db:reset": "prisma migrate reset --force"

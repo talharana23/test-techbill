@@ -55,7 +55,7 @@ const TECH_PERMISSIONS = [
 ];
 
 async function main() {
-  console.log('Seeding SaaS ElectroTrack database...\n');
+  console.log('Seeding SaaS TechBill database...\n');
   const BCRYPT_ROUNDS = 12;
 
   // ── 1. Create Tenants ──────────────────────────────────────────────────────
@@ -77,8 +77,8 @@ async function main() {
     update: {},
     create: {
       id: GULBERG_TENANT_ID,
-      name: 'ElectroTrack Gulberg',
-      slug: 'electrotrack-gulberg',
+      name: 'TechBill Gulberg',
+      slug: 'techbill-gulberg',
       status: 'active',
       plan: 'pro'
     }
@@ -89,8 +89,8 @@ async function main() {
     update: {},
     create: {
       id: DHA_TENANT_ID,
-      name: 'ElectroTrack DHA',
-      slug: 'electrotrack-dha',
+      name: 'TechBill DHA',
+      slug: 'techbill-dha',
       status: 'active',
       plan: 'basic'
     }
@@ -119,7 +119,7 @@ async function main() {
     update: {},
     create: {
       id: SHOP_SETTINGS_GULBERG_ID,
-      shopName: 'ElectroTrack Gulberg',
+      shopName: 'TechBill Gulberg',
       lowStockThreshold: 2,
       deadStockDays: 60,
       maxDiscountWithoutOtp: 500,
@@ -134,7 +134,7 @@ async function main() {
     update: {},
     create: {
       id: SHOP_SETTINGS_DHA_ID,
-      shopName: 'ElectroTrack DHA',
+      shopName: 'TechBill DHA',
       lowStockThreshold: 2,
       deadStockDays: 60,
       maxDiscountWithoutOtp: 300,
@@ -150,11 +150,11 @@ async function main() {
 
   // Platform Admin (No tenant)
   const superAdmin = await prisma.user.upsert({
-    where: { email: 'superadmin@electrotrack.pk' },
+    where: { email: 'superadmin@techbill.app' },
     update: {},
     create: {
       name: 'Super Admin',
-      email: 'superadmin@electrotrack.pk',
+      email: 'superadmin@techbill.app',
       passwordHash: await bcrypt.hash('SuperAdmin@123', BCRYPT_ROUNDS),
       role: Role.platform_admin,
       isActive: true,

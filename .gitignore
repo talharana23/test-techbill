@@ -20,8 +20,8 @@ node_modules/
 dist/
 build/
 .output/
-electrotrack-api/dist/
-electrotrack-pos/dist/
+techbill-api/dist/
+techbill-pos/dist/
 
 # ── Logs ──────────────────────────────────────────────────────────────────────
 *.log

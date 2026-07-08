@@ -45,16 +45,16 @@ const TECHNICIAN_PERMISSIONS = [
 // ─── Main Seed ──────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('🌱 Seeding ElectroTrack multi-tenant database...');
+  console.log('🌱 Seeding TechBill multi-tenant database...');
 
   // 1. Platform Admin (no tenantId)
   const platformAdminHash = await bcrypt.hash('platform@123', BCRYPT_ROUNDS);
   const platformAdmin = await prisma.user.upsert({
-    where: { email: 'admin@electrotrack.io' },
+    where: { email: 'admin@techbill.app' },
     update: {},
     create: {
       name: 'Platform Admin',
-      email: 'admin@electrotrack.io',
+      email: 'admin@techbill.app',
       passwordHash: platformAdminHash,
       role: Role.platform_admin,
       tenantId: null,
@@ -229,7 +229,7 @@ async function main() {
 
   console.log('\n🎉 Seeding complete!');
   console.log('\n📋 Login credentials:');
-  console.log('  Platform Admin:  admin@electrotrack.io / platform@123');
+  console.log('  Platform Admin:  admin@techbill.app / platform@123');
   console.log('  Alpha Owner:     owner@alpha-electronics.com / owner@alpha123');
   console.log('  Alpha Cashier:   cashier@alpha-electronics.com / cashier@alpha123');
   console.log('  Alpha Inv Mgr:   inventory@alpha-electronics.com / invmgr@alpha123');

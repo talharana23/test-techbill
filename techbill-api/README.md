@@ -1,4 +1,4 @@
-# TechBill Backend API Service (`electrotrack-api`)
+# TechBill Backend API Service (`techbill-api`)
 
 This directory contains the NestJS-based backend REST API and WebSocket Gateway for **TechBill**, a high-scale multi-tenant Enterprise Resource Planning (ERP) and Invoice Management SaaS.
 

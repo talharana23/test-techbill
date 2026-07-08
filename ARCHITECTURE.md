@@ -37,7 +37,7 @@ graph TD
 
 ## 2. Tech Stack
 
-### Backend (`electrotrack-api`)
+### Backend (`techbill-api`)
 *   **Runtime**: Node.js 20+
 *   **Framework**: NestJS 11 (progressive TypeScript framework)
 *   **ORM**: Prisma 5
@@ -48,7 +48,7 @@ graph TD
 *   **AI Engine**: Groq SDK (`llama-3.3-70b-versatile`)
 *   **Security & Middleware**: Helmet, Throttler rate limiter, Cookie Parser, Class Validator
 
-### Frontend (`electrotrack-pos`)
+### Frontend (`techbill-pos`)
 *   **Framework & Build Tool**: React 18 + Vite + TypeScript 5
 *   **State Management**: Zustand (with persistent storage for auth and cart)
 *   **UI Styling**: Tailwind CSS v3 with a custom modern dark glassmorphism ("Stitch") theme
