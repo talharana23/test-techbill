@@ -265,7 +265,7 @@ export default function SettingsPage() {
 
         <FieldGroup title="Sales Controls">
           <div>
-            <label className={labelCls}>Max Discount Without OTP (â‚¨)</label>
+            <label className={labelCls}>Max Discount Without OTP (₨)</label>
             <input type="number" min="0" step="0.01" value={form.maxDiscountWithoutOtp} onChange={set('maxDiscountWithoutOtp')} className={inputCls} />
             <p className="text-[10px] text-stitch-on-surface-variant/60 mt-1">Discounts above this amount require owner OTP approval</p>
           </div>
@@ -486,7 +486,7 @@ export default function SettingsPage() {
                   inputMode="numeric"
                   value={settingsPin}
                   onChange={(e) => setSettingsPin(e.target.value.replace(/\D/g, ''))}
-                  placeholder="â€¢â€¢â€¢â€¢"
+                  placeholder="••••"
                   className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-base font-bold"
                 />
               </div>
@@ -499,7 +499,7 @@ export default function SettingsPage() {
                   inputMode="numeric"
                   value={settingsConfirmPin}
                   onChange={(e) => setSettingsConfirmPin(e.target.value.replace(/\D/g, ''))}
-                  placeholder="â€¢â€¢â€¢â€¢"
+                  placeholder="••••"
                   className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-base font-bold"
                 />
               </div>
@@ -557,7 +557,7 @@ export default function SettingsPage() {
           {saving ? (
             <>
               <span className="w-4 h-4 border-2 border-stitch-on-primary/30 border-t-stitch-on-primary rounded-full animate-spin" />
-              Savingâ€¦
+              Saving...
             </>
           ) : 'Save Settings'}
         </button>

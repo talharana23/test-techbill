@@ -20,13 +20,13 @@ const currencies: Record<CurrencyCode, CurrencyDetails> = {
     label: 'US / Global (USD)',
   },
   PKR: {
-    symbol: 'â‚¨',
+    symbol: '₨',
     starterPrice: { monthly: 13900, annual: 10900 },
     proPrice: { monthly: 27900, annual: 22000 },
     label: 'Pakistan (PKR)',
   },
   EUR: {
-    symbol: 'â‚¬',
+    symbol: '€',
     starterPrice: { monthly: 46, annual: 36 },
     proPrice: { monthly: 92, annual: 74 },
     label: 'Europe (EUR)',

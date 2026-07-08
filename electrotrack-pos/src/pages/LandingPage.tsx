@@ -69,13 +69,13 @@ const currencies: Record<CurrencyCode, CurrencyDetails> = {
     label: 'US / Global (USD)',
   },
   PKR: {
-    symbol: 'â‚¨',
+    symbol: '₨',
     starterPrice: { monthly: 13900, annual: 10900 },
     proPrice: { monthly: 27900, annual: 22000 },
     label: 'Pakistan (PKR)',
   },
   EUR: {
-    symbol: 'â‚¬',
+    symbol: '€',
     starterPrice: { monthly: 46, annual: 36 },
     proPrice: { monthly: 92, annual: 74 },
     label: 'Europe (EUR)',
@@ -659,9 +659,9 @@ export default function LandingPage() {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                     {[
-                      { node: 'Downtown Register', status: 'Online', desc: 'DT-01 â€¢ 12ms', color: 'bg-emerald-500' },
-                      { node: 'Uptown Boutique', status: 'Online', desc: 'UT-02 â€¢ 24ms', color: 'bg-emerald-500' },
-                      { node: 'Warehouse Depot', status: 'Online', desc: 'WH-09 â€¢ 110ms', color: 'bg-indigo-500' },
+                      { node: 'Downtown Register', status: 'Online', desc: 'DT-01 • 12ms', color: 'bg-emerald-500' },
+                      { node: 'Uptown Boutique', status: 'Online', desc: 'UT-02 • 24ms', color: 'bg-emerald-500' },
+                      { node: 'Warehouse Depot', status: 'Online', desc: 'WH-09 • 110ms', color: 'bg-indigo-500' },
                     ].map((node, i) => (
                       <div key={i} className="p-4 rounded-xl bg-slate-200/40 dark:bg-white/[0.005] border border-slate-200 dark:border-white/5 flex flex-col justify-between">
                         <div className="flex items-center justify-between">
