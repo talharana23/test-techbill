@@ -12,7 +12,7 @@ import StockAlerts from '../../components/dashboard/StockAlerts';
 import AiInsights from '../../components/dashboard/AiInsights';
 import gsap from 'gsap';
 
-const formatPKR = (n: number) => `â‚¨ ${n.toLocaleString('en-PK')}`;
+const formatPKR = (n: number) => `₨ ${n.toLocaleString('en-PK')}`;
 
 export default function OwnerDashboard() {
   const navigate = useNavigate();

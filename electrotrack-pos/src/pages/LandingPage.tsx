@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, AnimatePresence, useMotionTemplate } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { usePublicTheme } from '../components/layout/PublicLayout';
@@ -69,19 +69,19 @@ const currencies: Record<CurrencyCode, CurrencyDetails> = {
     label: 'US / Global (USD)',
   },
   PKR: {
-    symbol: 'â‚¨',
-    starterPrice: { monthly: 13900, annual: 10900 },
-    proPrice: { monthly: 27900, annual: 22000 },
+    symbol: '₨',
+    starterPrice: { monthly: 13900, annual: 11100 },
+    proPrice: { monthly: 27900, annual: 22300 },
     label: 'Pakistan (PKR)',
   },
   EUR: {
-    symbol: 'â‚¬',
-    starterPrice: { monthly: 46, annual: 36 },
+    symbol: '€',
+    starterPrice: { monthly: 46, annual: 37 },
     proPrice: { monthly: 92, annual: 74 },
     label: 'Europe (EUR)',
   },
   GBP: {
-    symbol: 'Â£',
+    symbol: '£',
     starterPrice: { monthly: 39, annual: 31 },
     proPrice: { monthly: 79, annual: 63 },
     label: 'United Kingdom (GBP)',
@@ -574,7 +574,7 @@ export default function LandingPage() {
 
                 <div className="p-3.5 rounded-xl border border-dashed border-slate-300 dark:border-white/10 bg-slate-100/10 dark:bg-white/[0.003]">
                   <p className="text-[11px] text-slate-500 dark:text-[#c7c4d7] text-center">
-                    ðŸ’¡ Click <strong>"+ Cart"</strong> on the catalog cards above to instantly feed the sandbox checkout receipt on the right.
+                    💡 Click <strong>"+ Cart"</strong> on the catalog cards above to instantly feed the sandbox checkout receipt on the right.
                   </p>
                 </div>
               </div>
@@ -659,9 +659,9 @@ export default function LandingPage() {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                     {[
-                      { node: 'Downtown Register', status: 'Online', desc: 'DT-01 â€¢ 12ms', color: 'bg-emerald-500' },
-                      { node: 'Uptown Boutique', status: 'Online', desc: 'UT-02 â€¢ 24ms', color: 'bg-emerald-500' },
-                      { node: 'Warehouse Depot', status: 'Online', desc: 'WH-09 â€¢ 110ms', color: 'bg-indigo-500' },
+                      { node: 'Downtown Register', status: 'Online', desc: 'DT-01 • 12ms', color: 'bg-emerald-500' },
+                      { node: 'Uptown Boutique', status: 'Online', desc: 'UT-02 • 24ms', color: 'bg-emerald-500' },
+                      { node: 'Warehouse Depot', status: 'Online', desc: 'WH-09 • 110ms', color: 'bg-indigo-500' },
                     ].map((node, i) => (
                       <div key={i} className="p-4 rounded-xl bg-slate-200/40 dark:bg-white/[0.005] border border-slate-200 dark:border-white/5 flex flex-col justify-between">
                         <div className="flex items-center justify-between">
@@ -958,7 +958,7 @@ export default function LandingPage() {
             
             <button
               onClick={() => {
-                navigate(`/checkout?plan=starter&billing=${billingPeriod}`);
+                navigate(`/checkout?plan=starter&billing=${billingPeriod}&currency=${currency}`);
               }}
               className="w-full inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold rounded-lg border border-slate-300 dark:border-white/10 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all mt-8"
             >
@@ -1019,7 +1019,7 @@ export default function LandingPage() {
               
               <button
                 onClick={() => {
-                  navigate(`/checkout?plan=pro&billing=${billingPeriod}`);
+                  navigate(`/checkout?plan=pro&billing=${billingPeriod}&currency=${currency}`);
                 }}
                 className="w-full inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-[#c0c1ff] dark:text-[#1000a9] dark:hover:bg-[#c0c1ff]/90 transition-all mt-8"
               >

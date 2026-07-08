@@ -16,6 +16,7 @@ async function bootstrap() {
   );
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') ?? ['http://localhost:5173'];
   app.enableCors({
+    origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) {
         callback(null, true);
@@ -34,6 +35,7 @@ async function bootstrap() {
         }
       }) || origin.endsWith('.techbill.app') || origin === 'https://techbill.app';
       if (isAllowed) {
+        callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
       }

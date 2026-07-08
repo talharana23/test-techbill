@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, CreditCard, Loader2, CheckCircle2, ArrowLeft } from 'lucide-react';
@@ -20,19 +20,19 @@ const currencies: Record<CurrencyCode, CurrencyDetails> = {
     label: 'US / Global (USD)',
   },
   PKR: {
-    symbol: 'â‚¨',
-    starterPrice: { monthly: 13900, annual: 10900 },
-    proPrice: { monthly: 27900, annual: 22000 },
+    symbol: '₨',
+    starterPrice: { monthly: 13900, annual: 11100 },
+    proPrice: { monthly: 27900, annual: 22300 },
     label: 'Pakistan (PKR)',
   },
   EUR: {
-    symbol: 'â‚¬',
-    starterPrice: { monthly: 46, annual: 36 },
+    symbol: '€',
+    starterPrice: { monthly: 46, annual: 37 },
     proPrice: { monthly: 92, annual: 74 },
     label: 'Europe (EUR)',
   },
   GBP: {
-    symbol: 'Â£',
+    symbol: '£',
     starterPrice: { monthly: 39, annual: 31 },
     proPrice: { monthly: 79, annual: 63 },
     label: 'United Kingdom (GBP)',
@@ -72,7 +72,11 @@ export default function CheckoutPage() {
   const rawBilling = searchParams.get('billing')?.toLowerCase();
   const billing: 'monthly' | 'annual' = rawBilling === 'monthly' ? 'monthly' : 'annual';
 
-  const [currency, setCurrency] = useState<CurrencyCode>(() => detectCurrency());
+  const [currency, setCurrency] = useState<CurrencyCode>(() => {
+    const param = searchParams.get('currency')?.toUpperCase() as CurrencyCode;
+    if (param && currencies[param]) return param;
+    return detectCurrency();
+  });
   const [currencySelectorOpen, setCurrencySelectorOpen] = useState(false);
 
   // Form inputs
@@ -107,12 +111,12 @@ export default function CheckoutPage() {
 
   const handlePlanToggle = () => {
     const nextPlan = plan === 'starter' ? 'pro' : 'starter';
-    setSearchParams({ plan: nextPlan, billing });
+    setSearchParams({ plan: nextPlan, billing, currency });
   };
 
   const handleBillingToggle = () => {
     const nextBilling = billing === 'monthly' ? 'annual' : 'monthly';
-    setSearchParams({ plan, billing: nextBilling });
+    setSearchParams({ plan, billing: nextBilling, currency });
   };
 
   return (
@@ -224,6 +228,7 @@ export default function CheckoutPage() {
                           onClick={() => {
                             setCurrency(c);
                             setCurrencySelectorOpen(false);
+                            setSearchParams({ plan, billing, currency: c });
                           }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-between ${
                             currency === c

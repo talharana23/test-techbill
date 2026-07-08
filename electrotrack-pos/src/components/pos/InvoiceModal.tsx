@@ -1,4 +1,4 @@
-﻿import { X, Printer, Plus, Download } from 'lucide-react';
+import { X, Printer, Plus, Download } from 'lucide-react';
 import { format, addMonths, differenceInDays } from 'date-fns';
 import { QRCodeSVG } from 'qrcode.react';
 import html2pdf from 'html2pdf.js';
@@ -30,7 +30,7 @@ const PAYMENT_BADGE_CLASSES: Record<string, string> = {
 };
 
 function formatCurrency(value: number): string {
-  return `â‚¨ ${Number(value).toLocaleString('en-PK')}`;
+  return `₨ ${Number(value).toLocaleString('en-PK')}`;
 }
 
 function getPaymentLabel(method: string): string {
@@ -204,13 +204,13 @@ export default function InvoiceModal({ sale, shopSettings, shopName, onClose }: 
                         {resolvedShopName}
                       </h2>
                       <p className="text-[11px] uppercase tracking-[0.18em] text-white/40 mt-1.5">
-                        Tax Invoice Â· <span className="font-mono normal-case tracking-normal text-white/60">{sale.invoiceNumber}</span>
+                        Tax Invoice · <span className="font-mono normal-case tracking-normal text-white/60">{sale.invoiceNumber}</span>
                       </p>
                     </div>
                   </div>
                   {isAdvanced && (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold tracking-wide bg-emerald-500/15 text-emerald-300 border border-emerald-400/30 rounded-full">
-                      <span className="text-[11px] leading-none">âœ“</span> VERIFIED
+                      <span className="text-[11px] leading-none">✓</span> VERIFIED
                     </span>
                   )}
                 </div>
@@ -296,7 +296,7 @@ export default function InvoiceModal({ sale, shopSettings, shopName, onClose }: 
                 {discount > 0 && (
                   <div className="flex items-baseline justify-between text-sm">
                     <span className="text-white/55">Discount</span>
-                    <span className="text-rose-300 tabular-nums">âˆ’ {formatCurrency(discount)}</span>
+                    <span className="text-rose-300 tabular-nums">− {formatCurrency(discount)}</span>
                   </div>
                 )}
                 <div className="h-px bg-white/15 my-3" />

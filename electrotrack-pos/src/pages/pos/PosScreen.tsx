@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { ShoppingCart, Package, AlertTriangle, Layers, User, X, Plus, TrendingUp, Clock, Zap, ChevronLeft } from 'lucide-react';
 import gsap from 'gsap';
 import UniversalSearch, { type SearchProduct } from '../../components/pos/UniversalSearch';
@@ -33,7 +33,7 @@ const STATUS_LABELS: Record<StatusFilter, string> = {
   returned: 'Returned',
 };
 
-const formatPKR = (n: number): string => `â‚¨ ${n.toLocaleString('en-PK')}`;
+const formatPKR = (n: number): string => `₨ ${n.toLocaleString('en-PK')}`;
 
 export default function PosScreen() {
   const dashboard = usePosStore((s) => s.dashboardData);
@@ -274,10 +274,10 @@ export default function PosScreen() {
               <span>
                 <span className="font-mono font-semibold">{serialAlert.serial}</span>
                 {serialAlert.status === 'not_found'
-                  ? ' â€” not found in inventory'
+                  ? ' — not found in inventory'
                   : serialAlert.status === 'error'
-                  ? ' â€” lookup failed'
-                  : ` â€” status: ${serialAlert.status.replace(/_/g, ' ')}`}
+                  ? ' — lookup failed'
+                  : ` — status: ${serialAlert.status.replace(/_/g, ' ')}`}
               </span>
             </div>
           )}
@@ -351,7 +351,7 @@ export default function PosScreen() {
                   <ShoppingCart size={16} />
                   View Cart
                 </span>
-                <span className="tabular-nums">{items.length} {items.length === 1 ? 'item' : 'items'} Â· â‚¨ {items.reduce((s, i) => s + i.sellingPrice, 0).toLocaleString('en-PK')}</span>
+                <span className="tabular-nums">{items.length} {items.length === 1 ? 'item' : 'items'} · ₨ {items.reduce((s, i) => s + i.sellingPrice, 0).toLocaleString('en-PK')}</span>
               </button>
             </div>
           )}
@@ -404,7 +404,7 @@ export default function PosScreen() {
   );
 }
 
-// â”€â”€â”€ Sectioned Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Sectioned Grid ──────────────────────────────────────────────────────
 
 interface SectionedGridProps {
   dashboard: DashboardData | null;
@@ -425,7 +425,7 @@ function SectionedGrid({ dashboard, onAddToCart, onViewUnits }: SectionedGridPro
       <div className="flex flex-col items-center justify-center py-20 text-center gap-2">
         <Package size={32} className="text-stitch-on-surface-variant/30" />
         <p className="text-sm text-stitch-on-surface-variant">No inventory yet</p>
-        <p className="text-xs text-stitch-on-surface-variant/60">Add stock via Inventory â†’ GRN</p>
+        <p className="text-xs text-stitch-on-surface-variant/60">Add stock via Inventory → GRN</p>
       </div>
     );
   }
@@ -446,7 +446,7 @@ function SectionedGrid({ dashboard, onAddToCart, onViewUnits }: SectionedGridPro
   );
 }
 
-// â”€â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Sub-components ──────────────────────────────────────────────────────
 
 interface StatCardProps {
   icon: React.ReactNode;
@@ -526,7 +526,7 @@ function UnitPickerSheet({ product, units, loading, onClose, onAdd, cartSerials 
           <div className="min-w-0">
             <p className="text-[10px] font-bold text-stitch-on-surface-variant uppercase tracking-wider">Select Serial Number</p>
             <h3 className="text-base font-bold text-stitch-on-surface font-space truncate">{product.name}</h3>
-            <p className="text-xs text-stitch-on-surface-variant">{product.brand ?? 'â€”'} Â· {formatPKR(product.sellingPrice)}</p>
+            <p className="text-xs text-stitch-on-surface-variant">{product.brand ?? '—'} · {formatPKR(product.sellingPrice)}</p>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center text-stitch-on-surface-variant hover:text-stitch-on-surface hover:bg-white/5 transition-colors">
             <X size={16} />

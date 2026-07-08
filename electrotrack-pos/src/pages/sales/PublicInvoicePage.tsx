@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ShieldCheck, ShieldX, Clock, Package, CheckCircle } from 'lucide-react';
@@ -41,7 +41,7 @@ const PAYMENT_LABELS: Record<string, string> = {
   bank_transfer: 'Bank Transfer',
 };
 
-const formatPKR = (n: number) => `â‚¨ ${Number(n).toLocaleString('en-PK')}`;
+const formatPKR = (n: number) => `₨ ${Number(n).toLocaleString('en-PK')}`;
 
 function WarrantyBadge({ item, isReturned }: { item: PublicItem; isReturned: boolean }) {
   if (isReturned) return null;
@@ -206,7 +206,7 @@ export default function PublicInvoicePage() {
             {hasDiscount && (
               <div className="flex justify-between text-sm text-rose-400">
                 <span>Discount</span>
-                <span className="tabular-nums">âˆ’ {formatPKR(invoice.discountAmount)}</span>
+                <span className="tabular-nums">− {formatPKR(invoice.discountAmount)}</span>
               </div>
             )}
             <div className="h-px bg-white/10 my-2" />

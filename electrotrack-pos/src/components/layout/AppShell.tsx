@@ -81,7 +81,7 @@ export default function AppShell() {
       const res = await api.get<{ notifications: Notification[] }>('/notifications');
       setNotifications(res.data.notifications ?? []);
     } catch {
-      // silently ignore â€” bell is non-critical
+      // silently ignore — bell is non-critical
     }
   }, [isPlatformAdmin]);
 
@@ -426,7 +426,7 @@ export default function AppShell() {
                     setLockErrorMsg('');
                   }}
                   className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-lg font-bold"
-                  placeholder="â€¢â€¢â€¢â€¢"
+                  placeholder="••••"
                   autoFocus
                 />
               </div>
@@ -447,7 +447,7 @@ export default function AppShell() {
                     setLockErrorMsg('');
                   }}
                   className="w-full bg-stitch-surface-container-high/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-stitch-on-surface outline-none focus:border-stitch-primary/50 transition-colors placeholder:text-stitch-on-surface-variant/50 text-center tracking-widest text-lg font-bold"
-                  placeholder="â€¢â€¢â€¢â€¢"
+                  placeholder="••••"
                 />
               </div>
 
