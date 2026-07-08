@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Plus, RefreshCw, X, ShieldAlert, CheckCircle, Ban, Edit3, Building2, Trash2, RotateCcw, CreditCard, Calendar } from 'lucide-react';
+import { Plus, RefreshCw, X, ShieldAlert, CheckCircle, Ban, Edit3, Building2, Trash2, RotateCcw, CreditCard, Calendar, Key } from 'lucide-react';
 import { api } from '../../api/client';
 import type { Tenant } from '../../types';
 import gsap from 'gsap';
@@ -46,6 +46,10 @@ export default function TenantsPage() {
   const [renewingTenant, setRenewingTenant] = useState<Tenant | null>(null);
   const [renewStartDate, setRenewStartDate] = useState(new Date().toISOString().split('T')[0]);
 
+  const [slugEdited, setSlugEdited] = useState(false);
+  const [resettingPasswordTenant, setResettingPasswordTenant] = useState<Tenant | null>(null);
+  const [newOwnerPassword, setNewOwnerPassword] = useState('');
+
   const load = () => {
     setLoading(true);
     setError('');
@@ -74,9 +78,13 @@ export default function TenantsPage() {
     setLoading(true);
     setError('');
     try {
-      await api.post('/tenants', form);
+      await api.post('/tenants', {
+        ...form,
+        ownerEmail: `${form.ownerEmail}@${form.slug || 'tenant'}.techbill.app`
+      });
       setSuccessMsg(`Tenant "${form.name}" registered successfully.`);
       setShowAddForm(false);
+      setSlugEdited(false);
       setForm({ name: '', slug: '', plan: 'trial', maxUsers: 5, ownerName: '', ownerEmail: '', ownerPasswordHashOrText: '' });
       load();
       setTimeout(() => setSuccessMsg(''), 4000);
@@ -102,6 +110,25 @@ export default function TenantsPage() {
     } catch (err: unknown) {
       const e = err as { response?: { data?: { message?: string } } };
       setError(e.response?.data?.message ?? 'Failed to update tenant.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resettingPasswordTenant) return;
+    setLoading(true);
+    setError('');
+    try {
+      await api.post(`/tenants/${resettingPasswordTenant.id}/reset-owner-password`, { password: newOwnerPassword });
+      setSuccessMsg(`Password reset successfully for owner of "${resettingPasswordTenant.name}".`);
+      setResettingPasswordTenant(null);
+      setNewOwnerPassword('');
+      setTimeout(() => setSuccessMsg(''), 4000);
+    } catch (err: unknown) {
+      const e = err as { response?: { data?: { message?: string } } };
+      setError(e.response?.data?.message ?? 'Failed to reset password.');
     } finally {
       setLoading(false);
     }
@@ -236,13 +263,23 @@ export default function TenantsPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className={labelCls}>Shop/Company Name *</label>
-                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+                <input value={form.name} onChange={(e) => {
+                  const val = e.target.value;
+                  if (!slugEdited) {
+                    setForm({ ...form, name: val, slug: val.toLowerCase().replace(/[^a-z0-9-]/g, '') });
+                  } else {
+                    setForm({ ...form, name: val });
+                  }
+                }}
                   required placeholder="e.g. Galaxy Mobile Shop" className={inputCls} />
               </div>
               <div>
                 <label className={labelCls}>Slug (URL Segment) *</label>
                 <input value={form.slug}
-                  onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })}
+                  onChange={(e) => {
+                    setSlugEdited(true);
+                    setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') });
+                  }}
                   required placeholder="e.g. galaxy-mobile" className={inputCls} />
               </div>
               <div>
@@ -272,9 +309,14 @@ export default function TenantsPage() {
                     required placeholder="e.g. Hammad Khan" className={inputCls} />
                 </div>
                 <div>
-                  <label className={labelCls}>Owner Email *</label>
-                  <input type="email" value={form.ownerEmail} onChange={(e) => setForm({ ...form, ownerEmail: e.target.value })}
-                    required placeholder="e.g. hammad@galaxy.com" className={inputCls} />
+                  <label className={labelCls}>Owner Email Username *</label>
+                  <div className="flex bg-stitch-surface-container-high/50 border border-white/10 rounded-lg overflow-hidden focus-within:border-stitch-primary/50 transition-colors">
+                    <input type="text" value={form.ownerEmail} onChange={(e) => setForm({ ...form, ownerEmail: e.target.value.replace(/[^a-zA-Z0-9._-]/g, '') })}
+                      required placeholder="hammad" className="w-full bg-transparent px-3 py-1.5 text-sm text-stitch-on-surface outline-none" />
+                    <span className="flex items-center px-3 text-sm text-stitch-on-surface-variant bg-white/5 border-l border-white/5 select-none whitespace-nowrap">
+                      @{form.slug || 'tenant'}.techbill.app
+                    </span>
+                  </div>
                 </div>
                 <div>
                   <label className={labelCls}>Owner Password *</label>
@@ -394,6 +436,47 @@ export default function TenantsPage() {
                 </div>
               </form>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* RESET PASSWORD MODAL */}
+      {resettingPasswordTenant && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="glass-modal rounded-xl p-6 w-full max-w-sm border border-white/10 space-y-4">
+            <div className="flex items-center justify-between border-b border-white/5 pb-3">
+              <h2 className="font-bold text-stitch-on-surface font-space flex items-center gap-2">
+                <Key size={16} className="text-indigo-400" />
+                Reset Password: {resettingPasswordTenant.name}
+              </h2>
+              <button onClick={() => setResettingPasswordTenant(null)} className="text-stitch-on-surface-variant hover:text-white transition-colors">
+                <X size={18} />
+              </button>
+            </div>
+            <form onSubmit={handleResetPasswordSubmit} className="space-y-4">
+              <div>
+                <label className={labelCls}>New Password</label>
+                <input
+                  type="password"
+                  value={newOwnerPassword}
+                  onChange={(e) => setNewOwnerPassword(e.target.value)}
+                  required minLength={8}
+                  placeholder="At least 8 characters"
+                  className={inputCls}
+                />
+              </div>
+              <div className="flex gap-2 justify-end pt-2 border-t border-white/5">
+                <button type="button" onClick={() => setResettingPasswordTenant(null)}
+                  className="px-4 py-2 text-sm text-stitch-on-surface-variant border border-white/10 rounded-lg hover:bg-white/5 transition-colors">
+                  Cancel
+                </button>
+                <button type="submit" disabled={loading}
+                  className="px-4 py-2 text-sm bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-all active:scale-95 flex items-center gap-1.5 disabled:opacity-50">
+                  <Key size={14} />
+                  Reset Password
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
@@ -531,6 +614,12 @@ export default function TenantsPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => { setResettingPasswordTenant(t); setNewOwnerPassword(''); }}
+                          title="Reset Owner Password"
+                          className="p-1.5 text-stitch-on-surface-variant hover:text-indigo-400 rounded-lg hover:bg-indigo-500/10 transition-colors">
+                          <Key size={14} />
+                        </button>
                         <button
                           onClick={() => { setEditingTenant(t); setEditForm({ plan: t.plan, maxUsers: t.maxUsers, status: t.status, onlineSellingEnabled: t.onlineSellingEnabled }); }}
                           title="Edit Tenant"

@@ -193,6 +193,25 @@ export class TenantsService {
     });
   }
 
+  async resetOwnerPassword(tenantId: string, newPassword: string) {
+    const owner = await this.prisma.user.findFirst({
+      where: { tenantId, role: Role.owner },
+    });
+
+    if (!owner) {
+      throw new NotFoundException(`Owner for tenant "${tenantId}" not found`);
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
+
+    await this.prisma.user.update({
+      where: { id: owner.id },
+      data: { passwordHash },
+    });
+
+    return { message: 'Password reset successfully' };
+  }
+
   private readonly logger = new Logger(TenantsService.name);
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)

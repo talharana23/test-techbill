@@ -77,4 +77,10 @@ export class TenantsController {
   renewTenant(@Param('id') id: string, @Body('startDate') startDate?: string) {
     return this.tenantsService.renewTenant(id, startDate);
   }
+
+  @Post(':id/reset-owner-password')
+  @HttpCode(HttpStatus.OK)
+  resetOwnerPassword(@Param('id') id: string, @Body('password') password: string) {
+    return this.tenantsService.resetOwnerPassword(id, password);
+  }
 }
