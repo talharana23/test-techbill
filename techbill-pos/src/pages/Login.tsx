@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { AlertTriangle, Eye, EyeOff } from 'lucide-react';
+import { AlertTriangle, Eye, EyeOff, Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
 import { api } from '../api/client';
 import { useAuthStore } from '../store/auth.store';
 import { connectSocket } from '../api/socket';
 import type { User } from '../types';
+import gsap from 'gsap';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -15,13 +17,17 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-const inputCls = 'w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 outline-none focus:border-stitch-primary/50 transition-all';
-const labelCls = 'block text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1';
+const inputCls = 'w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-11 pr-4 py-3 text-[13px] text-white placeholder-white/30 outline-none focus:bg-white/[0.06] focus:border-stitch-primary/50 focus:ring-1 focus:ring-stitch-primary/30 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] backdrop-blur-md';
+const labelCls = 'block text-[11px] font-bold text-white/60 mb-1.5 ml-1 uppercase tracking-wider';
 
 export default function Login() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } =
     useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
@@ -31,6 +37,47 @@ export default function Login() {
 
   // Clear any stale persisted auth state when the login page mounts
   useEffect(() => { clearAuth(); }, [clearAuth]);
+
+  // GSAP Animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Background glow animation
+      gsap.fromTo('.bg-glow',
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 0.5, duration: 2.5, ease: 'power3.out' }
+      );
+
+      // Main timeline for the login components
+      const tl = gsap.timeline();
+
+      tl.fromTo(logoRef.current,
+        { y: -30, opacity: 0, scale: 0.9 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)' }
+      )
+      .fromTo('.heading-text',
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out' },
+        '-=0.4'
+      )
+      .fromTo(cardRef.current,
+        { y: 30, opacity: 0, rotationX: -5 },
+        { y: 0, opacity: 1, rotationX: 0, duration: 0.8, ease: 'power3.out', transformPerspective: 1000 },
+        '-=0.3'
+      )
+      .fromTo('.form-item',
+        { x: -20, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
+        '-=0.5'
+      )
+      .fromTo('.footer-link',
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+        '-=0.2'
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleLoginSubmit = async (data: LoginFormData) => {
     setServerError(null);
@@ -81,67 +128,107 @@ export default function Login() {
     }
   };
 
-
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0e1322] relative overflow-hidden">
-      <div className="absolute top-10 left-10 w-72 h-72 bg-stitch-primary/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-stitch-tertiary/5 rounded-full blur-[120px] pointer-events-none" />
+    <div ref={containerRef} className="min-h-screen flex items-center justify-center bg-[#07080d] relative overflow-hidden font-sans">
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(65,105,225,0.08),transparent_60%)] pointer-events-none" />
+      <div className="bg-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-stitch-primary/10 rounded-full blur-[140px] pointer-events-none opacity-0" />
+      
+      {/* Decorative Grid */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
 
-      <div className="glass-card rounded-2xl p-8 w-full max-w-sm relative z-10 border border-white/10">
-        <div className="mb-6 text-center flex flex-col items-center">
-          <img src="/logo.svg" alt="TechBill Logo" className="h-14 w-auto mb-2" />
-          <p className="text-[10px] text-white/40 uppercase tracking-wider font-semibold">SaaS Multi-tenant Enterprise Management</p>
+      <div className="w-full max-w-[440px] px-6 relative z-10">
+        
+        {/* Logo Container */}
+        <div ref={logoRef} className="flex flex-col items-center mb-10 opacity-0">
+          <div className="bg-white/5 p-4 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-xl mb-5 relative group">
+            <div className="absolute inset-0 bg-gradient-to-tr from-stitch-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl blur-xl" />
+            <img src="/logo.svg" alt="TechBill Logo" className="h-12 w-auto relative z-10" />
+          </div>
+          <h1 className="heading-text text-2xl font-bold text-white tracking-tight opacity-0">Welcome Back</h1>
+          <p className="heading-text text-[12px] text-white/50 mt-2 font-semibold tracking-[0.2em] uppercase opacity-0">SaaS Multi-tenant Enterprise</p>
         </div>
 
-        {serverError && (
-          <div className="mb-4 p-3 bg-stitch-error/10 border border-stitch-error/30 rounded-lg flex items-center gap-2">
-            <AlertTriangle size={13} className="text-stitch-error shrink-0" />
-            <p className="text-xs text-stitch-error font-medium">{serverError}</p>
-          </div>
-        )}
-        {infoMessage && (
-          <div className="mb-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-            <p className="text-xs text-green-400 font-medium">{infoMessage}</p>
-          </div>
-        )}
-
-        <div className="mb-6 p-3 bg-white/5 border border-white/10 rounded-lg backdrop-blur-sm relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-stitch-primary/10 to-transparent pointer-events-none" />
-          <p className="text-[10px] text-white/50 leading-relaxed relative z-10">
-            For security and fraud prevention, self-service password recovery is disabled. Please contact your store administrator or TechBill support directly to reset your credentials.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit(handleLoginSubmit)} className="space-y-4">
-            <div>
-              <label className={labelCls}>Email address</label>
-              <input {...register('email')} type="email" autoComplete="email"
-                placeholder="you@shop.com" className={inputCls} />
-              {errors.email && <p className="text-[11px] text-stitch-error mt-1">{errors.email.message}</p>}
+        {/* Main Card */}
+        <div ref={cardRef} className="bg-white/[0.02] backdrop-blur-2xl rounded-[2rem] p-8 sm:p-10 border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] relative overflow-hidden opacity-0">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stitch-primary/50 to-transparent" />
+          
+          {serverError && (
+            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
+              <AlertTriangle size={18} className="text-red-400 shrink-0 mt-0.5" />
+              <p className="text-[13px] text-red-200 leading-relaxed">{serverError}</p>
             </div>
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <label className={labelCls}>Password</label>
+          )}
+          {infoMessage && (
+            <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-start gap-3">
+              <ShieldCheck size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+              <p className="text-[13px] text-emerald-200 leading-relaxed">{infoMessage}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit(handleLoginSubmit)} className="space-y-6">
+            <div className="form-item opacity-0">
+              <label className={labelCls}>Email Address</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-white/40 group-focus-within:text-stitch-primary transition-colors">
+                  <Mail size={16} strokeWidth={2.5} />
+                </div>
+                <input {...register('email')} type="email" autoComplete="email"
+                  placeholder="admin@techbill.app" className={inputCls} />
               </div>
-              <div className="relative">
+              {errors.email && <p className="text-xs text-red-400 mt-1.5 ml-1">{errors.email.message}</p>}
+            </div>
+
+            <div className="form-item opacity-0">
+              <label className={labelCls}>Password</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-white/40 group-focus-within:text-stitch-primary transition-colors">
+                  <Lock size={16} strokeWidth={2.5} />
+                </div>
                 <input {...register('password')} type={showPassword ? 'text' : 'password'} autoComplete="current-password"
-                  placeholder="********" className={`${inputCls} pr-10`} />
+                  placeholder="••••••••" className={inputCls} />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors flex items-center justify-center">
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-white/30 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all">
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
-              {errors.password && <p className="text-[11px] text-stitch-error mt-1">{errors.password.message}</p>}
+              {errors.password && <p className="text-xs text-red-400 mt-1.5 ml-1">{errors.password.message}</p>}
             </div>
-            <button type="submit" disabled={isSubmitting}
-              className="w-full bg-stitch-primary hover:bg-stitch-primary/90 text-stitch-on-primary font-bold rounded-lg py-2.5 text-sm transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 mt-2">
-              {isSubmitting ? (
-                <><span className="w-4 h-4 border-2 border-stitch-on-primary/30 border-t-stitch-on-primary rounded-full animate-spin" /> Signing in...</>
-              ) : 'Sign in to Terminal'}
-            </button>
+
+            <div className="form-item opacity-0 pt-2">
+              <button type="submit" disabled={isSubmitting}
+                className="w-full relative group overflow-hidden bg-white text-black font-bold rounded-xl py-4 text-sm transition-all active:scale-[0.98] disabled:opacity-70 disabled:active:scale-100 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+                {isSubmitting ? (
+                  <><span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" /> Authenticating...</>
+                ) : (
+                  <>Sign In to Terminal <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
+                )}
+              </button>
+            </div>
           </form>
+          
+          <div className="form-item opacity-0 mt-8 pt-6 border-t border-white/5 flex items-start gap-3">
+             <div className="p-2 bg-stitch-primary/10 rounded-lg shrink-0 mt-0.5 border border-stitch-primary/20">
+               <ShieldCheck size={16} className="text-stitch-primary" />
+             </div>
+             <p className="text-[11px] text-white/40 leading-relaxed font-medium">
+              For security and fraud prevention, self-service password recovery is disabled. Contact your administrator.
+            </p>
+          </div>
+        </div>
+        
+        {/* Footer */}
+        <div className="mt-8 text-center flex items-center justify-center gap-4 text-[11px] text-white/40 font-medium">
+          <Link to="/privacy" className="footer-link opacity-0 hover:text-white transition-colors">Privacy Policy</Link>
+          <span className="footer-link opacity-0 w-1 h-1 bg-white/20 rounded-full" />
+          <Link to="/terms" className="footer-link opacity-0 hover:text-white transition-colors">Terms of Service</Link>
+          <span className="footer-link opacity-0 w-1 h-1 bg-white/20 rounded-full" />
+          <a href="mailto:krishbaresha@gmail.com" className="footer-link opacity-0 hover:text-white transition-colors">Support</a>
+        </div>
       </div>
     </div>
   );
 }
+
