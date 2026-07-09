@@ -36,8 +36,8 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'et-auth',
-      // Persist user and refreshToken — access token lives in memory only
-      partialize: (state) => ({ user: state.user, refreshToken: state.refreshToken }),
+      // Persist user, accessToken, and refreshToken
+      partialize: (state) => ({ user: state.user, accessToken: state.accessToken, refreshToken: state.refreshToken }),
       onRehydrateStorage: () => {
         return (state) => {
           if (state) {

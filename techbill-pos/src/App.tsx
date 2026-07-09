@@ -1,37 +1,39 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './store/auth.store';
 import { api } from './api/client';
-import Login from './pages/Login';
-import LandingPage from './pages/LandingPage';
+
+const Login = lazy(() => import('./pages/Login'));
+const LandingPage = lazy(() => import('./pages/LandingPage'));
+const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/public/TermsOfService'));
+const Security = lazy(() => import('./pages/public/Security'));
+const CheckoutPage = lazy(() => import('./pages/public/CheckoutPage'));
+const ReturnPolicy = lazy(() => import('./pages/public/ReturnPolicy'));
+const ShippingPolicy = lazy(() => import('./pages/public/ShippingPolicy'));
+const PosScreen = lazy(() => import('./pages/pos/PosScreen'));
+const OwnerDashboard = lazy(() => import('./pages/dashboard/OwnerDashboard'));
+const InventoryPage = lazy(() => import('./pages/inventory/InventoryPage'));
+const ReturnsPage = lazy(() => import('./pages/returns/ReturnsPage'));
+const ReturnAnalyticsPage = lazy(() => import('./pages/returns/ReturnAnalyticsPage'));
+const ReportsPage = lazy(() => import('./pages/reports/ReportsPage'));
+const CashReconciliationPage = lazy(() => import('./pages/reports/CashReconciliationPage'));
+const ExpensesPage = lazy(() => import('./pages/expenses/ExpensesPage'));
+const UsersPage = lazy(() => import('./pages/users/UsersPage'));
+const SettingsPage = lazy(() => import('./pages/settings/SettingsPage'));
+const AuditPage = lazy(() => import('./pages/audit/AuditPage'));
+const CustomersPage = lazy(() => import('./pages/customers/CustomersPage'));
+const LoyaltyPage = lazy(() => import('./pages/customers/LoyaltyPage'));
+const SuppliersPage = lazy(() => import('./pages/suppliers/SuppliersPage'));
+const PurchaseOrdersPage = lazy(() => import('./pages/suppliers/PurchaseOrdersPage'));
+const GrnPage = lazy(() => import('./pages/suppliers/GrnPage'));
+const WarrantyPage = lazy(() => import('./pages/warranty/WarrantyPage'));
+const TenantsPage = lazy(() => import('./pages/tenants/TenantsPage'));
+const InvoiceHistoryPage = lazy(() => import('./pages/sales/InvoiceHistoryPage'));
+const PublicInvoicePage = lazy(() => import('./pages/sales/PublicInvoicePage'));
+const OnlineOrdersPage = lazy(() => import('./pages/sales/OnlineOrdersPage'));
+
 import PublicLayout from './components/layout/PublicLayout';
-import PrivacyPolicy from './pages/public/PrivacyPolicy';
-import TermsOfService from './pages/public/TermsOfService';
-import Security from './pages/public/Security';
-import CheckoutPage from './pages/public/CheckoutPage';
-import ReturnPolicy from './pages/public/ReturnPolicy';
-import ShippingPolicy from './pages/public/ShippingPolicy';
-import PosScreen from './pages/pos/PosScreen';
-import OwnerDashboard from './pages/dashboard/OwnerDashboard';
-import InventoryPage from './pages/inventory/InventoryPage';
-import ReturnsPage from './pages/returns/ReturnsPage';
-import ReturnAnalyticsPage from './pages/returns/ReturnAnalyticsPage';
-import ReportsPage from './pages/reports/ReportsPage';
-import CashReconciliationPage from './pages/reports/CashReconciliationPage';
-import ExpensesPage from './pages/expenses/ExpensesPage';
-import UsersPage from './pages/users/UsersPage';
-import SettingsPage from './pages/settings/SettingsPage';
-import AuditPage from './pages/audit/AuditPage';
-import CustomersPage from './pages/customers/CustomersPage';
-import LoyaltyPage from './pages/customers/LoyaltyPage';
-import SuppliersPage from './pages/suppliers/SuppliersPage';
-import PurchaseOrdersPage from './pages/suppliers/PurchaseOrdersPage';
-import GrnPage from './pages/suppliers/GrnPage';
-import WarrantyPage from './pages/warranty/WarrantyPage';
-import TenantsPage from './pages/tenants/TenantsPage';
-import InvoiceHistoryPage from './pages/sales/InvoiceHistoryPage';
-import PublicInvoicePage from './pages/sales/PublicInvoicePage';
-import OnlineOrdersPage from './pages/sales/OnlineOrdersPage';
 import AppShell from './components/layout/AppShell';
 import { can } from './lib/permissions';
 import type { Role, Permission } from './types';
@@ -136,7 +138,20 @@ export default function App() {
       });
   }, [_hasHydrated, isHydrating, user, accessToken, refreshToken, setToken, clearAuth, setHydrating]);
 
-  // Auto-lock inactivity handler
+  // Eager background preload for critical routes after authentication
+  useEffect(() => {
+    if (user && accessToken) {
+      const preloadTimer = setTimeout(() => {
+        // Preload core operational screens silently
+        import('./pages/dashboard/OwnerDashboard');
+        import('./pages/pos/PosScreen');
+        import('./pages/inventory/InventoryPage');
+        import('./pages/sales/InvoiceHistoryPage');
+        import('./pages/settings/SettingsPage');
+      }, 1000); // 1 second after initial render
+      return () => clearTimeout(preloadTimer);
+    }
+  }, [user, accessToken]);
   const { isLocked, isPinSet, lock, autoLockMinutes } = useLockStore();
 
   useEffect(() => {
@@ -172,8 +187,13 @@ export default function App() {
     <BrowserRouter>
       <LockOverlay />
       <ToastContainer />
-      <Routes>
-        {/* Public Routes */}
+      <Suspense fallback={
+        <div className="flex items-center justify-center min-h-screen bg-stitch-surface">
+          <span className="w-8 h-8 border-2 border-stitch-primary/30 border-t-stitch-primary rounded-full animate-spin" />
+        </div>
+      }>
+        <Routes>
+          {/* Public Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -361,6 +381,7 @@ export default function App() {
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
